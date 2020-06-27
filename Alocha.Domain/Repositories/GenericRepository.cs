@@ -14,10 +14,9 @@ namespace Alocha.Domain.Repositories
         private readonly DbContext _dbContext;
         private DbSet<TEntity> _dbSet;
 
-        public GenericRepository(DbContext dbContext, DbSet<TEntity> dbSet)
+        public GenericRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
-            _dbSet = dbSet;
         }
 
         public void Add(TEntity entity)
