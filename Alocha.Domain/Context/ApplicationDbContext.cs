@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Alocha.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -12,17 +13,19 @@ namespace Alocha.Domain
         {
             base.OnModelCreating(builder);
 
-            ////Sow has a primary key 
-            //builder.Entity<Sow>().HasKey(s => s.SowId);
+            //Sow has a primary key 
+            builder.Entity<Sow>().HasKey(s => s.SowId);
 
-            ////Sow has many SmallPigs 1:N relation
-            //builder.Entity<Sow>().HasMany(s => s.SmallPigs).WithOne(s => s.Sow).HasForeignKey(s => s.SowId);
+            //Sow has many SmallPigs 1:N relation
+            builder.Entity<Sow>().HasMany(s => s.SmallPigs).WithOne(s => s.Sow).HasForeignKey(s => s.SowId);
 
-            ////SmallPig has a primary key
-            //builder.Entity<SmallPig>().HasKey(s => s.SmalPigsId);
+            //SmallPig has a primary key
+            builder.Entity<SmallPig>().HasKey(s => s.SmalPigsId);
 
-            ////User has many Sows 1:N relation
-            //builder.Entity<User>().HasMany(u => u.Sows).WithOne(s => s.User).HasForeignKey(u => u.UserId);
+            //User has one Customer 1:1 relation
+            builder.Entity<User>().HasOne(u => u.Customer).WithOne(c => c.User).HasForeignKey<Customer>(u => u.UserId);
+
+            builder.Entity<Customer>().HasMany(c => c.Sows).WithOne(s => s.Customer).HasForeignKey(c => c.CustomerId);
         }
     }
 }

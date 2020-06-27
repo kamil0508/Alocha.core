@@ -24,9 +24,9 @@ namespace Alocha.Domain.Entities
 
         public string Result { get; set; }
 
-        public string UserId { get; set; }
+        public int CustomerId { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public virtual ICollection<SmallPig> SmallPigs { get; set; }
     }

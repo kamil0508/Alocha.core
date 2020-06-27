@@ -11,8 +11,10 @@ namespace Alocha.Domain.Entities
         public string Name { get; set; }
         public string Adress { get; set; }
         public string Regon { get; set; }
-        public User User { get; set; }
 
-        public ICollection<Sow> Sows { get; set; }
+        public string UserId { get; set; }
+        public virtual User User { get; set; }
+
+        public virtual ICollection<Sow> Sows { get; set; }
     }
 }
