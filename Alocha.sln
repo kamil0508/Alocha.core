@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alocha.WebUi", "Alocha\Alocha.WebUi.csproj", "{459A09C1-09ED-409B-93E0-F941FD526E4B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D3C4E6DA-DFA8-4F7A-B49B-3B23F21926ED} = {D3C4E6DA-DFA8-4F7A-B49B-3B23F21926ED}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alocha.Domain", "Alocha.Domain\Alocha.Domain.csproj", "{D3C4E6DA-DFA8-4F7A-B49B-3B23F21926ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{459A09C1-09ED-409B-93E0-F941FD526E4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{459A09C1-09ED-409B-93E0-F941FD526E4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{459A09C1-09ED-409B-93E0-F941FD526E4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{459A09C1-09ED-409B-93E0-F941FD526E4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3C4E6DA-DFA8-4F7A-B49B-3B23F21926ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3C4E6DA-DFA8-4F7A-B49B-3B23F21926ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3C4E6DA-DFA8-4F7A-B49B-3B23F21926ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3C4E6DA-DFA8-4F7A-B49B-3B23F21926ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {25F66768-F8E1-4384-9269-DF1A8600CFD8}
+	EndGlobalSection
+EndGlobal
