@@ -1,0 +1,8 @@
+/Alocha.Domain/bin
+/Alocha.Domain/obj
+/Alocha/bin
+/Alocha/obj
+/.vs
+/.vscode
+*.user
+.vscode
