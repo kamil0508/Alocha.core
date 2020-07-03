@@ -1,0 +1,33 @@
+﻿@model Alocha.WebUi.Models.MessageVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="row h-100" style="margin-top:200px;">
+        <div class="col-sm-12 my-auto">
+            <div class="card card-block w-50 mx-auto">
+                <div class="text-center">
+                    @Html.HiddenFor(m => m.LinkUrl)
+                    <h4>@Model.Topic</h4>
+                    <p>@Model.Message</p>
+                    <a class="btn btn-primary" href=@Model.LinkUrl>@Model.LinkName (<span id="counter">5</span>)</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/message.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
