@@ -29,11 +29,11 @@ namespace Alocha.WebUi.Controllers
             if(ModelState.IsValid)
             {
                 var result = await _accountService.LogInAsync(model);
-                //if (result.Succeeded)
-                //    return RedirectToAction();
-                //if (result.IsLockedOut)
+                if (result.Succeeded)
+                    return RedirectToAction();
+                if (result.IsLockedOut)
                     return RedirectToAction("Index", "Message", new { Message = IdMessage.AccountLock });
-                //ModelState.AddModelError("", "Niepoprawny login lub hasło");
+                ModelState.AddModelError("", "Niepoprawny login lub hasło");
             }
             return View(model);
         }
