@@ -1,6 +1,9 @@
-﻿using Alocha.Domain.Interfaces;
+﻿using Alocha.Domain.Entities;
+using Alocha.Domain.Interfaces;
+using Alocha.WebUi.Models.AccountVM;
 using Alocha.WebUi.Services.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +13,26 @@ namespace Alocha.WebUi.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IMapper _mapper;
 
-        public AccountService(IUnitOfWork unitOfWork, IMapper mapper)
+        public AccountService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _userManager = userManager;
+            _signInManager = signInManager;
             _mapper = mapper;
+        }
+
+        public async Task<SignInResult> LogInAsync(LogInVM model)
+        {
+            return await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);        
+        }
+
+        public async Task<bool> LogOutAsync()
+        {
+            await _signInManager.SignOutAsync();
+            return true;
         }
     }
 }
