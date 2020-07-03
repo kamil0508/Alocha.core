@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 
 namespace Alocha.Domain
 {
@@ -26,6 +27,12 @@ namespace Alocha.Domain
             builder.Entity<User>().HasOne(u => u.Customer).WithOne(c => c.User).HasForeignKey<Customer>(u => u.UserId);
 
             builder.Entity<Customer>().HasMany(c => c.Sows).WithOne(s => s.Customer).HasForeignKey(c => c.CustomerId);
+
+            // Determine restrict delete behaviour for each entity to avoid cycles cascade error
+            builder.Model.GetEntityTypes()
+                .SelectMany(t => t.GetForeignKeys())
+                .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade)
+                .ToList().ForEach(fk => fk.DeleteBehavior = DeleteBehavior.Restrict);
         }
     }
 }
