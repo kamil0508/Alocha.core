@@ -1,5 +1,7 @@
 ﻿using Alocha.Domain.Interfaces;
 using Alocha.Domain.Repositories;
+using Alocha.WebUi.Services;
+using Alocha.WebUi.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -20,7 +22,10 @@ namespace Alocha.WebUi.Extensions
 
         public static IServiceCollection ServiceInjector(this IServiceCollection services)
         {
-            //TODO inject services
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ISmallPigService, SmallPigService>();
+            services.AddScoped<ISowService, SowService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
