@@ -2,6 +2,7 @@
 {
     public enum IdMessage
     {
-        AccountLock
+        AccountLock,
+        SendConfirmEmail
     }
 }

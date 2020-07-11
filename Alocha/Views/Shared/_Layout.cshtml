@@ -3,46 +3,64 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AlochawebV1._0.WebUI</title>
+    <title>@ViewData["Title"] - Alocha </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/sideMenu/side-menu.css" rel="stylesheet" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-            <a class="navbar-brand" href="#">ALOCHA-WEB</a>
-            @*@if (User.Identity.IsAuthenticated)
-            {*@
-                <!-- Use any element to open the sidenav -->
-                <span style="font-size:20px; cursor:pointer" onclick="openNav()">Menu &#9776;</span>
-            @*}*@
+        <nav class="navbar navbar-static-top navbar-expand-lg" role="navigation" style="margin-bottom: 0;">
+                <div class="navbar-header">
+                    <a class="navbar-brand " href="/">
+                        <strong class="font-italic">ALOCHA</strong>
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"></li>
+                    </ul>
+                    <span style="font-size:20px; cursor:pointer" onclick="openNav()">&#9776;</span>
+                </div>
         </nav>
     </header>
-    <div class="container">
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            @User.Identity.Name
-            <a href="#">Najbliższe zdarzenia</a>
-            <a href="#">Lista loch</a>
-            <a href="#">Dodaj loche</a>
-            <a href="#">Statystyki</a>
-            @if (User.Identity.IsAuthenticated)
-            {
-                @Html.ActionLink("Wyloguj", "LogOut", "Account")
-            }
-        </div>
 
-        <main role="main">
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            @User.Identity.Name
+            <a href="#">Kontakt z administratorem</a>
+            @Html.ActionLink("Wyloguj", "LogOut", "Account")
+        }
+    </div>
+
+    <aside class="sidebar">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav">
+                    <li><a asp-controller="Home" asp-action="Index">Zadania</a></li>
+                    <li><a asp-controller="Invoice" asp-action="Index">Lochy</a></li>
+                    <li><a asp-controller="Offer" asp-action="Index">Wykresy</a></li>
+                </ul>
+            </nav>
+        </div><!-- End Sidebar scroll-->
+    </aside>
+
+    <div id="page-wrapper">
+        <div class="row">
             @RenderBody()
-        </main>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Alocha-web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - Alocha-web 
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -91,7 +91,7 @@ namespace Alocha
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=LogIn}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

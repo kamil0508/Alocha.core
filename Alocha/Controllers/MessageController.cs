@@ -16,7 +16,15 @@ namespace Alocha.WebUi.Controllers
             if (message == IdMessage.AccountLock)
             {
                 model.Topic = "Blokada";
-                model.Message = "Twoje konto zostało zablokowane spróbuj ponownie później";
+                model.Message = "Twoje konto zostało zablokowane spróbuj ponownie później.";
+                model.LinkUrl = "/Account/LogIn";
+                model.LinkName = "Wróć";
+            }
+            else
+            if (message == IdMessage.SendConfirmEmail)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Na Adres Email został wysłany link potwierdzajacy konto.";
                 model.LinkUrl = "/Account/LogIn";
                 model.LinkName = "Wróć";
             }

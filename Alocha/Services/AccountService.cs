@@ -34,5 +34,11 @@ namespace Alocha.WebUi.Services
             await _signInManager.SignOutAsync();
             return true;
         }
+
+        public Task<IdentityResult> RegisterAsync(RegisterVM model)
+        {
+            var user = new User() { UserName = model.Email, Email = model.Email };
+            return _userManager.CreateAsync(user, model.Password);
+        }
     }
 }

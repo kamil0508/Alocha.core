@@ -9,6 +9,7 @@ namespace Alocha.WebUi.Services.Interfaces
 {
     public interface IAccountService
     {
+        Task<IdentityResult> RegisterAsync(RegisterVM model);
         Task<SignInResult> LogInAsync(LogInVM model);
         Task<bool> LogOutAsync();
     }

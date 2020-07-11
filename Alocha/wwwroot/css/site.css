@@ -2,70 +2,209 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #f3f3f3;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #8c9196;
+    border-color: #7db610;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    font-size: 14px;
 }
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
 }
+
+.navbar {
+    z-index: 1;
+    color: #f3f3f3 !important;
+    background-color: #8c9196;
+}
+
+.sidebar {
+    position: fixed;
+    width: 240px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    padding-top: 60px;
+    background-color: #637283;
+    -webkit-box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
+}
+
+.footer {
+    background-color: #8c9196;
+    color: #f3f3f3 !important;
+}
+
+.sidebar-nav ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+    .sidebar-nav ul li {
+        list-style: none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+        .sidebar-nav ul li a {
+            color: #f3f3f3 !important;
+            padding: 15px 35px 15px 15px;
+            display: block;
+            -webkit-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+            .sidebar-nav ul li.active > a, .sidebar-nav ul li.active > a.active, .sidebar-nav ul li a:hover {
+                text-decoration: none;
+                background-color: #8c9196;
+            }
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
+#page-wrapper {
+    padding: 25px 25px;
+    flex: 1;
+    margin-left: 240px;
+}
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+/* PANELS ***********************************/
+.panel {
+    margin-bottom: 25px;
+    background-color: rgb(252, 237, 216);
+    border: 0;
+    border-radius: 0;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+.panel-body {
+    padding: 20px;
+}
+
+.panel-heading {
+    color: #333;
+    border: 0;
+    padding: 20px;
+    background-color: transparent;
+}
+
+    .panel-heading h3 {
+        color: #555;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        display: inline-block;
+        line-height: 30px;
+        font-size: 21px;
+    }
+
+    .panel-heading .lstick {
+        width: 2px;
+        background: #555;
+        height: 40px;
+        margin-left: -20px;
+        margin-right: 18px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+.pull-right {
+    float: right !important;
+}
+
+/* TABLES ***********************************/
+
+table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc_disabled {
+    background: transparent;
+}
+
+table > tbody > tr > td, table > tbody > tr > th {
+    background: rgb(252, 237, 216);
+}
+
+table#dataTablesLink > tbody > tr > td, table#dataTablesLink > tbody > tr > th {
+    background: rgb(252, 237, 216);
+}
+
+table {
+    padding: 2px;
+}
+
+    table thead {
+        border-top: 1px solid rgb(252, 237, 216);
+    }
+
+    table > thead > tr > th {
+        border-bottom: 1px solid rgb(252, 237, 216);
+    }
+
+    table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        vertical-align: middle !important;
+    }
+
+    table tfoot > tr {
+        background-color: rgb(252, 237, 216);
+    }
+
+/* BUTTONS ***********************************/
+.btn-primary.btn-outline {
+    color: rgb(252, 237, 216);
+    background-color: #0366d6;
+    border-color: #0366d6;
 }

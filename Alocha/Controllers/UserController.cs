@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Alocha.WebUi.Helpers;
 using Alocha.WebUi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +17,5 @@ namespace Alocha.WebUi.Controllers
             _userService = userService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
     }
 }

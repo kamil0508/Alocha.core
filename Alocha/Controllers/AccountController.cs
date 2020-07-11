@@ -24,13 +24,17 @@ namespace Alocha.WebUi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LogIn(LogInVM model)
+        public async Task<IActionResult> LogIn(LogInVM model, string returnUrl)
         {
             if(ModelState.IsValid)
             {
                 var result = await _accountService.LogInAsync(model);
                 if (result.Succeeded)
-                    return RedirectToAction();
+                {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                        return RedirectToAction(returnUrl);
+                    return RedirectToAction("Index", "Home");
+                }
                 if (result.IsLockedOut)
                     return RedirectToAction("Index", "Message", new { Message = IdMessage.AccountLock });
                 ModelState.AddModelError("", "Niepoprawny login lub hasło");
@@ -44,6 +48,28 @@ namespace Alocha.WebUi.Controllers
             if (result)
                 return RedirectToAction("LogIn");
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _accountService.RegisterAsync(model);
+                if (result.Succeeded)
+                {
+                    //TODO Send Eemail COnfirmation
+                    return RedirectToAction("Index", "Message", new { Message = IdMessage.SendConfirmEmail });
+                }
+                result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
+            }
+            return View(model);
         }
     }
 }
