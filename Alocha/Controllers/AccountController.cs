@@ -12,10 +12,12 @@ namespace Alocha.WebUi.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly IEmailService _emailService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, IEmailService emailService)
         {
             _accountService = accountService;
+            _emailService = emailService;
         }
 
         public IActionResult LogIn()
@@ -65,7 +67,13 @@ namespace Alocha.WebUi.Controllers
                 if (result.Succeeded)
                 {
                     //TODO Send Eemail COnfirmation
-                    return RedirectToAction("Index", "Message", new { Message = IdMessage.SendConfirmEmail });
+                    var user = await _accountService.GetUserByEmailAsync(model.Email);
+                    var token = await _accountService.GenerateConfirmTokenAsync(user);
+                    var callBackUrl = Url.ActionLink("Confirm", "Account", new { Token = token, UserId = user.Id });
+                    var resultEmail = await _emailService.SendConfirmEmail(callBackUrl, user.Email);
+                    if(resultEmail)
+                        return RedirectToAction("Index", "Message", new { Message = IdMessage.SendConfirmEmailSucces });
+                    return RedirectToAction("Index", "Message", new { Message = IdMessage.SendConfirmEmailError });
                 }
                 result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
             }

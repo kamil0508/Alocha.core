@@ -3,6 +3,7 @@
     public enum IdMessage
     {
         AccountLock,
-        SendConfirmEmail
+        SendConfirmEmailSucces,
+        SendConfirmEmailError
     }
 }

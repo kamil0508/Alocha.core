@@ -14,7 +14,7 @@ namespace Alocha.WebUi.Helpers
             MailMessage message = new MailMessage();
 
             message.To.Add(userEmail);
-            message.From = new MailAddress("programista2020@onet.pl", "Aplikacja Ebok");
+            message.From = new MailAddress("programista2020@onet.pl", "Aplikacja Alocha");
             message.IsBodyHtml = true;
             message.Subject = subject;
             message.Body = body;

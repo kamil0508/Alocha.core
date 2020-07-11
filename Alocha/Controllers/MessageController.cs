@@ -21,10 +21,18 @@ namespace Alocha.WebUi.Controllers
                 model.LinkName = "Wróć";
             }
             else
-            if (message == IdMessage.SendConfirmEmail)
+            if (message == IdMessage.SendConfirmEmailSucces)
             {
                 model.Topic = "Powodzenie";
                 model.Message = "Na Adres Email został wysłany link potwierdzajacy konto.";
+                model.LinkUrl = "/Account/LogIn";
+                model.LinkName = "Wróć";
+            }
+            else
+            if (message == IdMessage.SendConfirmEmailError)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Niestety nie udało się wysłać maila z potwierdzeniem, skontaktuj się proszę z administratorem.";
                 model.LinkUrl = "/Account/LogIn";
                 model.LinkName = "Wróć";
             }

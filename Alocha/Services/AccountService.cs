@@ -15,12 +15,14 @@ namespace Alocha.WebUi.Services
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public AccountService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IMapper mapper)
+        public AccountService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -39,6 +41,16 @@ namespace Alocha.WebUi.Services
         {
             var user = new User() { UserName = model.Email, Email = model.Email };
             return _userManager.CreateAsync(user, model.Password);
+        }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await _unitOfWork.User.FindOneAsync(u => u.Email == email);
+        }
+
+        public async Task<string> GenerateConfirmTokenAsync(User user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
         }
     }
 }
