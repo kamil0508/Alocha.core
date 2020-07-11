@@ -4,14 +4,16 @@ using Alocha.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Alocha.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200711123452_AddFlagIsRemove")]
+    partial class AddFlagIsRemove
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,16 +54,16 @@ namespace Alocha.Domain.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("DateBorn")
+                    b.Property<DateTime>("DateBorn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateDetachment")
+                    b.Property<DateTime>("DateDetachment")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateHappening")
+                    b.Property<DateTime>("DateHappening")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateInsimination")
+                    b.Property<DateTime>("DateInsimination")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsRemoved")
@@ -70,8 +72,8 @@ namespace Alocha.Domain.Migrations
                     b.Property<bool>("IsVaccinated")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
@@ -79,7 +81,7 @@ namespace Alocha.Domain.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("VaccineDate")
+                    b.Property<DateTime>("VaccineDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("SowId");

@@ -14,5 +14,7 @@ namespace Alocha.Domain.Entities
 
         public int SowId { get; set; }
         public virtual Sow Sow { get; set; }
+
+        public bool IsRemoved { get; set; }
     }
 }

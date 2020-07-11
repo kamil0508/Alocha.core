@@ -8,19 +8,19 @@ namespace Alocha.Domain.Entities
     {
         public int SowId { get; set; }
 
-        public string Number { get; set; }
+        public int Number { get; set; }
 
         public string Status { get; set; }
 
-        public DateTime DateHappening { get; set; }
+        public DateTime? DateHappening { get; set; }
 
-        public DateTime DateBorn { get; set; }
+        public DateTime? DateBorn { get; set; }
 
-        public DateTime DateInsimination { get; set; }
+        public DateTime? DateInsimination { get; set; }
 
-        public DateTime DateDetachment { get; set; }
+        public DateTime? DateDetachment { get; set; }
 
-        public DateTime VaccineDate { get; set; }
+        public DateTime? VaccineDate { get; set; }
 
         public bool IsVaccinated { get; set; }
 
@@ -29,5 +29,7 @@ namespace Alocha.Domain.Entities
         public virtual User User { get; set; }
 
         public virtual ICollection<SmallPig> SmallPigs { get; set; }
+
+        public bool IsRemoved { get; set; }
     }
 }
