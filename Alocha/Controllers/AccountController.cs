@@ -66,15 +66,75 @@ namespace Alocha.WebUi.Controllers
                 var result = await _accountService.RegisterAsync(model);
                 if (result.Succeeded)
                 {
-                    //TODO Send Eemail COnfirmation
+                    //send confirmation email
                     var user = await _accountService.GetUserByEmailAsync(model.Email);
                     var token = await _accountService.GenerateConfirmTokenAsync(user);
-                    var callBackUrl = Url.ActionLink("Confirm", "Account", new { Token = token, UserId = user.Id });
-                    var resultEmail = await _emailService.SendConfirmEmail(callBackUrl, user.Email);
+                    var callBackUrl = Url.ActionLink("Confirmed", "Account", new { Token = token, UserId = user.Id });
+                    var resultEmail = await _emailService.SendConfirmEmailAsync(callBackUrl, user.Email);
                     if(resultEmail)
                         return RedirectToAction("Index", "Message", new { Message = IdMessage.SendConfirmEmailSucces });
                     return RedirectToAction("Index", "Message", new { Message = IdMessage.SendConfirmEmailError });
                 }
+                result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Confirmed(string token, string userId)
+        {
+            var result = await _accountService.ConfirmEmailAsync(token, userId);
+            if (result.Succeeded)
+                return RedirectToAction("Index", "Message", new { Message = IdMessage.EmailConfirmedSucces });
+            return RedirectToAction("Index", "Message", new { Message = IdMessage.EmailConfirmedError });
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var token = await _accountService.GenerateResetPasswordTokenAsync(model);
+                if (token != null)
+                {
+                    var user = await _accountService.GetUserByEmailAsync(model.Email);
+                    var callbackUrl = Url.ActionLink("ResetPassword", "Account", new { Token = token, UserId = user.Id });
+                    var resultEmail = await _emailService.SendResetPasswordEmailAsync(callbackUrl, user.Email);
+                    if (resultEmail)
+                        return RedirectToAction("Index", "Message", new { Message = IdMessage.ResetPasswordTokenSendSucces});
+                    return RedirectToAction("Index", "Message", new { Message = IdMessage.ResetPasswordTokenSendError });
+                }
+                ModelState.AddModelError("", "Niepoprawny adres E-mail");
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token, string userId)
+        {
+            if (token == null || userId == null)
+                ModelState.AddModelError("", "Nieprawidłowy token do zmiany hasła.");
+            var model = new ResetPasswordVM()
+            {
+                Token= token
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordVM model)
+        {
+            if(ModelState.IsValid)
+            {
+                var result = await _accountService.ResetPasswordAsync(model);
+                if(result.Succeeded)
+                    return RedirectToAction("Index", "Message", new { Message = IdMessage.ResetPasswordSucces });
                 result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
             }
             return View(model);

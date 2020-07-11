@@ -8,6 +8,7 @@ namespace Alocha.WebUi.Services.Interfaces
 {
     public interface IEmailService
     {
-        Task<bool> SendConfirmEmail(string callBackUrl, string email);
+        Task<bool> SendConfirmEmailAsync(string callBackUrl, string email);
+        Task<bool> SendResetPasswordEmailAsync(string callBackUrl, string email);
     }
 }

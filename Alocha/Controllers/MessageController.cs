@@ -31,8 +31,48 @@ namespace Alocha.WebUi.Controllers
             else
             if (message == IdMessage.SendConfirmEmailError)
             {
-                model.Topic = "Powodzenie";
+                model.Topic = "Błąd";
                 model.Message = "Niestety nie udało się wysłać maila z potwierdzeniem, skontaktuj się proszę z administratorem.";
+                model.LinkUrl = "/Account/LogIn";
+                model.LinkName = "Wróć";
+            }
+            else
+            if (message == IdMessage.EmailConfirmedSucces)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Dziękujemy za potwierdzenie konta, zostaniesz przekierowany do ekranu logowania.";
+                model.LinkUrl = "/Account/LogIn";
+                model.LinkName = "Wróć";
+            }
+            else
+            if (message == IdMessage.EmailConfirmedError)
+            {
+                model.Topic = "Błąd";
+                model.Message = "Niestety nie udało się potwierdzic konta, skontaktuj się proszę z administartorem.";
+                model.LinkUrl = "/Account/LogIn";
+                model.LinkName = "Wróć";
+            }
+            else
+            if (message == IdMessage.ResetPasswordTokenSendSucces)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Link do zmiany hasła został wysłany na podany adres Email.";
+                model.LinkUrl = "/Account/LogIn";
+                model.LinkName = "Wróć";
+            }
+            else
+            if (message == IdMessage.ResetPasswordTokenSendError)
+            {
+                model.Topic = "Błąd";
+                model.Message = "Niestety nie udało sie wysłać liku do zmiany hasła.";
+                model.LinkUrl = "/Account/LogIn";
+                model.LinkName = "Wróć";
+            }
+            else
+            if (message == IdMessage.ResetPasswordSucces)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Hasło zostało pomyślnie zresetowane.";
                 model.LinkUrl = "/Account/LogIn";
                 model.LinkName = "Wróć";
             }

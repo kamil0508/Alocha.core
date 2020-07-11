@@ -1,5 +1,6 @@
 ﻿using Alocha.Domain.Entities;
 using Alocha.Domain.Interfaces;
+using Alocha.WebUi.Helpers.Constans;
 using Alocha.WebUi.Models.AccountVM;
 using Alocha.WebUi.Services.Interfaces;
 using AutoMapper;
@@ -51,6 +52,28 @@ namespace Alocha.WebUi.Services
         public async Task<string> GenerateConfirmTokenAsync(User user)
         {
             return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        }
+
+        public async Task<IdentityResult> ConfirmEmailAsync(string token, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            return await _userManager.ConfirmEmailAsync(user, token);    
+        }
+
+        public async Task<string> GenerateResetPasswordTokenAsync(ForgotPasswordVM model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if(user != null)
+                return await _userManager.GeneratePasswordResetTokenAsync(user);
+            return null;
+        }
+
+        public async Task<IdentityResult> ResetPasswordAsync(ResetPasswordVM model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if(user != null)
+                return await _userManager.ResetPasswordAsync(user, model.Token, model.Password);    
+            return IdentityResult.Failed(new IdentityError() { Description = IdentityResultErrorsConstans.RESET_PASSWORD_USER_NOT_FOUND });
         }
     }
 }

@@ -15,5 +15,8 @@ namespace Alocha.WebUi.Services.Interfaces
         Task<bool> LogOutAsync();
         Task<User> GetUserByEmailAsync(string email);
         Task<string> GenerateConfirmTokenAsync(User user);
+        Task<IdentityResult> ConfirmEmailAsync(string token, string userId);
+        Task<string> GenerateResetPasswordTokenAsync(ForgotPasswordVM model);
+        Task<IdentityResult> ResetPasswordAsync(ResetPasswordVM model);
     }
 }

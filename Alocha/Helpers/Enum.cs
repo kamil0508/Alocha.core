@@ -4,6 +4,11 @@
     {
         AccountLock,
         SendConfirmEmailSucces,
-        SendConfirmEmailError
+        SendConfirmEmailError,
+        EmailConfirmedSucces,
+        EmailConfirmedError,
+        ResetPasswordTokenSendSucces,
+        ResetPasswordTokenSendError,
+        ResetPasswordSucces
     }
 }
