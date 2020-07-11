@@ -7,6 +7,6 @@ namespace Alocha.Domain.Entities
 {
     public class User : IdentityUser 
     {
-        public virtual Customer Customer { get; set; }
+        public virtual ICollection<Sow> Sows { get; set; }
     }
 }

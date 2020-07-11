@@ -23,10 +23,8 @@ namespace Alocha.Domain
             //SmallPig has a primary key
             builder.Entity<SmallPig>().HasKey(s => s.SmalPigsId);
 
-            //User has one Customer 1:1 relation
-            builder.Entity<User>().HasOne(u => u.Customer).WithOne(c => c.User).HasForeignKey<Customer>(u => u.UserId);
-
-            builder.Entity<Customer>().HasMany(c => c.Sows).WithOne(s => s.Customer).HasForeignKey(c => c.CustomerId);
+            //User has many Sow 1:n relation
+            builder.Entity<User>().HasMany(u => u.Sows).WithOne(s => s.User).HasForeignKey(s => s.UserId);
 
             // Determine restrict delete behaviour for each entity to avoid cycles cascade error
             builder.Model.GetEntityTypes()

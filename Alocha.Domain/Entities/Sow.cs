@@ -22,11 +22,11 @@ namespace Alocha.Domain.Entities
 
         public DateTime VaccineDate { get; set; }
 
-        public string Result { get; set; }
+        public bool IsVaccinated { get; set; }
 
-        public int CustomerId { get; set; }
+        public string UserId{ get; set; }
 
-        public virtual Customer Customer { get; set; }
+        public virtual User User { get; set; }
 
         public virtual ICollection<SmallPig> SmallPigs { get; set; }
     }

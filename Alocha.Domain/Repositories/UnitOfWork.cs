@@ -17,14 +17,11 @@ namespace Alocha.Domain.Repositories
         {
             _applicationDbContext = applicationDbContext;
             User = new GenericRepository<User>(_applicationDbContext);
-            Customer = new GenericRepository<Customer>(_applicationDbContext);
             Sow = new GenericRepository<Sow>(_applicationDbContext);
             Smallpig = new GenericRepository<SmallPig>(_applicationDbContext);
         }
 
         public IGenericRepository<User> User { get; private set; }
-
-        public IGenericRepository<Customer> Customer { get; private set; }
 
         public IGenericRepository<Sow> Sow { get; private set; }
 
