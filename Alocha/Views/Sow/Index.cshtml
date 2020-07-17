@@ -1,0 +1,177 @@
+﻿@model Alocha.WebUi.Models.SowVM.SowIndexVM
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="col-md-12 col-lg-12">
+    <div class="panel">
+        <div class="panel-heading">
+            <h3><span class="lstick"></span>Lochy</h3>
+            <div class="pull-right">
+                <!-- Button trigger modal -->
+                <button type="button" id="openModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Dodaj loche
+                </button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover" cellspacing="0" style="width:100%" id="dataTables">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().Number)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().Status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().DateHappening)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().DateInsimination)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().DateDetachment)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().DateBorn)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().VaccineDate)
+                        </th>
+                        <th>Opcje</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().Number)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().Status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().DateHappening)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().DateInsimination)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().DateDetachment)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().DateBorn)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Sows.FirstOrDefault().VaccineDate)
+                        </th>
+                        <th>Opcje</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model.Sows)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.Number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Status)
+                            </td>
+                            <td>
+                                @if (item.DateHappening != DateTime.MinValue)
+                                    @Html.DisplayFor(m => item.DateHappening)
+                            </td>
+                            <td>
+                                @if (item.DateInsimination != DateTime.MinValue)
+                                    @Html.DisplayFor(m => item.DateInsimination)
+                            </td>
+                            <td>
+                                @if (item.DateDetachment != DateTime.MinValue)
+                                    @Html.DisplayFor(m => item.DateDetachment)
+                            </td>
+                            <td>
+                                @if (item.DateBorn != DateTime.MinValue)
+                                    @Html.DisplayFor(m => item.DateBorn)
+                            </td>
+                            <td>
+                                @if (item.VaccineDate != DateTime.MinValue)
+                                    @Html.DisplayFor(m => item.VaccineDate)
+                            </td>
+                            <td>
+                                <div class="dropdown btn-block pull-right">
+                                    <button class="btn btn-xs btn-primary btn-block dropdown-toggle" data-toggle="dropdown">
+                                        Opcje
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Szczegóły", "Details", new { id = item.SowId })</li>
+                                        <li>@Html.ActionLink("Edytuj", "Edit", new { id = item.SowId })</li>
+                                        <li>@Html.ActionLink("Usuń", "Remove", new { id = item.SowId })</li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<body onload="OpenModalWithValidation()">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nowa Locha</h5>
+                    <button type="button" onclick="ClearModal()" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("Create", "Sow", FormMethod.Post))
+                    {
+                        <div class="form-group col-sm-10">
+                            @Html.LabelFor(m => m.Number)
+                            @Html.EditorFor(m => m.Number, new { htmlAttributes = new { @class = "form-control", placeholder = "Numer", id= "numberInput" , min="0001", max="9999" } })
+                            @Html.ValidationMessageFor(m => m.Number, "", new { @class = "field-validation text-danger" })
+                        </div>
+                        <div class="form-group col-sm-10">
+                            @{
+                                List<SelectListItem> listItems = new List<SelectListItem>();
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "Luźna",
+                                    Value = "Luźna"
+                                });
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "Prośna",
+                                    Value = "Prośna",
+                                });
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "Laktacja",
+                                    Value = "Laktacja"
+                                });
+                            }
+                            @Html.DropDownListFor(m => m.Status, listItems,"Stan lochy:*", new { @class = "form-control"})<br />
+                            @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" href="/Sow/Index">Zapisz</button>
+                        </div>
+                        <div class="form-group">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @section Scripts {
+        <script src="~/js/datatables-filters.js"></script>
+        <script src="~/js/create-sow.js"></script>
+    }
+</body>

@@ -7,21 +7,22 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/sideMenu/side-menu.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 </head>
 <body>
     <header>
         <nav class="navbar navbar-static-top navbar-expand-lg" role="navigation" style="margin-bottom: 0;">
-                <div class="navbar-header">
-                    <a class="navbar-brand " href="/">
-                        <strong class="font-italic">ALOCHA</strong>
-                    </a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"></li>
-                    </ul>
-                    <span style="font-size:20px; cursor:pointer" onclick="openNav()">&#9776;</span>
-                </div>
+            <div class="navbar-header">
+                <a class="navbar-brand " href="/">
+                    <strong class="font-italic">ALOCHA</strong>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"></li>
+                </ul>
+                <span style="font-size:20px; cursor:pointer" onclick="openNav()">&#9776;</span>
+            </div>
         </nav>
     </header>
 
@@ -42,8 +43,8 @@
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
                     <li><a asp-controller="Home" asp-action="Index">Zadania</a></li>
-                    <li><a asp-controller="Invoice" asp-action="Index">Lochy</a></li>
-                    <li><a asp-controller="Offer" asp-action="Index">Wykresy</a></li>
+                    <li><a asp-controller="Sow" asp-action="Index">Lochy</a></li>
+                    <li><a asp-controller="#" asp-action="#">Wykresy</a></li>
                 </ul>
             </nav>
         </div><!-- End Sidebar scroll-->
@@ -57,7 +58,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Alocha-web 
+            &copy; 2020 - Alocha-web
         </div>
     </footer>
 
@@ -68,6 +69,8 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <script src="~/js/create-sow.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>
