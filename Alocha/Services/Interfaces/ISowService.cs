@@ -13,5 +13,6 @@ namespace Alocha.WebUi.Services.Interfaces
         Task<SowEditVM> GetSowForEditAsync(int sowId);
         Task<bool> EditSowAsync(SowEditVM model);
         string CalculateDate(DateTime date, string status);
+        Task<bool> RemoveSowAsync(int sowId);
     }
 }

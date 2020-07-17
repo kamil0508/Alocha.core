@@ -68,5 +68,11 @@ namespace Alocha.WebUi.Controllers
             var response = _sowService.CalculateDate(date, status);
             return response;
         }
+
+        public async Task<IActionResult> Remove(int id)
+        {
+            var result = await _sowService.RemoveSowAsync(id);
+            return RedirectToAction("Index");
+        }
     }
 }

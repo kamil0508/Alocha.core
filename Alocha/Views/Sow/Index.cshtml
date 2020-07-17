@@ -107,7 +107,7 @@
                                     <ul class="dropdown-menu">
                                         <li>@Html.ActionLink("Szczegóły", "Details", new { id = item.SowId })</li>
                                         <li>@Html.ActionLink("Edytuj", "Edit", new { id = item.SowId })</li>
-                                        <li>@Html.ActionLink("Usuń", "Remove", new { id = item.SowId })</li>
+                                        <li>@Html.ActionLink("Usuń", "Remove", new { id = item.SowId }, new { onclick = "return confirm('Czy napewno chcesz usunąc tą loche?');" })</li>
                                     </ul>
                                 </div>
                             </td>

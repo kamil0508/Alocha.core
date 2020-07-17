@@ -41,7 +41,7 @@ namespace Alocha.WebUi.Services
         public async Task<bool> CreateSowAsync(SowIndexVM model, string userId)
         {
             var user = await _unitOfWork.User.FindOneAsync(u => u.Id == userId);
-            if (!user.Sows.Where(s => s.Number == model.Number).Any())
+            if (!user.Sows.Where(s => s.Number == model.Number && !s.IsRemoved).Any())
             {
                 var sow = _mapper.Map<SowIndexVM, Sow>(model);
                 sow.UserId = userId;
@@ -86,6 +86,13 @@ namespace Alocha.WebUi.Services
             if(status == "Laktacja")
                 response = date.AddDays(28).ToShortDateString();                          
             return response;
+        }
+
+        public async Task<bool> RemoveSowAsync(int sowId)
+        {
+            var sow = await _unitOfWork.Sow.GetByIdAsync(sowId);
+            sow.IsRemoved = true;
+            return await _unitOfWork.SaveChangesAsync();
         }
     }
 }
