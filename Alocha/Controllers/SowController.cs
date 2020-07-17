@@ -43,5 +43,30 @@ namespace Alocha.WebUi.Controllers
             model.Sows = await _sowService.GetAllSowsAsync(currentUserId);
             return View("Index", model); 
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await _sowService.GetSowForEditAsync(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(SowEditVM model)
+        {
+            if(ModelState.IsValid)
+            {
+                var result = await _sowService.EditSowAsync(model);
+                if(result)
+                    return RedirectToAction("Index");
+                ModelState.AddModelError("", "Niestety nie udało się dokonać zmian");
+            }
+            return View(model);
+        }
+
+        public string CalculateDate(DateTime date,string status)
+        {
+            var response = _sowService.CalculateDate(date, status);
+            return response;
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace Alocha.WebUi.Helpers
         {
             CreateMap<Sow, SowVM>();
             CreateMap<SowIndexVM, Sow>();
+            CreateMap<Sow, SowEditVM>().ReverseMap();
         }
     }
 }

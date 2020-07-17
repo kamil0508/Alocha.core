@@ -9,7 +9,7 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-    color: #f3f3f3;
+    color: #0366d6;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {

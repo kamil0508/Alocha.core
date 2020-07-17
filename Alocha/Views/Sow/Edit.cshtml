@@ -1,0 +1,93 @@
+﻿@model Alocha.WebUi.Models.SowVM.SowEditVM
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="col-md-12 col-lg-12">
+    <div class="panel">
+        <div class="panel-heading">
+            <h3><span class="lstick"></span>Zarządzanie lochą</h3>
+        </div><!-- /.panel-heading -->
+        <div class="panel-body">
+            <form id="create" method="post">
+                @Html.HiddenFor(m => m.SowId)
+                @Html.HiddenFor(m => m.Number)
+                <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        @Html.LabelFor(m => m.DateHappening)
+                        @Html.EditorFor(m => m.DateHappening, new { htmlAttributes = new { @class = "form-control", id = "dateHappening" } })
+                        @Html.ValidationMessageFor(m => m.DateHappening, "", new { @class = "field-validation text-danger" })
+                    </div>
+                    <div class="form-group col-sm-5">
+                        @Html.LabelFor(m => m.Status)
+                        @{
+                            List<SelectListItem> listItems = new List<SelectListItem>();
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "Oderwano prosięta",
+                                Value = "Luźna"
+                            });
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "Zaproszona",
+                                Value = "Prośna",
+                            });
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "Wyproszona",
+                                Value = "Laktacja"
+                            });
+                        }
+                        @Html.DropDownListFor(m => m.Status, listItems, "Wydarzenie:*", new { @class = "form-control", id = "status", onchange = "calculateDate()" })<br />
+                        @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-3">
+                        @Html.LabelFor(m => m.VaccineDays)
+                        @Html.EditorFor(m => m.VaccineDays, new { htmlAttributes = new { @class = "form-control", id = "vaccineDay", min = "0", onchange = "calculateVacineDate()" } })
+                        @Html.ValidationMessageFor(m => m.VaccineDays, "", new { @class = "field-validation text-danger" })
+                    </div>
+                </div>
+                <hr />
+                <div class="form-row">
+                    <div class="form-group col-sm-3">
+                        @Html.Label("", "Przewidywana data")
+                        <input type="text" id="endDate" class="form-control" readonly="readonly" />
+                    </div>
+                </div>
+                @*<div class="form-row">
+            <div class="form-group col-sm-5">
+                @Html.LabelFor(m => m.OfferVatId)
+                @Html.DropDownListFor(model => model.OfferVatId, Model.OfferVat, "Wybierz *", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.OfferVatId, "", new { @class = "field-validation text-danger" })
+            </div>
+            <div class="form-group col-sm-3">
+                @Html.LabelFor(m => m.OfferTypeId)
+                @Html.DropDownListFor(model => model.OfferTypeId, Model.OfferType, "Wybierz *", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.OfferTypeId, "", new { @class = "field-validation text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-sm-8">
+            @Html.LabelFor(m => m.Description)
+            @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Opis" } })
+            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "field-validation text-danger" })
+        </div>*@
+                <div class="col-sm-12 ">
+                    <a href="/Sow/Index" class="btn btn-link"><i class="ti-angle-left"></i> Wróć</a>
+                    <button type="submit" class="btn btn-primary">Zapisz</button>
+                </div>
+                <div class="form-group col-sm-5">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/edit-sow.js"></script>
+}
+
+
