@@ -51,6 +51,8 @@ namespace Alocha.WebUi.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var model = await _sowService.GetSowForEditAsync(id);
+            if (model == null)
+                return RedirectToAction("Index");
             return View(model);
         }
 

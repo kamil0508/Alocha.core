@@ -2,6 +2,7 @@
 using Alocha.WebUi.Models.AccountVM;
 using Alocha.WebUi.Models.SowVM;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Alocha.WebUi.Helpers
             CreateMap<Sow, SowVM>();
             CreateMap<SowIndexVM, Sow>();
             CreateMap<Sow, SowEditVM>().ReverseMap();
+            CreateMap<SowEditVM, SmallPig>();
         }
     }
 }

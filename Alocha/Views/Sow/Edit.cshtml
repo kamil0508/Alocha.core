@@ -45,9 +45,17 @@
                 <div class="form-row">
                     <div class="form-group col-sm-3">
                         @Html.LabelFor(m => m.VaccineDays)
-                        @Html.EditorFor(m => m.VaccineDays, new { htmlAttributes = new { @class = "form-control", id = "vaccineDay", min = "0", onchange = "calculateVacineDate()" } })
+                        @Html.EditorFor(m => m.VaccineDays, new { htmlAttributes = new { @class = "form-control", id = "vaccineDay", min = "0", @readonly = true } })
                         @Html.ValidationMessageFor(m => m.VaccineDays, "", new { @class = "field-validation text-danger" })
                     </div>
+                    @if (Model.Status == "Prośna")
+                    {
+                        <div class="form-group col-sm-3">
+                            @Html.LabelFor(m => m.PigsQuantity)
+                            @Html.EditorFor(m => m.PigsQuantity, new { htmlAttributes = new { @class = "form-control", id = "pigQuantity", min = "0", @readonly = true } })
+                            @Html.ValidationMessageFor(m => m.PigsQuantity, "", new { @class = "field-validation text-danger" })
+                        </div>
+                    }
                 </div>
                 <hr />
                 <h5 style="margin-top:10px;color:#ff6347">Infromacje:</h5>

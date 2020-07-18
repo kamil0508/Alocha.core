@@ -41,5 +41,10 @@ namespace Alocha.WebUi.Models.SowVM
         public int VaccineDays { get; set; }
 
         public bool IsVaccinated { get; set; }
+
+        public DateTime BornDate { get; set; }
+
+        [Display(Name = "Ilość prosiąt")]
+        public int? PigsQuantity { get; set; }
     }
 }

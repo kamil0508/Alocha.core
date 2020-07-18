@@ -69,9 +69,18 @@ namespace Alocha.WebUi.Services
             }
             if (model.Status == "Luźna")
                 model.DateInsimination = model.DateHappening.AddDays(8);
-            if (model.Status == "Laktacja")       
+            if (model.Status == "Laktacja")
+            {
                 model.DateDetachment = model.DateHappening.AddDays(28);
-          
+                //add smallpig
+                if(model.PigsQuantity != null)
+                {
+                    model.BornDate = model.DateHappening;
+                    var smallpig = _mapper.Map<SowEditVM, SmallPig>(model);
+                    _unitOfWork.Smallpig.Add(smallpig);
+                }
+            }
+
             _mapper.Map(model, sow);
             return await _unitOfWork.SaveChangesAsync();
         }
