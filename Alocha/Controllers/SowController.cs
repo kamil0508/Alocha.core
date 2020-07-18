@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Alocha.Domain.Entities;
+using Alocha.WebUi.Helpers;
 using Alocha.WebUi.Models.SowVM;
 using Alocha.WebUi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,9 @@ namespace Alocha.WebUi.Controllers
         public async Task<IActionResult> Create([Bind(include:"Number, Status, IsRemoved")]SowIndexVM model)
         {
             var currentUserId = User.Claims.ElementAt(0).Value;
+            var validationResult = CustomNumberValidator.NumberValidation(model.Number);
+            if (validationResult != null)
+                ModelState.AddModelError("", validationResult);
             if(ModelState.IsValid)
             {
                 var result = await _sowService.CreateSowAsync(model, currentUserId);

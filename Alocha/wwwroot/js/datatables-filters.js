@@ -1,35 +1,24 @@
 ﻿$(document).ready(function () {
-    // Setup - add a text input to each footer cell
-    $('#dataTables tfoot th').each(function () {
-        var title = $(this).text();
-        if (title.trim() === 'Opcje')
-            $(this).html('');
-        else
-            $(this).html('<input type="text" style="width: 100%;" class = "form-control" placeholder=' + title + ' />');
-    });
+    $('#dataTables').DataTable({
+        initComplete: function () {
+            this.api().columns('.select-filter').every(function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo($(column.header()).empty())
+                    .on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
 
-    // DataTable
-    var table = $('#dataTables').DataTable();
+                        column
+                            .search(val ? '^' + val + '$' : '', true, false)
+                            .draw();
+                    });
 
-    // Restore state
-    var state = table.state.loaded();
-    if (state) {
-        table.columns().eq(0).each(function (colIdx) {
-            var colSearch = state.columns[colIdx].search;
-
-            if (colSearch.search) {
-                $('input', table.column(colIdx).footer()).val(colSearch.search);
-            }
-        });
-    }
-
-    // Apply the search
-    table.columns().eq(0).each(function (colIdx) {
-        $('input', table.column(colIdx).footer()).on('keyup change', function () {
-            table
-                .column(colIdx)
-                .search(this.value)
-                .draw();
-        });
+                column.data().unique().sort().each(function (d, j) {
+                    select.append('<option value="' + d + '">' + d + '</option>')
+                });
+            });
+        }
     });
 });

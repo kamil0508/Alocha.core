@@ -11,7 +11,7 @@ namespace Alocha.WebUi.Models.SowVM
 
         [Required(ErrorMessage = "Pole Numer jest wymagane.")]
         [Display(Name = "Numer")]
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         [Required(ErrorMessage = "Pole Stan lochy jet wymagane.")]
         [Display(Name = "Stan lochy")]

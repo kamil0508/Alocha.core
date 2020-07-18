@@ -8,7 +8,7 @@ namespace Alocha.Domain.Entities
     {
         public int SowId { get; set; }
 
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         public string Status { get; set; }
 
