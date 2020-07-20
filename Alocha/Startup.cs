@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Alocha.Domain;
 using Alocha.WebUi.Extensions;
 using AutoMapper;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace Alocha
 {
@@ -81,6 +83,34 @@ namespace Alocha
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            CultureInfo newCulture = new CultureInfo("pl-PL");
+            newCulture.NumberFormat.NumberDecimalSeparator = ".";
+            newCulture.NumberFormat.NumberGroupSeparator = " ";
+            newCulture.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+            newCulture.DateTimeFormat.ShortTimePattern = "HH:mm:ss";
+            newCulture.DateTimeFormat.FullDateTimePattern = "dd-MM-yyyy HH:mm:ss";
+            newCulture.DateTimeFormat.DateSeparator = "-";
+            newCulture.DateTimeFormat.TimeSeparator = ":";
+
+            CultureInfo.DefaultThreadCurrentCulture = newCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = newCulture;
+            CultureInfo.CurrentCulture = newCulture;
+            CultureInfo.CurrentUICulture = newCulture;
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(newCulture),
+                SupportedCultures = new List<CultureInfo>
+                {
+                    newCulture,
+                },
+                SupportedUICultures = new List<CultureInfo>
+                {
+                    newCulture,
+                }
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
