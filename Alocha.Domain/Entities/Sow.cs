@@ -31,5 +31,7 @@ namespace Alocha.Domain.Entities
         public virtual ICollection<SmallPig> SmallPigs { get; set; }
 
         public bool IsRemoved { get; set; }
+
+        public bool IsEdit { get; set; }
     }
 }

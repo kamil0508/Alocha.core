@@ -37,5 +37,7 @@ namespace Alocha.WebUi.Models.SowVM
         public DateTime VaccineDate { get; set; }
 
         public bool IsVaccinated { get; set; }
+
+        public bool IsEdit { get; set; }
     }
 }

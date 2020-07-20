@@ -8,6 +8,11 @@ namespace Alocha.WebUi.Models.SowVM
 {
     public class SowEditVM
     {
+        public SowEditVM()
+        {
+            IsEdit = true;
+        }
+
         public int SowId { get; set; }
 
         [Display(Name = "Numer")]
@@ -41,6 +46,8 @@ namespace Alocha.WebUi.Models.SowVM
         public int VaccineDays { get; set; }
 
         public bool IsVaccinated { get; set; }
+
+        public bool IsEdit { get; set; }
 
         public DateTime BornDate { get; set; }
 
