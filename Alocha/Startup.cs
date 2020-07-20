@@ -16,6 +16,7 @@ using Alocha.WebUi.Extensions;
 using AutoMapper;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Alocha.WebUi.Helpers;
 
 namespace Alocha
 {
@@ -45,6 +46,7 @@ namespace Alocha
 
             // Add IdentityUser and IdentityRole
             services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddErrorDescriber<OverrideIdentityResultErrors>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
                 
