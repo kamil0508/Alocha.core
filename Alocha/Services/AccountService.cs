@@ -29,7 +29,7 @@ namespace Alocha.WebUi.Services
 
         public async Task<SignInResult> LogInAsync(LogInVM model)
         {
-            return await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);        
+            return await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);        
         }
 
         public async Task<bool> LogOutAsync()

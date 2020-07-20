@@ -6,7 +6,7 @@
 <div class="col-md-12 col-lg-12">
     <div class="panel">
         <div class="panel-heading">
-            <h3><span class="lstick"></span>Zarządzanie lochą</h3>
+            <h3><span class="lstick"></span>Locha numer: &nbsp <strong class="text-info">@Model.Number</strong>  </h3>
         </div><!-- /.panel-heading -->
         <div class="panel-body">
             <form id="create" method="post">
@@ -38,7 +38,7 @@
                                 Value = "Laktacja"
                             });
                         }
-                        @Html.DropDownListFor(m => m.Status, listItems, "Wydarzenie:*", new { @class = "form-control", id = "status", onchange = "calculateDate()" })<br />
+                        @Html.DropDownListFor(m => m.Status, listItems, "Wydarzenie:*", new { @class = "form-control", id = "status", onChange = "calculateDate()" })<br />
                         @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
                     </div>
                 </div>

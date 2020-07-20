@@ -12,6 +12,7 @@
             $("#endDate").val(response);            
             if ($("#status").val() == "Prośna") {
                 document.getElementById("vaccineDay").readOnly = false;
+                document.getElementById("pigQuantity").readOnly = true;
             }
             if ($("#status").val() == "Laktacja") {
                 document.getElementById("vaccineDay").readOnly = true;

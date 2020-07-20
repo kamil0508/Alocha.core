@@ -71,47 +71,94 @@
                 <tbody>
                     @foreach (var item in Model.Sows)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(m => item.Number)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.Status)
-                            </td>
-                            <td>
-                                @if (item.DateHappening != DateTime.MinValue)
-                                    @Html.DisplayFor(m => item.DateHappening)
-                            </td>
-                            <td>
-                                @if (item.DateInsimination != DateTime.MinValue)
-                                    @Html.DisplayFor(m => item.DateInsimination)
-                            </td>
-                            <td>
-                                @if (item.DateDetachment != DateTime.MinValue)
-                                    @Html.DisplayFor(m => item.DateDetachment)
-                            </td>
-                            <td>
-                                @if (item.DateBorn != DateTime.MinValue)
-                                    @Html.DisplayFor(m => item.DateBorn)
-                            </td>
-                            <td>
-                                @if (item.VaccineDate != DateTime.MinValue)
-                                    @Html.DisplayFor(m => item.VaccineDate)
-                            </td>
-                            <td>
-                                <div class="dropdown btn-block pull-right">
-                                    <button class="btn btn-xs btn-primary btn-block dropdown-toggle" data-toggle="dropdown">
-                                        Opcje
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>@Html.ActionLink("Szczegóły", "Details", new { id = item.SowId })</li>
-                                        <li>@Html.ActionLink("Edytuj", "Edit", new { id = item.SowId })</li>
-                                        <li>@Html.ActionLink("Usuń", "Remove", new { id = item.SowId }, new { onclick = "return confirm('Czy napewno chcesz usunąc tą loche?');" })</li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
+                        if (!item.IsEdit)
+                        {
+                            <tr>                                
+                                <td class="sow-is-not-edit">
+                                    @Html.DisplayFor(m => item.Number)
+                                </td>
+                                <td class="sow-is-not-edit">
+                                    @Html.DisplayFor(m => item.Status)
+                                </td>
+                                <td class="sow-is-not-edit">
+                                    @if (item.DateHappening != DateTime.MinValue)
+                                        @Html.DisplayFor(m => item.DateHappening)
+                                </td>
+                                <td class="sow-is-not-edit">
+                                    @if (item.DateInsimination != DateTime.MinValue)
+                                        @Html.DisplayFor(m => item.DateInsimination)
+                                </td>
+                                
+                                <td class="sow-is-not-edit">
+                                    <h4 style="color:#ff6347">LOCHA DO EDYCJI</h4>
+                                </td>
+                                <td class="sow-is-not-edit">
+                                    @if (item.DateBorn != DateTime.MinValue)
+                                        @Html.DisplayFor(m => item.DateBorn)
+                                </td>
+                                <td class="sow-is-not-edit">
+                                    @if (item.VaccineDate != DateTime.MinValue)
+                                        @Html.DisplayFor(m => item.VaccineDate)
+                                </td>
+                                <td class="sow-is-not-edit">
+                                    <div class="dropdown btn-block pull-right">
+                                        <button class="btn btn-xs btn-primary btn-block dropdown-toggle" data-toggle="dropdown">
+                                            Opcje
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>@Html.ActionLink("Szczegóły", "Details", new { id = item.SowId })</li>
+                                            <li>@Html.ActionLink("Edytuj", "Edit", new { id = item.SowId })</li>
+                                            <li>@Html.ActionLink("Usuń", "Remove", new { id = item.SowId }, new { onclick = "return confirm('Czy napewno chcesz usunąc tą loche?');" })</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item.Number)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Status)
+                                </td>
+                                <td>
+                                    @if (item.DateHappening != DateTime.MinValue)
+                                        @Html.DisplayFor(m => item.DateHappening)
+                                </td>
+                                <td>
+                                    @if (item.DateInsimination != DateTime.MinValue)
+                                        @Html.DisplayFor(m => item.DateInsimination)
+                                </td>
+                                <td>
+                                    @if (item.DateDetachment != DateTime.MinValue)
+                                        @Html.DisplayFor(m => item.DateDetachment)
+                                </td>
+                                <td>
+                                    @if (item.DateBorn != DateTime.MinValue)
+                                        @Html.DisplayFor(m => item.DateBorn)
+                                </td>
+                                <td>
+                                    @if (item.VaccineDate != DateTime.MinValue)
+                                        @Html.DisplayFor(m => item.VaccineDate)
+                                </td>
+                                <td>
+                                    <div class="dropdown btn-block pull-right">
+                                        <button class="btn btn-xs btn-primary btn-block dropdown-toggle" data-toggle="dropdown">
+                                            Opcje
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>@Html.ActionLink("Szczegóły", "Details", new { id = item.SowId })</li>
+                                            <li>@Html.ActionLink("Edytuj", "Edit", new { id = item.SowId })</li>
+                                            <li>@Html.ActionLink("Usuń", "Remove", new { id = item.SowId }, new { onclick = "return confirm('Czy napewno chcesz usunąc tą loche?');" })</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
