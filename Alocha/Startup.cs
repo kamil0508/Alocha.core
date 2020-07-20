@@ -17,6 +17,7 @@ using AutoMapper;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Alocha.WebUi.Helpers;
+using Alocha.Domain.DbInitializer;
 
 namespace Alocha
 {
@@ -69,10 +70,13 @@ namespace Alocha
                 options.Cookie.IsEssential = true;
             });
 
+            //Add DBInitializer
+            services.AddScoped<IDBInitializer, DbInitializer>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDBInitializer dbInitialize)
         {
             if (env.IsDevelopment())
             {
@@ -128,6 +132,8 @@ namespace Alocha
                     pattern: "{controller=Account}/{action=LogIn}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            dbInitialize.Initializer();
         }
     }
 }
