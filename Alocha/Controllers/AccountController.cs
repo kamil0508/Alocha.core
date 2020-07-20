@@ -39,6 +39,9 @@ namespace Alocha.WebUi.Controllers
                 }
                 if (result.IsLockedOut)
                     return RedirectToAction("Index", "Message", new { Message = IdMessage.AccountLock });
+                if(result.IsNotAllowed)
+                    ModelState.AddModelError("", "Adres Email nie został potwierdzony.");
+                else
                 ModelState.AddModelError("", "Niepoprawny login lub hasło");
             }
             return View(model);
