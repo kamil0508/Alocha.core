@@ -31,7 +31,9 @@ namespace Alocha
         {
             // Add controllers and views handler
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddRazorPages()
+                .AddRazorRuntimeCompilation();
+
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
