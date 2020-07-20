@@ -214,4 +214,7 @@ table {
     background: rgba(170, 241, 255, 0.3);
 }
 
-
+/*DETAILS SOW***************/
+.details-sow {
+    border: 3px solid #80ffd2;
+}

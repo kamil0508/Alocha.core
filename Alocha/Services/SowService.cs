@@ -103,5 +103,12 @@ namespace Alocha.WebUi.Services
             sow.IsRemoved = true;
             return await _unitOfWork.SaveChangesAsync();
         }
+
+        public async Task<SowDetailVM> DetailsSowAsync(int sowId)
+        {
+            var sow = await _unitOfWork.Sow.GetByIdAsync(sowId);
+            var model = _mapper.Map<Sow, SowDetailVM>(sow);
+            return model;
+        }
     }
 }

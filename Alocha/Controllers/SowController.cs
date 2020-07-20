@@ -80,5 +80,13 @@ namespace Alocha.WebUi.Controllers
             var result = await _sowService.RemoveSowAsync(id);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var model = await _sowService.DetailsSowAsync(id);
+            return View(model);
+        }
+
     }
 }
