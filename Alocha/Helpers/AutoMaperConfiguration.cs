@@ -20,7 +20,8 @@ namespace Alocha.WebUi.Helpers
             CreateMap<Sow, SowEditVM>().ReverseMap();
             CreateMap<SowEditVM, SmallPig>();
             CreateMap<SmallPig, SmallPigVM>();
-            CreateMap<Sow, SowDetailVM>();
+            CreateMap<Sow, SowDetailVM>()
+                .ForMember(dest => dest.SmallPigs, opt => opt.MapFrom(src => src.SmallPigs.Where(s => !s.IsRemoved)));
 
         }
     }

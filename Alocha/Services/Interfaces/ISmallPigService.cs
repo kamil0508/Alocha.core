@@ -7,5 +7,6 @@ namespace Alocha.WebUi.Services.Interfaces
 {
     public interface ISmallPigService
     {
+        Task<bool> RemoveSmallPigAsync(int smallPigId);
     }
 }

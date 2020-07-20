@@ -10,10 +10,10 @@ namespace Alocha.WebUi.Services.Interfaces
     {
         Task<IEnumerable<SowVM>> GetAllSowsAsync(string userId);
         Task<bool> CreateSowAsync(SowIndexVM model, string userId);
-        Task<SowEditVM> GetSowForEditAsync(int sowId);
+        Task<SowEditVM> GetSowForEditAsync(int sowId, string userId);
         Task<bool> EditSowAsync(SowEditVM model);
         string CalculateDate(DateTime date, string status);
-        Task<SowDetailVM> DetailsSowAsync(int sowId);
+        Task<SowDetailVM> DetailsSowAsync(int sowId, string userId);
         Task<bool> RemoveSowAsync(int sowId);
     }
 }

@@ -16,9 +16,12 @@ namespace Alocha.WebUi.Controllers
             _smallPigService = smallPigService;
         }
 
-        public IActionResult Index()
+        public async Task<string> Remove(int id)
         {
-            return View();
+            var result = await _smallPigService.RemoveSmallPigAsync(id);
+            if (result)
+                return null;
+            return "Nie udało się usunąć wpisu.";
         }
     }
 }

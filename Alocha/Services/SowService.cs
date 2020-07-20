@@ -52,9 +52,10 @@ namespace Alocha.WebUi.Services
             return false;
         }
 
-        public async Task<SowEditVM> GetSowForEditAsync(int sowId)
+        public async Task<SowEditVM> GetSowForEditAsync(int sowId, string userId)
         {
-            var sow = await _unitOfWork.Sow.GetByIdAsync(sowId);
+            var user = await _unitOfWork.User.FindOneAsync(u => u.Id == userId);
+            var sow = user.Sows.Where(s => s.SowId == sowId && !s.IsRemoved).FirstOrDefault();
             var model = _mapper.Map<Sow, SowEditVM>(sow);
             return model;
         }
@@ -104,9 +105,10 @@ namespace Alocha.WebUi.Services
             return await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<SowDetailVM> DetailsSowAsync(int sowId)
+        public async Task<SowDetailVM> DetailsSowAsync(int sowId, string userId)
         {
-            var sow = await _unitOfWork.Sow.GetByIdAsync(sowId);
+            var user = await _unitOfWork.User.FindOneAsync(u => u.Id == userId);
+            var sow = user.Sows.Where(s => s.SowId == sowId && !s.IsRemoved).FirstOrDefault();
             var model = _mapper.Map<Sow, SowDetailVM>(sow);
             return model;
         }

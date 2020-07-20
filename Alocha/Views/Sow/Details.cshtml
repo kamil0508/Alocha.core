@@ -7,6 +7,9 @@
     <div class="panel">
         <div class="panel-heading">
             <h3><span class="lstick"></span>Szczegóły lochy o numerze: &nbsp <strong class="text-info">@Model.Number</strong>  </h3>
+            <div class="pull-right">
+                <a href="/Sow/Index" class="btn btn-primary">Wróć</a>
+            </div>
         </div><!-- /.panel-heading -->
         <div class="panel-body">
             <div class="form-row">
@@ -50,9 +53,6 @@
                     </div>
 
                 }
-            </div>
-            <div class="col-sm-12 ">
-                <a href="/Sow/Index" class="btn btn-link"><i class="ti-angle-left"></i> Wróć</a>
             </div>
 
             <hr />
@@ -101,7 +101,7 @@
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li>@Html.ActionLink("Usuń", "Remove", new { id = item.SmalPigsId }, new { onclick = "return confirm('Czy napewno chcesz usunąć ten wpis?');" })</li>
+                                                    <li><a href="#" id="@item.SmalPigsId" onclick="RemoveFromTable(this.id)" class="btn btn-block btn-danger">Usuń</a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -118,4 +118,5 @@
 </div>
 @section Scripts {
     <script src="~/js/datatables-filters-sow-details.js"></script>
+    <script src="~/js/details-sow.js"></script>
 }

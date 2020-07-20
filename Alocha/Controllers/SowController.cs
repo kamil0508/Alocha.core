@@ -50,7 +50,8 @@ namespace Alocha.WebUi.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await _sowService.GetSowForEditAsync(id);
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var model = await _sowService.GetSowForEditAsync(id, currentUserId);
             if (model == null)
                 return RedirectToAction("Index");
             return View(model);
@@ -84,9 +85,11 @@ namespace Alocha.WebUi.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var model = await _sowService.DetailsSowAsync(id);
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var model = await _sowService.DetailsSowAsync(id, currentUserId);
             return View(model);
         }
+
 
     }
 }

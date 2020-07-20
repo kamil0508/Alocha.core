@@ -18,5 +18,12 @@ namespace Alocha.WebUi.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
+        public async Task<bool> RemoveSmallPigAsync(int smallPigId)
+        {
+            var smallPig = await _unitOfWork.Smallpig.GetByIdAsync(smallPigId);
+            smallPig.IsRemoved = true;
+            return await _unitOfWork.SaveChangesAsync();
+        }
     }
 }
