@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Alocha.Models;
+using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account.Manage;
+using Alocha.WebUi.Services.Interfaces;
 
 namespace Alocha.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IHomeService _homeService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IHomeService homeService)
         {
-            _logger = logger;
+            _homeService = homeService;
         }
 
         public IActionResult Index()
@@ -23,15 +25,12 @@ namespace Alocha.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> UpcomingTask()
         {
-            return View();
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var model = await _homeService.GetUpcomingTaskAsync(currentUserId);
+            return View(model);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

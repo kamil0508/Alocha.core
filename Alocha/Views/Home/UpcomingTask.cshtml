@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Alocha.WebUi.Models.HomeVM.UpcomingTaskVM>
+@{
+    ViewData["Title"] = "UpcomingTask";
+}
+
+    <div class="col-md-12 col-lg-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3><span class="lstick"></span><strong class="text-info">Najbliższe zadania</strong>  </h3>
+            </div><!-- /.panel-heading -->
+            <div class="panel-body">
+                @if (Model.Count() == 0)
+                {
+                    <div class="text-center"><h3>Brak Zadań w najbliższym czasie</h3></div>
+                }
+            <div class="form-row">
+                @foreach (var task in Model)
+                {
+                    @if (task.DateBorn == DateTime.Today || task.DateDetachment == DateTime.Today || task.DateInsimination == DateTime.Today || task.VaccineDate == DateTime.Today)
+                    {
+                        <a href="/Sow/Details/@task.SowId" class="col-sm-3 date-today text-center mx-5 my-1 style-link link-hover ">
+                            <div>
+                                <h3 class="text-warning">@Html.LabelFor(m => task.Number) @Html.DisplayFor(m => task.Number)</h3>
+                                @if (task.DateBorn != DateTime.MinValue)
+                                {
+                                    <h4>@Html.LabelFor(m => task.DateBorn)</h4>
+                                    <h5>@Html.DisplayFor(m => task.DateBorn)</h5>
+                                }
+                                @if (task.DateDetachment != DateTime.MinValue)
+                                {
+                                    <h4>@Html.LabelFor(m => task.DateDetachment)</h4>
+                                    <h5>@Html.DisplayFor(m => task.DateDetachment)</h5>
+                                }
+
+                                @if (task.DateInsimination != DateTime.MinValue)
+                                {
+                                    <h4>@Html.LabelFor(m => task.DateInsimination)</h4>
+                                    <h5>@Html.DisplayFor(m => task.DateInsimination)</h5>
+                                }
+                                @if (task.VaccineDate != DateTime.MinValue )
+                                {
+                                    <h4>@Html.LabelFor(m => task.VaccineDate)</h4>
+                                    <h5>@Html.DisplayFor(m => task.VaccineDate)</h5>
+                                }
+                                <p class="text-warning">DZIŚ</p>
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Sow/Details/@task.SowId" class="col-sm-3 upcoming-task text-center mx-5 my-1 style-link link-hover ">
+                            <div>
+                                <h3 class="text-warning">@Html.LabelFor(m => task.Number) @Html.DisplayFor(m => task.Number)</h3>
+                                @if (task.DateBorn != DateTime.MinValue)
+                                {
+                                    <h4>@Html.LabelFor(m => task.DateBorn)</h4>
+                                    <h5>@Html.DisplayFor(m => task.DateBorn)</h5>
+                                }
+                                @if (task.DateDetachment != DateTime.MinValue)
+                                {
+                                    <h4>@Html.LabelFor(m => task.DateDetachment)</h4>
+                                    <h5>@Html.DisplayFor(m => task.DateDetachment)</h5>
+                                }
+
+                                @if (task.DateInsimination != DateTime.MinValue)
+                                {
+                                    <h4>@Html.LabelFor(m => task.DateInsimination)</h4>
+                                    <h5>@Html.DisplayFor(m => task.DateInsimination)</h5>
+                                }
+                                @if (task.VaccineDate != DateTime.MinValue)
+                                {
+                                    <h4>@Html.LabelFor(m => task.VaccineDate)</h4>
+                                    <h5>@Html.DisplayFor(m => task.VaccineDate)</h5>
+                                }
+                            </div>
+                        </a>
+                    }
+                 }
+            </div>
+            </div>
+        </div>    
+    </div>

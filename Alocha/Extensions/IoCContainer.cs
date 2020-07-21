@@ -27,6 +27,7 @@ namespace Alocha.WebUi.Extensions
             services.AddScoped<ISowService, SowService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IHomeService, HomeService>();
 
             return services;
         }

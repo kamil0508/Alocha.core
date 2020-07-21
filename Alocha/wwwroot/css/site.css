@@ -218,3 +218,38 @@ table {
 .details-sow {
     border: 3px solid #80ffd2;
 }
+
+/*DETAILS SOW***************/
+.upcoming-task {
+    color: white;
+    border: 5px solid #637283;
+    border-radius: 20px;
+    background: radial-gradient(circle, rgba(0,0,57,1) 0%, rgba(0,111,96,1) 100%);
+    padding: 10px;
+}
+
+    .upcoming-task:hover {
+        border: 5px solid rgba(255, 98, 53, 0.94);      
+    }
+
+.date-today {
+    color: white;
+    border: 5px solid #ff3131;
+    border-radius: 20px;
+    background: radial-gradient(circle, rgba(0,0,57,1) 0%, rgba(0,111,96,1) 100%);
+    padding: 10px;
+}
+
+    .date-today:hover {
+        border: 5px solid rgba(255, 98, 53, 0.94);
+        
+    }
+
+a.style-link{
+    text-decoration: none;
+}
+
+a:hover.link-hover {
+    text-decoration: none;
+    color:white;
+}

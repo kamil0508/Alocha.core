@@ -1,5 +1,6 @@
 ﻿using Alocha.Domain.Entities;
 using Alocha.WebUi.Models.AccountVM;
+using Alocha.WebUi.Models.HomeVM;
 using Alocha.WebUi.Models.SmallPigsVM;
 using Alocha.WebUi.Models.SowVM;
 using AutoMapper;
@@ -22,6 +23,7 @@ namespace Alocha.WebUi.Helpers
             CreateMap<SmallPig, SmallPigVM>();
             CreateMap<Sow, SowDetailVM>()
                 .ForMember(dest => dest.SmallPigs, opt => opt.MapFrom(src => src.SmallPigs.Where(s => !s.IsRemoved)));
+            CreateMap<Sow, UpcomingTaskVM>();
 
         }
     }
