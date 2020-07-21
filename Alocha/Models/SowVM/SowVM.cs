@@ -36,6 +36,7 @@ namespace Alocha.WebUi.Models.SowVM
         [DataType(DataType.Date)]
         public DateTime VaccineDate { get; set; }
 
+        [Display(Name = "Szczepienie")]
         public bool IsVaccinated { get; set; }
 
         public bool IsEdit { get; set; }

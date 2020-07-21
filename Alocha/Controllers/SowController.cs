@@ -90,6 +90,20 @@ namespace Alocha.WebUi.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Vaccinate()
+        {
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var model = await _sowService.GetPregnancySows(currentUserId);
+            return View(model);
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> WasVaccinated(int id)
+        {
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var result = await _sowService.SowWasVacinated(id, currentUserId);
+            return RedirectToAction("Vaccinate");
+        }
     }
 }

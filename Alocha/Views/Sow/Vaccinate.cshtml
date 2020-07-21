@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Alocha.WebUi.Models.SowVM.SowVM>
+@{
+    ViewData["Title"] = "Vaccinate";
+}
+
+<div class="col-md-12 col-lg-12">
+    <div class="panel">
+        <div class="panel-heading">
+            <h3><span class="lstick"></span>Szczepienia (lochy prośne)</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover" cellspacing="0" style="width:100%" id="dataTables">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().Number)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().Status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().DateHappening)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().DateBorn)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().VaccineDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().IsVaccinated)
+                        </th>
+                        <th>Opcje</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().Number)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().Status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().DateHappening)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().DateBorn)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().VaccineDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.FirstOrDefault().IsVaccinated)
+                        </th>
+                        <th>Opcje</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.Number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Status)
+                            </td>
+                            <td>
+                                @if (item.DateHappening != DateTime.MinValue)
+                                    @Html.DisplayFor(m => item.DateHappening)
+                            </td>
+                            <td>
+                                @if (item.DateBorn != DateTime.MinValue)
+                                    @Html.DisplayFor(m => item.DateBorn)
+                            </td>
+                            <td>
+                                @if (item.VaccineDate != DateTime.MinValue)
+                                    @Html.DisplayFor(m => item.VaccineDate)
+                            </td>
+                            @if (item.IsVaccinated == true)
+                            {
+                                <td class="bg-success">
+                                    <h5>Zaszczepiona</h5>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="bg-danger">
+                                    <h5>Nie zaszczepiona</h5>
+                                </td>
+                            }
+                            <td>
+                                <div class="dropdown btn-block pull-right">
+                                    <button class="btn btn-xs btn-primary btn-block dropdown-toggle" data-toggle="dropdown">
+                                        Opcje
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Szczegóły", "Details", new { id = item.SowId })</li>
+                                        <li>@Html.ActionLink("Edytuj", "Edit", new { id = item.SowId })</li>
+                                        <li><a href="/Sow/WasVaccinated/@item.SowId" id="@item.SowId" onclick="return confirm('Czy napewno zmienić status lochy na zaszczepiona?');" class="btn btn-block btn-danger">Zaszczepiona</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/datatables-filters-classic.js"></script>>
+}

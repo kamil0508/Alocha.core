@@ -15,5 +15,7 @@ namespace Alocha.WebUi.Services.Interfaces
         string CalculateDate(DateTime date, string status);
         Task<SowDetailVM> DetailsSowAsync(int sowId, string userId);
         Task<bool> RemoveSowAsync(int sowId);
+        Task<IEnumerable<SowVM>> GetPregnancySows(string userId);
+        Task<bool> SowWasVacinated(int sowId, string userId);
     }
 }

@@ -112,5 +112,20 @@ namespace Alocha.WebUi.Services
             var model = _mapper.Map<Sow, SowDetailVM>(sow);
             return model;
         }
+
+        public async Task<IEnumerable<SowVM>> GetPregnancySows(string userId)
+        {
+            var user = await _unitOfWork.User.FindOneAsync(u => u.Id == userId);
+            var sows = user.Sows.Where(s => s.Status == "Prośna" && !s.IsRemoved);
+            var model = _mapper.Map<IEnumerable<Sow>, IEnumerable<SowVM>>(sows);
+            return model;
+        }
+
+        public async Task<bool> SowWasVacinated(int sowId, string userId)
+        {
+            var sow = await _unitOfWork.Sow.FindOneAsync(s => s.SowId == sowId && !s.IsRemoved && s.UserId == userId);
+            sow.IsVaccinated = true;
+            return await _unitOfWork.SaveChangesAsync();
+        }
     }
 }
