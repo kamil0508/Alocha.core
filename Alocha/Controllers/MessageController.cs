@@ -77,6 +77,14 @@ namespace Alocha.WebUi.Controllers
                 model.LinkName = "Wróć";
             }
             else
+            if (message == IdMessage.ChangePasswordSucces)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Hasło zostało pomyślnie zmienione.";
+                model.LinkUrl = "/User/Index";
+                model.LinkName = "Wróć";
+            }
+            else
                 return RedirectToAction("Index", "Home");
 
             return View(model);

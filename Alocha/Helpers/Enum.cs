@@ -9,6 +9,7 @@
         EmailConfirmedError,
         ResetPasswordTokenSendSucces,
         ResetPasswordTokenSendError,
-        ResetPasswordSucces
+        ResetPasswordSucces,
+        ChangePasswordSucces
     }
 }

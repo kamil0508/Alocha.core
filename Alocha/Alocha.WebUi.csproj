@@ -29,10 +29,4 @@
     <ProjectReference Include="..\Alocha.Domain\Alocha.Domain.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Models\UserVM\" />
-    <Folder Include="Views\User\" />
-  </ItemGroup>
-
 </Project>

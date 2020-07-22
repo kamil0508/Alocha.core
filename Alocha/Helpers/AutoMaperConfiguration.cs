@@ -3,7 +3,9 @@ using Alocha.WebUi.Models.AccountVM;
 using Alocha.WebUi.Models.HomeVM;
 using Alocha.WebUi.Models.SmallPigsVM;
 using Alocha.WebUi.Models.SowVM;
+using Alocha.WebUi.Models.UserVM;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,8 @@ namespace Alocha.WebUi.Helpers
             CreateMap<Sow, SowDetailVM>()
                 .ForMember(dest => dest.SmallPigs, opt => opt.MapFrom(src => src.SmallPigs.Where(s => !s.IsRemoved)));
             CreateMap<Sow, UpcomingTaskVM>();
+
+            CreateMap<IdentityUser, UserManageVM>();
 
         }
     }
