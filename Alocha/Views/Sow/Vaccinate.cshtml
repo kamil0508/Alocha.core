@@ -98,7 +98,6 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>@Html.ActionLink("Szczegóły", "Details", new { id = item.SowId })</li>
-                                        <li>@Html.ActionLink("Edytuj", "Edit", new { id = item.SowId })</li>
                                         <li><a href="/Sow/WasVaccinated/@item.SowId" id="@item.SowId" onclick="return confirm('Czy napewno zmienić status lochy na zaszczepiona?');" class="btn btn-block btn-danger">Zaszczepiona</a></li>
                                     </ul>
                                 </div>

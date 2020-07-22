@@ -123,7 +123,8 @@ namespace Alocha.WebUi.Services
 
         public async Task<bool> SowWasVacinated(int sowId, string userId)
         {
-            var sow = await _unitOfWork.Sow.FindOneAsync(s => s.SowId == sowId && !s.IsRemoved && s.UserId == userId);
+            var user = await _unitOfWork.User.FindOneAsync(u => u.Id == userId);
+            var sow = user.Sows.Where(s => s.SowId == sowId && !s.IsRemoved).FirstOrDefault();
             sow.IsVaccinated = true;
             return await _unitOfWork.SaveChangesAsync();
         }

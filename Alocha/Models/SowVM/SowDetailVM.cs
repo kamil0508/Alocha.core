@@ -9,6 +9,8 @@ namespace Alocha.WebUi.Models.SowVM
 {
     public class SowDetailVM
     {
+        public int SowId { get; set; }
+
         [Display(Name = "Numer")]
         public string Number { get; set; }
 
