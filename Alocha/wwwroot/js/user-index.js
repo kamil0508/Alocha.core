@@ -1,4 +1,6 @@
 ﻿function OpenModalWithValidation() {
-    if ($("#sumaryValidation").html().length != 40)
-        $("#openModal").click();
+    if ($("#sumaryValidationChangePassword").html().length != 40)
+        $("#openModalChangePassword").click();
+    if ($("#sumaryValidationAddPhoneNumber").html().length != 40)
+        $("#openModalAddPhone").click();
 }

@@ -10,7 +10,9 @@ namespace Alocha.WebUi.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UserManageVM> GetUserPhoneNumberById(string userId);
+        Task<UserManageVM> GetUserPhoneNumberEmailByIdAsync(string userId);
         Task<IdentityResult> ChangePasswordAsync(UserManageVM model, string userId);
+        Task<IdentityResult> AddPhoneNumberAsync(UserManageVM model, string userId);
+        Task<IdentityResult> RemovePhoneNumberAsync(UserManageVM model, string userId);
     }
 }

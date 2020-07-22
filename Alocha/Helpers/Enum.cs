@@ -10,6 +10,8 @@
         ResetPasswordTokenSendSucces,
         ResetPasswordTokenSendError,
         ResetPasswordSucces,
-        ChangePasswordSucces
+        ChangePasswordSucces,
+        AddPhoneNumberSucces,
+        RemovePhoneNumberSucces
     }
 }

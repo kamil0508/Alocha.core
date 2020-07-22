@@ -21,7 +21,7 @@ namespace Alocha.WebUi.Controllers
         public async Task<IActionResult> Index()
         {
             var currentUserId = User.Claims.ElementAt(0).Value;
-            var model = await _userService.GetUserPhoneNumberById(currentUserId);
+            var model = await _userService.GetUserPhoneNumberEmailByIdAsync(currentUserId);
             return View(model);
         }
 
@@ -36,5 +36,25 @@ namespace Alocha.WebUi.Controllers
             return View("Index",model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddPhoneNumber(UserManageVM model)
+        {
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var result = await _userService.AddPhoneNumberAsync(model,currentUserId);
+            if (result.Succeeded)
+                return RedirectToAction("Index", "Message", new { Message = IdMessage.AddPhoneNumberSucces });
+            result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
+            return View("Index", model);
+        }
+
+        public async Task<IActionResult> RemovePhoneNumber(UserManageVM model)
+        {
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var result = await _userService.RemovePhoneNumberAsync(model, currentUserId);
+            if (result.Succeeded)
+                return RedirectToAction("Index", "Message", new { Message = IdMessage.RemovePhoneNumberSucces });
+            result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
+            return View("Index", model);
+        }
     }
 }

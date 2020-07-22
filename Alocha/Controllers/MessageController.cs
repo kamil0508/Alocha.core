@@ -85,6 +85,22 @@ namespace Alocha.WebUi.Controllers
                 model.LinkName = "Wróć";
             }
             else
+            if (message == IdMessage.AddPhoneNumberSucces)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Numer telefonu został dodany pomyślnie.";
+                model.LinkUrl = "/User/Index";
+                model.LinkName = "Wróć";
+            }
+            else
+            if (message == IdMessage.RemovePhoneNumberSucces)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Numer telefonu został usunięty pomyślnie.";
+                model.LinkUrl = "/User/Index";
+                model.LinkName = "Wróć";
+            }
+            else
                 return RedirectToAction("Index", "Home");
 
             return View(model);

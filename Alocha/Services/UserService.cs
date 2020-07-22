@@ -24,17 +24,29 @@ namespace Alocha.WebUi.Services
             _userManager = userManager;
         }
 
+        public async Task<IdentityResult> AddPhoneNumberAsync(UserManageVM model, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            return await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
+        }
+
         public async Task<IdentityResult> ChangePasswordAsync(UserManageVM model, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             return await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);         
         }
 
-        public async Task<UserManageVM> GetUserPhoneNumberById(string userId)
+        public async Task<UserManageVM> GetUserPhoneNumberEmailByIdAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             var model = _mapper.Map<IdentityUser, UserManageVM>(user); 
             return model;
+        }
+
+        public async Task<IdentityResult> RemovePhoneNumberAsync(UserManageVM model, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            return await _userManager.SetPhoneNumberAsync(user, null);
         }
     }
 }

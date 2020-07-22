@@ -18,7 +18,7 @@
                     </dd>
                     <dt>Hasło:</dt>
                     <dd>
-                       <button type="button" id="openModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Zmień</button>
+                       <button type="button" id=" " class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Zmień</button>
                     </dd>
                     <dt>Numer telefonu:</dt>
                     <dd>
@@ -29,14 +29,15 @@
                         @if (Model.PhoneNumber != null)
                         {
                             <br />
-                            <a asp-controller="User" asp-action="AddPhoneNumber" class="btn-bracketed">Zmień</a>
+                            <a id="openModalAddPhone" href="#" data-toggle="modal" data-target="#exampleModalCenterAddPhone">Zmień</a>
                             <form asp-controller="User" asp-action="RemovePhoneNumber" method="post">
-                                [<button type="submit" class="btn-link">Usuń</button>]
+                                @Html.HiddenFor(m => m.PhoneNumber)
+                                <button type="submit" class="btn-danger" onclick="return confirm('Usuwająć numer telefonu nie będziesz miał możliwości otrzymywania wiadomości z powiadomieniami.');">Usuń</button>
                             </form>
                         }
                         else
                         {
-                            <a asp-controller="User" asp-action="AddPhoneNumber" class="btn-bracketed">Dodaj</a>
+                            <button id="openModalAddPhone" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterAddPhone">Dodaj</button>
                         }
                     </dd>
                 </dl>
@@ -45,7 +46,7 @@
     </div>
 
     <body onload="OpenModalWithValidation()">
-        <!-- Modal -->
+        <!-- Modal Change Password -->
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -65,19 +66,48 @@
                             </div>
                             <div class="form-group col-sm-10">
                                 @Html.LabelFor(m => m.NewPassword)
-                                @Html.EditorFor(m => m.NewPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Nowe hasło", id = "newPassword"} })
+                                @Html.EditorFor(m => m.NewPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Nowe hasło", id = "newPassword" } })
                                 @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "field-validation text-danger" })
                             </div>
                             <div class="form-group col-sm-10">
                                 @Html.LabelFor(m => m.ConfirmNewPassword)
-                                @Html.EditorFor(m => m.ConfirmNewPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Potwierdzenie hasła", id = "confirmPassword"} })
+                                @Html.EditorFor(m => m.ConfirmNewPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Potwierdzenie hasła", id = "confirmPassword" } })
                                 @Html.ValidationMessageFor(m => m.ConfirmNewPassword, "", new { @class = "field-validation text-danger" })
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Zapisz</button>
                             </div>
                             <div class="form-group">
-                                @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "sumaryValidation" })
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "sumaryValidationChangePassword" })
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Add Phone Number-->
+        <div class="modal fade" id="exampleModalCenterAddPhone" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Numer telefonu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @using (Html.BeginForm("AddPhoneNumber", "User", FormMethod.Post))
+                        {
+                            <div class="form-group col-sm-10">
+                                @Html.LabelFor(m => m.PhoneNumber)
+                                @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Numer telefonu", maxlength = "9", id = "phoneNumber" } })
+                                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "field-validation text-danger" })
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Zapisz</button>
+                            </div>
+                            <div class="form-group">
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "sumaryValidationAddPhoneNumber" })
                             </div>
                         }
                     </div>
