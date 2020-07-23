@@ -6,16 +6,19 @@ using Alocha.WebUi.Helpers;
 using Alocha.WebUi.Models.UserVM;
 using Alocha.WebUi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Twilio.TwiML.Voice;
 
 namespace Alocha.WebUi.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly ISmsService _smsService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ISmsService smsService)
         {
             _userService = userService;
+            _smsService = smsService;
         }
 
         public async Task<IActionResult> Index()
@@ -44,7 +47,7 @@ namespace Alocha.WebUi.Controllers
             if (result.Succeeded)
             {
                 var code = await _userService.GenerateConfirmedPhoneNumberCodeAsync(model.PhoneNumber, currentUserId);
-                var smsResult = SmsSender.SendSmsAsync(string.Format("48{0}", model.PhoneNumber), string.Format("Twój kod potwierdzający to:{0}", code));
+                var smsResult = await _smsService.SendConfirmPhoneNumberSmsAsync(model.PhoneNumber, code);
                 return RedirectToAction("Index", "Message", new { Message = IdMessage.AddPhoneNumberSucces });
             }
             result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
