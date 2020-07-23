@@ -105,5 +105,38 @@ namespace Alocha.WebUi.Controllers
             var result = await _sowService.SowWasVacinated(id, currentUserId);
             return RedirectToAction("Vaccinate");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> DownloadAttachment()
+        {
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var model = await _sowService.GetAllSowsAsync(currentUserId);
+            
+            var pdfHelper = new PdfDocument(model);
+            var bytes = pdfHelper.Generate();
+            var fileName = string.Format("SpisLoch_{0}.pdf", DateTime.Today.ToShortDateString());
+            var contentType = default(string);
+            var extension = fileName.Split(".");
+            switch (extension[1])
+            {
+                case "pdf":
+                    contentType = "application/pdf";
+                    break;
+                case "txt":
+                    contentType = "text/plain";
+                    break;
+                case "doc":
+                case "docx":
+                    contentType = "application/vnd.ms-word";
+                    break;
+                case "png":
+                    contentType = "image/png";
+                    break;
+                case "jpeg":
+                    contentType = "image/jpeg";
+                    break;
+            }
+            return File(bytes, contentType, fileName);
+        }
     }
 }
