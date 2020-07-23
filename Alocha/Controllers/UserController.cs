@@ -40,12 +40,33 @@ namespace Alocha.WebUi.Controllers
         public async Task<IActionResult> AddPhoneNumber(UserManageVM model)
         {
             var currentUserId = User.Claims.ElementAt(0).Value;
-            var result = await _userService.AddPhoneNumberAsync(model,currentUserId);
+            var result = await _userService.AddPhoneNumberAsync(model, currentUserId);
             if (result.Succeeded)
+            {
+                var code = await _userService.GenerateConfirmedPhoneNumberCodeAsync(model.PhoneNumber, currentUserId);
+                var smsResult = SmsSender.SendSmsAsync(string.Format("48{0}", model.PhoneNumber), string.Format("Twój kod potwierdzający to:{0}", code));
                 return RedirectToAction("Index", "Message", new { Message = IdMessage.AddPhoneNumberSucces });
+            }
             result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
             return View("Index", model);
         }
+
+        [HttpGet]
+        public IActionResult ConfirmPhoneNumber()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmPhoneNumber(UserManageVM model)
+        {
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var result = await _userService.ConfirmPhoneNumberAsync(model.Token, currentUserId);
+            if (result.Succeeded)          
+                return RedirectToAction("Index", "Message", new { Message = IdMessage.ConfirmedPhoneNumberSucces });         
+            return RedirectToAction("Index", "Message", new { Message = IdMessage.ConfirmedPhoneNumberError });
+        }
+
 
         public async Task<IActionResult> RemovePhoneNumber(UserManageVM model)
         {

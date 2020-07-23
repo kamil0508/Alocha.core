@@ -4,3 +4,6 @@
     if ($("#sumaryValidationAddPhoneNumber").html().length != 40)
         $("#openModalAddPhone").click();
 }
+
+
+

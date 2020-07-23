@@ -31,5 +31,8 @@ namespace Alocha.WebUi.Models.UserVM
         [Compare("NewPassword", ErrorMessage = "Hasła nie są takie same.")]
         public string ConfirmNewPassword { get; set; }
 
+        [Display(Name = "Kod potwierdzający")]
+        public string Token { get; set; }
+
     }
 }

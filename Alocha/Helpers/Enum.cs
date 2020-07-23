@@ -12,6 +12,8 @@
         ResetPasswordSucces,
         ChangePasswordSucces,
         AddPhoneNumberSucces,
-        RemovePhoneNumberSucces
+        RemovePhoneNumberSucces,
+        ConfirmedPhoneNumberSucces,
+        ConfirmedPhoneNumberError
     }
 }

@@ -88,15 +88,31 @@ namespace Alocha.WebUi.Controllers
             if (message == IdMessage.AddPhoneNumberSucces)
             {
                 model.Topic = "Powodzenie";
-                model.Message = "Numer telefonu został dodany pomyślnie.";
-                model.LinkUrl = "/User/Index";
-                model.LinkName = "Wróć";
+                model.Message = "Numer wymaga potwierdzenie dlatego został wysłany sms z kodem potwierdzającym.";
+                model.LinkUrl = "/User/ConfirmPhoneNumber";
+                model.LinkName = "Potwierdź";
             }
             else
             if (message == IdMessage.RemovePhoneNumberSucces)
             {
                 model.Topic = "Powodzenie";
                 model.Message = "Numer telefonu został usunięty pomyślnie.";
+                model.LinkUrl = "/User/Index";
+                model.LinkName = "Wróć";
+            }
+            else
+            if (message == IdMessage.ConfirmedPhoneNumberSucces)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Numer telefonu został potwierdzony pomyślnie.";
+                model.LinkUrl = "/User/Index";
+                model.LinkName = "OK";
+            }
+            else
+            if (message == IdMessage.ConfirmedPhoneNumberError)
+            {
+                model.Topic = "Błąd";
+                model.Message = "Niestety nie udało się potwierdzić numeru telefonu.";
                 model.LinkUrl = "/User/Index";
                 model.LinkName = "Wróć";
             }

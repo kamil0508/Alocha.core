@@ -1,0 +1,40 @@
+﻿@model Alocha.WebUi.Models.UserVM.UserManageVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="row h-100 col-sm-12" style="margin-top:200px;">
+        <div class="col-sm-12 my-auto">
+            <div class="card card-block w-50 mx-auto">
+                <div class="text-center">
+                    @using (Html.BeginForm("ConfirmPhoneNumber", "User", FormMethod.Post))
+                    {
+                        <div class="form-group col-sm-10">
+                            @Html.LabelFor(m => m.Token)
+                            @Html.EditorFor(m => m.Token, new { htmlAttributes = new { @class = "form-control", id = "codeToken" } })
+                            @Html.ValidationMessageFor(m => m.Token, "", new { @class = "field-validation text-danger" })
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" id="submitConfirmation" type="submit">Potwierdź(<span id="counter">59</span>)</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/confirm-phone-number.js"></script>
+
+</body>
+</html>

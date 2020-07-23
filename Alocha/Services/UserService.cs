@@ -48,5 +48,17 @@ namespace Alocha.WebUi.Services
             var user = await _userManager.FindByIdAsync(userId);
             return await _userManager.SetPhoneNumberAsync(user, null);
         }
+
+        public async Task<string> GenerateConfirmedPhoneNumberCodeAsync(string phoneNumber, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            return await _userManager.GenerateChangePhoneNumberTokenAsync(user, phoneNumber);
+        }
+
+        public async Task<IdentityResult> ConfirmPhoneNumberAsync(string code, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            return await _userManager.ChangePhoneNumberAsync(user, user.PhoneNumber, code);
+        }
     }
 }

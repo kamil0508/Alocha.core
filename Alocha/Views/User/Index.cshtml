@@ -1,120 +1,144 @@
-﻿@model Alocha.WebUi.Models.UserVM.UserManageVM
+﻿@using Microsoft.AspNetCore.Identity
+@model Alocha.WebUi.Models.UserVM.UserManageVM
+@inject UserManager<IdentityUser> _userManager
+
 @{
     ViewData["Title"] = "Index";
 }
 
-    <div class="col-md-12 col-lg-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <h2><span class="lstick"></span><strong class="text-info">Ustawienia</strong>  </h2>
-            </div><!-- /.panel-heading -->
-            <div class="panel-body">                
-                <h4>Zmiana ustawień konta</h4>
-                <hr />
-                <dl class="dl-horizontal">
-                    <dt>Adres Email:</dt>
-                    <dd>
-                        @Model.Email 
-                    </dd>
-                    <dt>Hasło:</dt>
-                    <dd>
-                       <button type="button" id=" " class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Zmień</button>
-                    </dd>
-                    <dt>Numer telefonu:</dt>
-                    <dd>
-                        <p>
-                            Numer Telefonu jest używany do wysyłania infomacji o najbliżej nadchodzących wydarzeniach z wyprzedzeniem jednego dnia.
-                        </p>
-                        @(Model.PhoneNumber ?? "Brak")
-                        @if (Model.PhoneNumber != null)
+<div class="col-md-12 col-lg-12">
+    <div class="panel">
+        <div class="panel-heading">
+            <h2><span class="lstick"></span><strong class="text-info">Ustawienia</strong>  </h2>
+        </div><!-- /.panel-heading -->
+        <div class="panel-body">
+            <h4>Zmiana ustawień konta</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>Adres Email:</dt>
+                <dd>
+                    @Model.Email
+                </dd>
+                <dt>Hasło:</dt>
+                <dd>
+                    <button type="button" id=" " class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Zmień</button>
+                </dd>
+                <dt>Numer telefonu:</dt>
+                <dd>
+                    <p>
+                        Numer Telefonu jest używany do wysyłania infomacji o najbliżej
+                        nadchodzących wydarzeniach z wyprzedzeniem jednego dnia.
+                    </p>
+                    <hr />
+                    @if (Model.PhoneNumber == null)
+                    {
+                        <h6 class="text-danger">
+                            Powiadomienia SMS nieaktywne, aby aktywować dodaj numer telefonu.
+                        </h6>
+                    }
+                    @(Model.PhoneNumber ?? "Brak")
+                    @if (Model.PhoneNumber != null)
+                    {
+                        <br />
+                        @if (!await _userManager.IsPhoneNumberConfirmedAsync(await _userManager.FindByIdAsync(User.Claims.ElementAt(0).Value)))
                         {
-                            <br />
-                            <a id="openModalAddPhone" href="#" data-toggle="modal" data-target="#exampleModalCenterAddPhone">Zmień</a>
-                            <form asp-controller="User" asp-action="RemovePhoneNumber" method="post">
-                                @Html.HiddenFor(m => m.PhoneNumber)
-                                <button type="submit" class="btn-danger" onclick="return confirm('Usuwająć numer telefonu nie będziesz miał możliwości otrzymywania wiadomości z powiadomieniami.');">Usuń</button>
-                            </form>
+                            <h6 class="text-danger">
+                                Powiadomienia SMS nieaktywne, numer nie został prawidłowo potwierdzony.
+                            </h6>
                         }
                         else
                         {
-                            <button id="openModalAddPhone" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterAddPhone">Dodaj</button>
+                            <h6 class="text-success">
+                                Numer telefonu został potwierdzony, powiadomienia SMS o nadchodzących
+                                wydarzeniach zostały prawidłowo uruchomione.
+                            </h6>
                         }
-                    </dd>
-                </dl>
-            </div>
-       </div> 
+                        <a id="openModalAddPhone" href="#" data-toggle="modal" data-target="#exampleModalCenterAddPhone">Zmień</a>
+                        <form asp-controller="User" asp-action="RemovePhoneNumber" method="post">
+                            @Html.HiddenFor(m => m.PhoneNumber)
+                            <button type="submit" class="btn-danger" onclick="return confirm('Usuwająć numer telefonu nie będziesz miał możliwości otrzymywania wiadomości z powiadomieniami.');">Usuń</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button id="openModalAddPhone" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterAddPhone">Dodaj</button>
+                    }
+                </dd>
+            </dl>
+        </div>
     </div>
+</div>
 
-    <body onload="OpenModalWithValidation()">
-        <!-- Modal Change Password -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Zmiana hasła</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        @using (Html.BeginForm("ChangePassword", "User", FormMethod.Post))
-                        {
-                            <div class="form-group col-sm-10">
-                                @Html.LabelFor(m => m.OldPassword)
-                                @Html.EditorFor(m => m.OldPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Stare hasło", id = "oldPassword" } })
-                                @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "field-validation text-danger" })
-                            </div>
-                            <div class="form-group col-sm-10">
-                                @Html.LabelFor(m => m.NewPassword)
-                                @Html.EditorFor(m => m.NewPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Nowe hasło", id = "newPassword" } })
-                                @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "field-validation text-danger" })
-                            </div>
-                            <div class="form-group col-sm-10">
-                                @Html.LabelFor(m => m.ConfirmNewPassword)
-                                @Html.EditorFor(m => m.ConfirmNewPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Potwierdzenie hasła", id = "confirmPassword" } })
-                                @Html.ValidationMessageFor(m => m.ConfirmNewPassword, "", new { @class = "field-validation text-danger" })
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Zapisz</button>
-                            </div>
-                            <div class="form-group">
-                                @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "sumaryValidationChangePassword" })
-                            </div>
-                        }
-                    </div>
+<body onload="OpenModalWithValidation()">
+    <!-- Modal Change Password -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Zmiana hasła</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("ChangePassword", "User", FormMethod.Post))
+                    {
+                        <div class="form-group col-sm-10">
+                            @Html.LabelFor(m => m.OldPassword)
+                            @Html.EditorFor(m => m.OldPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Stare hasło", id = "oldPassword" } })
+                            @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "field-validation text-danger" })
+                        </div>
+                        <div class="form-group col-sm-10">
+                            @Html.LabelFor(m => m.NewPassword)
+                            @Html.EditorFor(m => m.NewPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Nowe hasło", id = "newPassword" } })
+                            @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "field-validation text-danger" })
+                        </div>
+                        <div class="form-group col-sm-10">
+                            @Html.LabelFor(m => m.ConfirmNewPassword)
+                            @Html.EditorFor(m => m.ConfirmNewPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Potwierdzenie hasła", id = "confirmPassword" } })
+                            @Html.ValidationMessageFor(m => m.ConfirmNewPassword, "", new { @class = "field-validation text-danger" })
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                        </div>
+                        <div class="form-group">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "sumaryValidationChangePassword" })
+                        </div>
+                    }
                 </div>
             </div>
         </div>
-        <!-- Modal Add Phone Number-->
-        <div class="modal fade" id="exampleModalCenterAddPhone" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Numer telefonu</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        @using (Html.BeginForm("AddPhoneNumber", "User", FormMethod.Post))
-                        {
-                            <div class="form-group col-sm-10">
-                                @Html.LabelFor(m => m.PhoneNumber)
-                                @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Numer telefonu", maxlength = "9", id = "phoneNumber" } })
-                                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "field-validation text-danger" })
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Zapisz</button>
-                            </div>
-                            <div class="form-group">
-                                @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "sumaryValidationAddPhoneNumber" })
-                            </div>
-                        }
-                    </div>
+    </div>
+    <!-- Modal Add Phone Number-->
+    <div class="modal fade" id="exampleModalCenterAddPhone" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Numer telefonu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("AddPhoneNumber", "User", FormMethod.Post))
+                    {
+                        <div class="form-group col-sm-10">
+                            @Html.LabelFor(m => m.PhoneNumber)
+                            @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Numer telefonu", maxlength = "9", id = "phoneNumber" } })
+                            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "field-validation text-danger" })
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                        </div>
+                        <div class="form-group">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "sumaryValidationAddPhoneNumber" })
+                        </div>
+                    }
                 </div>
             </div>
         </div>
-    </body>
-@section Scripts{ 
+    </div>
+</body>
+@section Scripts{
     <script src="~/js/user-index.js"></script>
 } 
