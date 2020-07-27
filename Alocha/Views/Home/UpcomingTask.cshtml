@@ -3,6 +3,7 @@
     ViewData["Title"] = "UpcomingTask";
 }
 
+
     <div class="col-md-12 col-lg-12">
         <div class="panel">
             <div class="panel-heading">
@@ -18,7 +19,7 @@
                 {
                     @if (task.DateBorn == DateTime.Today || task.DateDetachment == DateTime.Today || task.DateInsimination == DateTime.Today || task.VaccineDate == DateTime.Today)
                     {
-                        <a href="/Sow/Details/@task.SowId" class="col-sm-3 date-today text-center mx-5 my-1 style-link link-hover ">
+                        <a href="/Sow/Details/@task.SowId" class="form-group col-lg-3 mx-5 date-today text-center  style-link link-hover ">
                             <div>
                                 <h3 class="text-warning">@Html.LabelFor(m => task.Number) @Html.DisplayFor(m => task.Number)</h3>
                                 @if (task.DateBorn != DateTime.MinValue)
@@ -48,7 +49,7 @@
                     }
                     else
                     {
-                        <a href="/Sow/Details/@task.SowId" class="col-sm-3 upcoming-task text-center mx-5 my-1 style-link link-hover ">
+                        <a href="/Sow/Details/@task.SowId" class="form-group mx-5 col-lg-3 mx-5 upcoming-task text-center style-link link-hover ">
                             <div>
                                 <h3 class="text-warning">@Html.LabelFor(m => task.Number) @Html.DisplayFor(m => task.Number)</h3>
                                 @if (task.DateBorn != DateTime.MinValue)
