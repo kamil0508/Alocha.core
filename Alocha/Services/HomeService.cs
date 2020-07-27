@@ -32,8 +32,22 @@ namespace Alocha.WebUi.Services
                         || !s.IsRemoved && s.DateInsimination >= sevenDaysAgo && s.DateInsimination <= sevenDaysUp
                         || !s.IsRemoved && s.VaccineDate >= sevenDaysAgo && s.VaccineDate <= sevenDaysUp);
 
-            var model = _mapper.Map<IEnumerable<Sow>, IEnumerable<UpcomingTaskVM>>(sows.OrderBy(s => s.DateHappening));
+            var model = _mapper.Map<IEnumerable<Sow>, IEnumerable<UpcomingTaskVM>>(sows);
             return model;
+        }
+
+        public async Task<string> GetUpcomingTaskCountAsync(string userId)
+        {
+            var user = await _unitOfWork.User.FindOneAsync(u => u.Id == userId);
+            var sevenDaysUp = DateTime.Today.AddDays(7);
+            var sevenDaysAgo = DateTime.Today.AddDays(-7);
+
+            var count = user.Sows.Where(s => !s.IsRemoved && s.DateBorn >= sevenDaysAgo && s.DateBorn <= sevenDaysUp
+                        || !s.IsRemoved && s.DateDetachment >= sevenDaysAgo && s.DateDetachment <= sevenDaysUp
+                        || !s.IsRemoved && s.DateInsimination >= sevenDaysAgo && s.DateInsimination <= sevenDaysUp
+                        || !s.IsRemoved && s.VaccineDate >= sevenDaysAgo && s.VaccineDate <= sevenDaysUp).Count();
+
+            return count.ToString();
         }
     }
 }

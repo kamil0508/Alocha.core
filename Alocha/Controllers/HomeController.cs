@@ -32,5 +32,13 @@ namespace Alocha.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<string> UpcomingTaskCount()
+        {
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var count = await _homeService.GetUpcomingTaskCountAsync(currentUserId);
+            return count;
+        }
+
     }
 }

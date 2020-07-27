@@ -8,13 +8,15 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/sideMenu/side-menu.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <link href="~/lib/Alertify/css/alertify.css" rel="stylesheet" />
+    <link href="~/lib/Alertify/css/themes/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-static-top navbar-expand-lg" role="navigation" style="margin-bottom: 0;">
+        <nav class="navbar navbar-static-top navbar-expand-lg" role="navigation">
             <div class="navbar-header">
-                <a class="navbar-brand " asp-controller="Home" asp-action="Index">
-                    <strong class="font-italic">ALOCHA</strong>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <strong class="font-italic text-light">ALOCHA</strong>
                 </a>
             </div>
             <div class="collapse navbar-collapse">
@@ -30,7 +32,7 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         @if (User.Identity.IsAuthenticated)
         {
-            @User.Identity.Name
+            <h4 class="text-warning text-center">@User.Identity.Name</h4>
             <a href="/User/Index">Ustawienia</a>
             @Html.ActionLink("Wyloguj", "LogOut", "Account")
         }
@@ -71,6 +73,7 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
     <script src="~/js/create-sow.js"></script>
+    <script src="~/lib/Alertify/js/alertify.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

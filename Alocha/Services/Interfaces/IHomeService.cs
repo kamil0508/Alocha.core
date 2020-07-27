@@ -9,5 +9,6 @@ namespace Alocha.WebUi.Services.Interfaces
     public interface IHomeService
     {
         Task<IEnumerable<UpcomingTaskVM>> GetUpcomingTaskAsync(string userId);
+        Task<string> GetUpcomingTaskCountAsync(string userId);
     }
 }
