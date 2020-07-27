@@ -3,6 +3,7 @@ using Alocha.Domain.Repositories;
 using Alocha.WebUi.Services;
 using Alocha.WebUi.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace Alocha.WebUi.Extensions
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<ISmsService, SmsService>();
+            services.AddTransient<IHostedService, WorkerServices>();
 
             return services;
         }
