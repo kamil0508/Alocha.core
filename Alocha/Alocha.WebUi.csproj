@@ -33,4 +33,9 @@
     <ProjectReference Include="..\Alocha.Domain\Alocha.Domain.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\Alertify\" />
+  </ItemGroup>
+
 </Project>
