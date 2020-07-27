@@ -29,7 +29,7 @@ namespace Alocha
             }
             catch(Exception ex)
             {
-                Log.Fatal("There was a problem to start the logging service.");
+                Log.Fatal(ex, "There was a problem to start the logging service.");
                 return;
             }
             finally
