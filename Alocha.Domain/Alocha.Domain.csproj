@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200711133411_NullableDateTimeInSow.cs" />
     <Compile Remove="Migrations\20200711133411_NullableDateTimeInSow.Designer.cs" />
+    <Compile Remove="Migrations\20200725165504_AddFalgIsSmsSendInSowTabe.cs" />
+    <Compile Remove="Migrations\20200725165504_AddFalgIsSmsSendInSowTabe.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -33,5 +33,7 @@ namespace Alocha.Domain.Entities
         public bool IsRemoved { get; set; }
 
         public bool IsEdit { get; set; }
+
+        public bool IsSmsSend { get; set; }
     }
 }

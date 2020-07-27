@@ -11,6 +11,7 @@ namespace Alocha.WebUi.Models.SowVM
         public SowEditVM()
         {
             IsEdit = true;
+            IsSmsSend = false;
         }
 
         public int SowId { get; set; }
@@ -43,6 +44,8 @@ namespace Alocha.WebUi.Models.SowVM
         public bool IsVaccinated { get; set; }
 
         public bool IsEdit { get; set; }
+
+        public bool IsSmsSend { get; set; }
 
         public DateTime BornDate { get; set; }
 
