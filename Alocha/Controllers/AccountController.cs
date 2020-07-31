@@ -34,7 +34,7 @@ namespace Alocha.WebUi.Controllers
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(returnUrl))
-                        return RedirectToAction(returnUrl);
+                        return LocalRedirect(returnUrl);
                     return RedirectToAction("Index", "Home");
                 }
                 if (result.IsLockedOut)

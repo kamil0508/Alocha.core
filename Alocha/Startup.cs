@@ -70,6 +70,12 @@ namespace Alocha
                 options.Cookie.IsEssential = true;
             });
 
+            //Access Denied path
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Account/LogIn";
+            });
+
             //Add DBInitializer
             services.AddScoped<IDBInitializer, DbInitializer>();
 

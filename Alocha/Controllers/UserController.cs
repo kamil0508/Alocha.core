@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Alocha.WebUi.Helpers;
 using Alocha.WebUi.Models.UserVM;
 using Alocha.WebUi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Twilio.TwiML.Voice;
 
 namespace Alocha.WebUi.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

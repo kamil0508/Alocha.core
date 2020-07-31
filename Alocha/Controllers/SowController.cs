@@ -6,10 +6,12 @@ using Alocha.Domain.Entities;
 using Alocha.WebUi.Helpers;
 using Alocha.WebUi.Models.SowVM;
 using Alocha.WebUi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Alocha.WebUi.Controllers
 {
+    [Authorize]
     public class SowController : Controller
     {
         private readonly ISowService _sowService;

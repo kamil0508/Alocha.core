@@ -8,9 +8,11 @@ using Microsoft.Extensions.Logging;
 using Alocha.Models;
 using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account.Manage;
 using Alocha.WebUi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Alocha.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IHomeService _homeService;

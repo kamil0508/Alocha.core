@@ -6,10 +6,12 @@ using Alocha.WebUi.Helpers;
 using Alocha.WebUi.Models.ManagementAdminVM;
 using Alocha.WebUi.Services.Interfaces;
 using AutoMapper.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Alocha.WebUi.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class ManagementAdminController : Controller
     {
         private readonly IManagementAdminService _managementAdminService;
