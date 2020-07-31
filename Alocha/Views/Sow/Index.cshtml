@@ -184,7 +184,7 @@
                     {
                         <div class="form-group col-sm-10">
                             @Html.LabelFor(m => m.Number)
-                            @Html.EditorFor(m => m.Number, new { htmlAttributes = new { @class = "form-control", placeholder = "Numer", id= "numberInput" , maxlength = "4" } })
+                            @Html.EditorFor(m => m.Number, new { htmlAttributes = new { @class = "form-control", placeholder = "Numer", id = "numberInput", maxlength = "4" } })
                             @Html.ValidationMessageFor(m => m.Number, "", new { @class = "field-validation text-danger" })
                         </div>
                         <div class="form-group col-sm-10">
@@ -206,7 +206,7 @@
                                     Value = "Laktacja"
                                 });
                             }
-                            @Html.DropDownListFor(m => m.Status, listItems,"Stan lochy:*", new { @class = "form-control"})<br />
+                            @Html.DropDownListFor(m => m.Status, listItems, "Stan lochy:*", new { @class = "form-control" })<br />
                             @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
                         </div>
                         <div class="modal-footer">
@@ -221,7 +221,7 @@
         </div>
     </div>
     @section Scripts {
-        <script src="~/js/datatables-filters.js"></script>
+        <script src="~/js/datatables-filters-classic.js"></script>
         <script src="~/js/create-sow.js"></script>
     }
 </body>
