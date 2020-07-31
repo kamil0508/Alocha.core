@@ -16,11 +16,15 @@
         <nav class="navbar navbar-static-top navbar-expand-lg" role="navigation">
             <div class="navbar-header">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    <strong class="font-italic text-light">ALOCHA</strong>
+                    <h4><strong class="font-italic  text-light">ALOCHA</strong></h4>
                 </a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li class="text-warning">Administrator</li>
+                    }
                     <li class="nav-item"></li>
                 </ul>
                 <span style="font-size:20px; cursor:pointer" onclick="openNav()">&#9776;</span>
@@ -47,6 +51,10 @@
                     <li><a asp-controller="Home" asp-action="UpcomingTask">Zadania</a></li>
                     <li><a asp-controller="Sow" asp-action="Index">Lochy</a></li>
                     <li><a asp-controller="Sow" asp-action="Vaccinate">Szczepienia</a></li>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li><a asp-controller="ManagementAdmin" asp-action="Index">Panel Administratora</a></li>
+                    }
                 </ul>
             </nav>
         </div><!-- End Sidebar scroll-->

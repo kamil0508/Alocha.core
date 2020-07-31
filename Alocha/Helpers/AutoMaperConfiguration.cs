@@ -1,6 +1,7 @@
 ﻿using Alocha.Domain.Entities;
 using Alocha.WebUi.Models.AccountVM;
 using Alocha.WebUi.Models.HomeVM;
+using Alocha.WebUi.Models.ManagementAdminVM;
 using Alocha.WebUi.Models.SmallPigsVM;
 using Alocha.WebUi.Models.SowVM;
 using Alocha.WebUi.Models.UserVM;
@@ -28,6 +29,8 @@ namespace Alocha.WebUi.Helpers
             CreateMap<Sow, UpcomingTaskVM>();
 
             CreateMap<IdentityUser, UserManageVM>();
+
+            CreateMap<User, ManagementVM>();
 
         }
     }

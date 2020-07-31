@@ -31,6 +31,7 @@ namespace Alocha.WebUi.Extensions
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<ISmsService, SmsService>();
             services.AddTransient<IHostedService, WorkerServices>();
+            services.AddScoped<IManagementAdminService, ManagementAdminService>();
 
             return services;
         }
