@@ -117,6 +117,22 @@ namespace Alocha.WebUi.Controllers
                 model.LinkName = "Wróć";
             }
             else
+            if (message == IdMessage.AdminSendConfirmationEmailSucces)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Na adres klienta został wysłany link do potwierdzenia adresu Email.";
+                model.LinkUrl = "/ManagementAdmin/Index";
+                model.LinkName = "OK";
+            }
+            else
+            if (message == IdMessage.AdminSendConfirmationEmailError)
+            {
+                model.Topic = "Błąd";
+                model.Message = "Niestety nie udało się wysłać potwierdzenia na adres Email.";
+                model.LinkUrl = "/ManagementAdmin/Index";
+                model.LinkName = "Wróć";
+            }
+            else
                 return RedirectToAction("Index", "Home");
 
             return View(model);

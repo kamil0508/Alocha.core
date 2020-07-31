@@ -14,6 +14,8 @@
         AddPhoneNumberSucces,
         RemovePhoneNumberSucces,
         ConfirmedPhoneNumberSucces,
-        ConfirmedPhoneNumberError
+        ConfirmedPhoneNumberError,
+        AdminSendConfirmationEmailSucces,
+        AdminSendConfirmationEmailError,
     }
 }
