@@ -38,10 +38,13 @@ namespace Alocha.WebUi.Services
             return true;
         }
 
-        public Task<IdentityResult> RegisterAsync(RegisterVM model)
+        public async Task<IdentityResult> RegisterAsync(RegisterVM model)
         {
             var user = new User() { UserName = model.Email, Email = model.Email };
-            return _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+                await _userManager.AddToRoleAsync(user, "Customer");
+            return result; 
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
