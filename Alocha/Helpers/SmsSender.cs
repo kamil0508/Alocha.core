@@ -12,15 +12,22 @@ namespace Alocha.WebUi.Helpers
     {
         public static async Task<MessageResource> SendSmsAsync(string number, string message)
         {
-            var accountSid = "";
-            var authToken = "";
+            try
+            {
+                var accountSid = "";
+                var authToken = "";
 
-            TwilioClient.Init(accountSid, authToken);
+                TwilioClient.Init(accountSid, authToken);
 
-            return await MessageResource.CreateAsync(
-              to: new PhoneNumber(number),
-              from: new PhoneNumber(""),
-              body: message);
+                return await MessageResource.CreateAsync(
+                  to: new PhoneNumber(number),
+                  from: new PhoneNumber(""),
+                  body: message);
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
     }
 }

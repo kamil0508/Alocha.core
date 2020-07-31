@@ -9,9 +9,11 @@ using Alocha.Models;
 using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account.Manage;
 using Alocha.WebUi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Alocha.WebUi.Helpers;
 
 namespace Alocha.Controllers
 {
+    [TraceFilter]
     [Authorize]
     public class HomeController : Controller
     {

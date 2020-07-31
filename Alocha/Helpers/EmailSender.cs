@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,30 +12,36 @@ namespace Alocha.WebUi.Helpers
     {
         public static async Task<bool> MailSender(string userEmail, string subject, string body)
         {
-            MailMessage message = new MailMessage();
-
-            message.To.Add(userEmail);
-            message.From = new MailAddress("", "Aplikacja Alocha");
-            message.IsBodyHtml = true;
-            message.Subject = subject;
-            message.Body = body;
-
-            using (var smtp = new SmtpClient())
+            try
             {
-                var credential = new NetworkCredential
+                MailMessage message = new MailMessage();
+
+                message.To.Add(userEmail);
+                message.From = new MailAddress("", "Aplikacja Alocha");
+                message.IsBodyHtml = true;
+                message.Subject = subject;
+                message.Body = body;
+
+                using (var smtp = new SmtpClient())
                 {
-                    UserName = "",
-                    Password = ""
-                };
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "",
+                        Password = ""
+                    };
 
-                smtp.UseDefaultCredentials = true;
-                smtp.Credentials = credential;
-                smtp.Host = "";
-                smtp.Port = 587;
-                smtp.EnableSsl = true;
-                await smtp.SendMailAsync(message);
-                return true;
-
+                    smtp.UseDefaultCredentials = true;
+                    smtp.Credentials = credential;
+                    smtp.Host = "";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(message);
+                    return true;
+                }
+            }
+            catch(Exception)
+            {
+                return false;
             }
         }
     }

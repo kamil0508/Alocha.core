@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Alocha.WebUi.Controllers
 {
+    [TraceFilter]
     [Authorize(Roles = "Administrator")]
     public class ManagementAdminController : Controller
     {

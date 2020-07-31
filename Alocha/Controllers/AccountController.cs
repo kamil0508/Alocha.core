@@ -6,6 +6,7 @@ using Alocha.WebUi.Helpers;
 using Alocha.WebUi.Models.AccountVM;
 using Alocha.WebUi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Alocha.WebUi.Controllers
 {
@@ -13,11 +14,13 @@ namespace Alocha.WebUi.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly IEmailService _emailService;
+        private readonly ILogger<AccountController> _loger;
 
-        public AccountController(IAccountService accountService, IEmailService emailService)
+        public AccountController(IAccountService accountService, IEmailService emailService, ILogger<AccountController> loger)
         {
             _accountService = accountService;
             _emailService = emailService;
+            _loger = loger;
         }
 
         public IActionResult LogIn()
@@ -33,6 +36,7 @@ namespace Alocha.WebUi.Controllers
                 var result = await _accountService.LogInAsync(model);
                 if (result.Succeeded)
                 {
+                    _loger.LogInformation(string.Format("The user: {0} logs in.", model.Email));
                     if (!string.IsNullOrEmpty(returnUrl))
                         return LocalRedirect(returnUrl);
                     return RedirectToAction("Index", "Home");
@@ -69,6 +73,7 @@ namespace Alocha.WebUi.Controllers
                 var result = await _accountService.RegisterAsync(model);
                 if (result.Succeeded)
                 {
+                    _loger.LogInformation(string.Format("The user: {0} is registering.", model.Email));
                     //send confirmation email
                     var user = await _accountService.GetUserByEmailAsync(model.Email);
                     var token = await _accountService.GenerateConfirmTokenAsync(user);
@@ -76,6 +81,7 @@ namespace Alocha.WebUi.Controllers
                     var resultEmail = await _emailService.SendConfirmEmailAsync(callBackUrl, user.Email);
                     if(resultEmail)
                         return RedirectToAction("Index", "Message", new { Message = IdMessage.SendConfirmEmailSucces });
+                    _loger.LogError(string.Format("The confirmation Email has not been sent to the user : {0}.", model.Email));
                     return RedirectToAction("Index", "Message", new { Message = IdMessage.SendConfirmEmailError });
                 }
                 result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));

@@ -7,20 +7,25 @@ using Alocha.WebUi.Models.UserVM;
 using Alocha.WebUi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using Twilio.TwiML.Voice;
 
 namespace Alocha.WebUi.Controllers
 {
+    [TraceFilter]
     [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
         private readonly ISmsService _smsService;
+        private readonly ILogger<UserController> _loger;
 
-        public UserController(IUserService userService, ISmsService smsService)
+        public UserController(IUserService userService, ISmsService smsService, ILogger<UserController> loger)
         {
             _userService = userService;
             _smsService = smsService;
+            _loger = loger;
         }
 
         public async Task<IActionResult> Index()
@@ -50,7 +55,9 @@ namespace Alocha.WebUi.Controllers
             {
                 var code = await _userService.GenerateConfirmedPhoneNumberCodeAsync(model.PhoneNumber, currentUserId);
                 var smsResult = await _smsService.SendConfirmPhoneNumberSmsAsync(model.PhoneNumber, code);
-                return RedirectToAction("Index", "Message", new { Message = IdMessage.AddPhoneNumberSucces });
+                if(smsResult != null)
+                    return RedirectToAction("Index", "Message", new { Message = IdMessage.AddPhoneNumberSucces });
+                _loger.LogError(string.Format("The confirmation SMS has not been sent to the user : {0}.", User.Identity.Name));
             }
             result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
             return View("Index", model);
