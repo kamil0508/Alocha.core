@@ -14,7 +14,7 @@ namespace Alocha.WebUi.Helpers
             MailMessage message = new MailMessage();
 
             message.To.Add(userEmail);
-            message.From = new MailAddress("programista2020@onet.pl", "Aplikacja Alocha");
+            message.From = new MailAddress("", "Aplikacja Alocha");
             message.IsBodyHtml = true;
             message.Subject = subject;
             message.Body = body;
@@ -23,13 +23,13 @@ namespace Alocha.WebUi.Helpers
             {
                 var credential = new NetworkCredential
                 {
-                    UserName = "programista2020@onet.pl",
-                    Password = "Juniordeveloper1"
+                    UserName = "",
+                    Password = ""
                 };
 
                 smtp.UseDefaultCredentials = true;
                 smtp.Credentials = credential;
-                smtp.Host = "smtp.poczta.onet.pl";
+                smtp.Host = "";
                 smtp.Port = 587;
                 smtp.EnableSsl = true;
                 await smtp.SendMailAsync(message);
