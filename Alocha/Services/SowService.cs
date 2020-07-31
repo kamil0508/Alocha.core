@@ -69,12 +69,16 @@ namespace Alocha.WebUi.Services
                 model.VaccineDate = model.DateBorn.Value.AddDays(-model.VaccineDays);
             }
             if (model.Status == "Luźna")
+            {
                 model.DateInsimination = model.DateHappening.AddDays(8);
+                model.IsVaccinated = false;
+            }
             if (model.Status == "Laktacja")
             {
                 model.DateDetachment = model.DateHappening.AddDays(28);
+                model.IsVaccinated = false;
                 //add smallpig
-                if(model.PigsQuantity != null)
+                if (model.PigsQuantity != null)
                 {
                     model.BornDate = model.DateHappening;
                     var smallpig = _mapper.Map<SowEditVM, SmallPig>(model);

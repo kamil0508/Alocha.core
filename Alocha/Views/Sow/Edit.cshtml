@@ -12,6 +12,7 @@
             <form id="create" method="post">
                 @Html.HiddenFor(m => m.SowId)
                 @Html.HiddenFor(m => m.Number)
+                @Html.HiddenFor(m => m.IsVaccinated)
                 <div class="form-row">
                     <div class="form-group col-sm-4">
                         @Html.LabelFor(m => m.DateHappening)
@@ -38,7 +39,7 @@
                                 Value = "Laktacja"
                             });
                         }
-                        @Html.DropDownListFor(m => m.Status, listItems, "Wydarzenie:*", new { @class = "form-control", id = "status", onChange = "calculateDate()" })<br />
+                        @Html.DropDownListFor(m => m.Status, listItems, "Wydarzenie:*", new { @class = "form-control", id = "status", onclick = "calculateDate()" })<br />
                         @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
                     </div>
                 </div>
