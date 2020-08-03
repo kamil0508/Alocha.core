@@ -56,7 +56,10 @@
                         <a id="openModalAddPhone" href="#" data-toggle="modal" data-target="#exampleModalCenterAddPhone">Zmień</a>
                         <form asp-controller="User" asp-action="RemovePhoneNumber" method="post">
                             @Html.HiddenFor(m => m.PhoneNumber)
-                            <button type="submit" class="btn-danger" onclick="return confirm('Usuwająć numer telefonu nie będziesz miał możliwości otrzymywania wiadomości z powiadomieniami.');">Usuń</button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Usuwająć numer telefonu nie będziesz miał możliwości otrzymywania wiadomości z powiadomieniami.');">
+                                <span class="fa fa-trash text-light"></span>
+                                Usuń
+                            </button>
                         </form>
                     }
                     else
@@ -99,7 +102,10 @@
                             @Html.ValidationMessageFor(m => m.ConfirmNewPassword, "", new { @class = "field-validation text-danger" })
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="fa fa-floppy-o text-light"></span>
+                                Zapisz
+                            </button>
                         </div>
                         <div class="form-group">
                             @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "sumaryValidationChangePassword" })
@@ -128,7 +134,10 @@
                             @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "field-validation text-danger" })
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="fa fa-floppy-o text-light"></span>
+                                Zapisz
+                            </button>
                         </div>
                         <div class="form-group">
                             @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "sumaryValidationAddPhoneNumber" })

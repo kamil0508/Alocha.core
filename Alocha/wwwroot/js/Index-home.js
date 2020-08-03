@@ -7,7 +7,7 @@
         success: function (count) {
             if (count != "0") {
                 alertify.set("notifier", "delay", 10);
-                var msg = alertify.error("Ilość najblirzszych zdarzeń: " + count);
+                var msg = alertify.error("Ilość najbliższych zdarzeń: " + count);
                 msg.callback = function (isClicked) {
                     if (isClicked)
                         window.location.href = "/Home/UpcomingTask";

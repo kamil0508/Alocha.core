@@ -10,13 +10,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     <link href="~/lib/Alertify/css/alertify.css" rel="stylesheet" />
     <link href="~/lib/Alertify/css/themes/bootstrap.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
 <body>
     <header>
         <nav class="navbar navbar-static-top navbar-expand-lg" role="navigation">
             <div class="navbar-header">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    <h4><strong class="font-italic  text-light">ALOCHA</strong></h4>
+                    <h4><strong class="font-italic text-light"><span class="fa fa-calendar-check-o text-light mr-2"></span>ALOCHA</strong></h4>
                 </a>
             </div>
             <div class="collapse navbar-collapse">
@@ -25,7 +26,9 @@
                     {
                         <li class="text-warning">Administrator</li>
                     }
-                    <li class="nav-item"></li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mr-4"><h6 class="text-warning">@User.Identity.Name</h6></li>
                 </ul>
                 <span style="font-size:20px; cursor:pointer" onclick="openNav()">&#9776;</span>
             </div>
@@ -36,9 +39,9 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         @if (User.Identity.IsAuthenticated)
         {
-            <h4 class="text-warning text-center">@User.Identity.Name</h4>
-            <a href="/User/Index">Ustawienia</a>
-            @Html.ActionLink("Wyloguj", "LogOut", "Account")
+
+            <a class="text-center" href="/User/Index"><span class="fa fa-cog text-secondary mr-2"></span>Ustawienia</a>
+            <a class="text-center" href="/Account/LogOut"><span class="fa fa-power-off text-danger mr-2"></span>Wyloguj</a>
         }
     </div>
 
@@ -48,12 +51,12 @@
             <!-- Sidebar navigation-->
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
-                    <li><a asp-controller="Home" asp-action="UpcomingTask">Zadania</a></li>
-                    <li><a asp-controller="Sow" asp-action="Index">Lochy</a></li>
-                    <li><a asp-controller="Sow" asp-action="Vaccinate">Szczepienia</a></li>
-                    @if (User.IsInRole("Administrator"))
+                    <li><a asp-controller="Home" asp-action="UpcomingTask"><span class="fa fa-thumb-tack text-light mr-2"></span>Zadania</a></li>
+                    <li><a asp-controller="Sow" asp-action="Index"><span class="fa fa-list-alt text-light mr-2"></span>Lochy</a></li>
+                    <li><a asp-controller="Sow" asp-action="Vaccinate"><span class="fa fa-user-md text-light mr-2"></span>Szczepienia</a></li>
+                    @if (User.IsInRole("Administrator")) 
                     {
-                        <li><a asp-controller="ManagementAdmin" asp-action="Index">Panel Administratora</a></li>
+                        <li><a asp-controller="ManagementAdmin" asp-action="Index"><span class="fa fa-bar-chart text-light mr-2"></span>Panel Administratora</a></li>
                     }
                 </ul>
             </nav>
