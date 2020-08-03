@@ -149,6 +149,14 @@ namespace Alocha.WebUi.Controllers
                 model.LinkName = "Wróć";
             }
             else
+            if (message == IdMessage.UserDeleteAccountSucces)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Konto zostało pomyślnie usunięte, dziękujemy za uzytkowanie naszego oprogramowania.";
+                model.LinkUrl = "/Account/LogIn";
+                model.LinkName = "OK";
+            }
+            else
                 return RedirectToAction("Index", "Home");
 
             return View(model);

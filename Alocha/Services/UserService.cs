@@ -1,5 +1,6 @@
 ﻿using Alocha.Domain.Entities;
 using Alocha.Domain.Interfaces;
+using Alocha.WebUi.Helpers.Constans;
 using Alocha.WebUi.Models.UserVM;
 using Alocha.WebUi.Services.Interfaces;
 using AutoMapper;
@@ -59,6 +60,24 @@ namespace Alocha.WebUi.Services
         {
             var user = await _userManager.FindByIdAsync(userId);
             return await _userManager.ChangePhoneNumberAsync(user, user.PhoneNumber, code);
+        }
+
+        public async Task<IdentityResult> DeleteUserAsync(string email, string userId)
+        {
+            var user = (User)await _userManager.FindByEmailAsync(email);
+            if(user.Id == userId)
+            {
+                if (user.Sows.Count() > 0)
+                {
+                    user.Sows.ToList().ForEach(s => _unitOfWork.Smallpig.RemoveRange(s.SmallPigs));
+                    _unitOfWork.Sow.RemoveRange(user.Sows);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+                var role = await _userManager.GetRolesAsync(user);
+                await _userManager.RemoveFromRoleAsync(user, role.First());
+                return await _userManager.DeleteAsync(user);
+            }
+            return IdentityResult.Failed(new IdentityError() { Description = IdentityResultErrorsConstans.DELETE_USER_ERROR_FROM_USER_SERVICE });
         }
     }
 }

@@ -16,5 +16,6 @@ namespace Alocha.WebUi.Services.Interfaces
         Task<IdentityResult> RemovePhoneNumberAsync(UserManageVM model, string userId);
         Task<string> GenerateConfirmedPhoneNumberCodeAsync(string phoneNumber, string userId);
         Task<IdentityResult> ConfirmPhoneNumberAsync(string code, string userId);
+        Task<IdentityResult> DeleteUserAsync(string email, string userId);
     }
 }

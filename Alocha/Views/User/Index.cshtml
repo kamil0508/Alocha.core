@@ -56,7 +56,7 @@
                         <a id="openModalAddPhone" href="#" data-toggle="modal" data-target="#exampleModalCenterAddPhone">Zmień</a>
                         <form asp-controller="User" asp-action="RemovePhoneNumber" method="post">
                             @Html.HiddenFor(m => m.PhoneNumber)
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Usuwająć numer telefonu nie będziesz miał możliwości otrzymywania wiadomości z powiadomieniami.');">
+                            <button type="submit" class="btn btn-secondary" onclick="return confirm('Usuwająć numer telefonu nie będziesz miał możliwości otrzymywania wiadomości z powiadomieniami.');">
                                 <span class="fa fa-trash text-light"></span>
                                 Usuń
                             </button>
@@ -67,6 +67,18 @@
                         <button id="openModalAddPhone" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterAddPhone">Dodaj</button>
                     }
                 </dd>
+                <dt class="text-danger">Usuń konto</dt>
+                <dd class="border border-danger p-2">
+                    <p>UWAGA!!! usuwając konto nie ma możliwości cofnięcia tych zmian.</p>
+                    <form asp-controller="User" asp-action="Delete" method="post">
+                        @Html.HiddenFor(m => m.Email)
+                        <button type="submit" class="btn btn-block btn-danger" onclick="return confirm('Czy napewo chcesz usunąć konto ? Zmian nie będzie można cofnąć.');">
+                            <span class="fa fa-trash text-light"></span>
+                            Usuń konto
+                        </button>
+                    </form>
+                </dd>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             </dl>
         </div>
     </div>

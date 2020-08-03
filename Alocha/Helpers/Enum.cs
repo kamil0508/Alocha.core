@@ -18,6 +18,7 @@
         AdminSendConfirmationEmailSucces,
         AdminSendConfirmationEmailError,
         AdminDeleteAccountSucces,
-        AdminDeleteAccountError
+        AdminDeleteAccountError,
+        UserDeleteAccountSucces
     }
 }

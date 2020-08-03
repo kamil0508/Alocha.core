@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Alocha.WebUi.Helpers;
 using Alocha.WebUi.Models.UserVM;
 using Alocha.WebUi.Services.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,13 +20,13 @@ namespace Alocha.WebUi.Controllers
     {
         private readonly IUserService _userService;
         private readonly ISmsService _smsService;
-        private readonly ILogger<UserController> _loger;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserService userService, ISmsService smsService, ILogger<UserController> loger)
+        public UserController(IUserService userService, ISmsService smsService, ILogger<UserController> logger)
         {
             _userService = userService;
             _smsService = smsService;
-            _loger = loger;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -57,7 +58,7 @@ namespace Alocha.WebUi.Controllers
                 var smsResult = await _smsService.SendConfirmPhoneNumberSmsAsync(model.PhoneNumber, code);
                 if(smsResult != null)
                     return RedirectToAction("Index", "Message", new { Message = IdMessage.AddPhoneNumberSucces });
-                _loger.LogError(string.Format("The confirmation SMS has not been sent to the user : {0}.", User.Identity.Name));
+                _logger.LogError(string.Format("The confirmation SMS has not been sent to the user : {0}.", User.Identity.Name));
             }
             result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
             return View("Index", model);
@@ -88,6 +89,19 @@ namespace Alocha.WebUi.Controllers
                 return RedirectToAction("Index", "Message", new { Message = IdMessage.RemovePhoneNumberSucces });
             result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
             return View("Index", model);
+        }
+
+        public async Task<IActionResult> Delete([Bind(include: "Email")] UserManageVM model)
+        {
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var result = await _userService.DeleteUserAsync(model.Email, currentUserId);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("User with email: {0} delete account.", model.Email);
+                return RedirectToAction("Index", "Message", new { Message = IdMessage.AdminDeleteAccountSucces });
+            }
+            _logger.LogError("User with email: {0} delete account errors: {1}", model.Email, result.Errors);
+            return View(model);
         }
     }
 }
