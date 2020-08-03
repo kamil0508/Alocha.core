@@ -13,5 +13,6 @@ namespace Alocha.WebUi.Services.Interfaces
         Task<IEnumerable<ManagementVM>> GetAllUsersAsync();
         Task<IdentityUser> GetUserByEmailAsync(string userEmail);
         Task<string> GenerateConfirmTokenAsync(IdentityUser user);
+        Task<IdentityResult> DeleteUserAsync(User user);
     }
 }

@@ -133,6 +133,22 @@ namespace Alocha.WebUi.Controllers
                 model.LinkName = "Wróć";
             }
             else
+            if (message == IdMessage.AdminDeleteAccountSucces)
+            {
+                model.Topic = "Powodzenie";
+                model.Message = "Użytkownik został prawidłowo usunięty.";
+                model.LinkUrl = "/ManagementAdmin/Index";
+                model.LinkName = "OK";
+            }
+            else
+            if (message == IdMessage.AdminDeleteAccountError)
+            {
+                model.Topic = "Błąd";
+                model.Message = "Niestety nie udało się usunąć użytkownika w logach zostały zawarte szczegóły.";
+                model.LinkUrl = "/ManagementAdmin/Index";
+                model.LinkName = "Wróć";
+            }
+            else
                 return RedirectToAction("Index", "Home");
 
             return View(model);

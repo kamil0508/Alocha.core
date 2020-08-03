@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Alocha.Domain.Entities;
 using Alocha.WebUi.Helpers;
 using Alocha.WebUi.Models.ManagementAdminVM;
 using Alocha.WebUi.Services.Interfaces;
-using AutoMapper.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Serilog.Data;
 
 namespace Alocha.WebUi.Controllers
 {
@@ -17,11 +16,13 @@ namespace Alocha.WebUi.Controllers
     {
         private readonly IManagementAdminService _managementAdminService;
         private readonly IEmailService _emailService;
+        private readonly ILogger<ManagementAdminController> _logger;
 
-        public ManagementAdminController(IManagementAdminService managementAdminService, IEmailService emailService)
+        public ManagementAdminController(IManagementAdminService managementAdminService, IEmailService emailService, ILogger<ManagementAdminController> logger)
         {
             _managementAdminService = managementAdminService;
             _emailService = emailService;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -42,6 +43,19 @@ namespace Alocha.WebUi.Controllers
             if (resultEmail)
                 return RedirectToAction("Index", "Message", new { Message = IdMessage.AdminSendConfirmationEmailSucces });
             return RedirectToAction("Index", "Message", new { Message = IdMessage.AdminSendConfirmationEmailError });
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = (User)await _managementAdminService.GetUserByEmailAsync(id);
+            var result = await _managementAdminService.DeleteUserAsync(user);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("Delete user: {0}", id);
+                return RedirectToAction("Index", "Message", new { Message = IdMessage.AdminDeleteAccountSucces });
+            }
+            _logger.LogError("Delete user: {0} errors: {1}", id, result.Errors);
+            return RedirectToAction("Index", "Message", new { Message = IdMessage.AdminDeleteAccountError });
         }
     }
 }

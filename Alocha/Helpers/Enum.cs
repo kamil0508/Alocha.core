@@ -17,5 +17,7 @@
         ConfirmedPhoneNumberError,
         AdminSendConfirmationEmailSucces,
         AdminSendConfirmationEmailError,
+        AdminDeleteAccountSucces,
+        AdminDeleteAccountError
     }
 }

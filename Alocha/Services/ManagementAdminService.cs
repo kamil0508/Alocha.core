@@ -4,7 +4,6 @@ using Alocha.WebUi.Models.ManagementAdminVM;
 using Alocha.WebUi.Services.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,6 +38,19 @@ namespace Alocha.WebUi.Services
         public async Task<string> GenerateConfirmTokenAsync(IdentityUser user)
         {
             return await _userManager.GenerateEmailConfirmationTokenAsync(user);    
+        }
+
+        public async Task<IdentityResult> DeleteUserAsync(User user)
+        {
+            if (user.Sows.Count() > 0)
+            {
+                user.Sows.ToList().ForEach(s => _unitOfWork.Smallpig.RemoveRange(s.SmallPigs));
+                _unitOfWork.Sow.RemoveRange(user.Sows);
+                await _unitOfWork.SaveChangesAsync();
+            }
+            var role = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRoleAsync(user, role.First());
+            return await _userManager.DeleteAsync(user);
         }
     }
 }
