@@ -1,4 +1,6 @@
-﻿using Alocha.WebUi.Models.SowVM;
+﻿using Alocha.Domain.Entities;
+using Alocha.WebUi.Models.SmallPigsVM;
+using Alocha.WebUi.Models.SowVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +19,6 @@ namespace Alocha.WebUi.Services.Interfaces
         Task<bool> RemoveSowAsync(int sowId);
         Task<IEnumerable<SowVM>> GetPregnancySows(string userId);
         Task<bool> SowWasVacinated(int sowId, string userId);
+        void CalcualteCountAndAverageSmallPigs(IEnumerable<SmallPigVM> model, ref double average, ref int count);
     }
 }

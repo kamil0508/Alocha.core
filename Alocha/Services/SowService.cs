@@ -1,5 +1,6 @@
 ﻿using Alocha.Domain.Entities;
 using Alocha.Domain.Interfaces;
+using Alocha.WebUi.Models.SmallPigsVM;
 using Alocha.WebUi.Models.SowVM;
 using Alocha.WebUi.Services.Interfaces;
 using AutoMapper;
@@ -128,6 +129,12 @@ namespace Alocha.WebUi.Services
             var sow = user.Sows.Where(s => s.SowId == sowId && !s.IsRemoved).FirstOrDefault();
             sow.IsVaccinated = true;
             return await _unitOfWork.SaveChangesAsync();
+        }
+
+        public void CalcualteCountAndAverageSmallPigs(IEnumerable<SmallPigVM> model, ref double average, ref int count)
+        {
+            average = Math.Round(model.Average(s => s.PigsQuantity));
+            count = model.Count();
         }
     }
 }

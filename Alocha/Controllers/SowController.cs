@@ -90,6 +90,14 @@ namespace Alocha.WebUi.Controllers
         {
             var currentUserId = User.Claims.ElementAt(0).Value;
             var model = await _sowService.DetailsSowAsync(id, currentUserId);
+            if (model.SmallPigs.Count() > 0)
+            {
+                var average = 0.0;
+                var count = 0;
+                _sowService.CalcualteCountAndAverageSmallPigs(model.SmallPigs, ref average, ref count);
+                ViewBag.AveragePigsCount = average;
+                ViewBag.BornCount = count;
+            }
             return View(model);
         }
 

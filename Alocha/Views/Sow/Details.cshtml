@@ -49,7 +49,14 @@
                     </div>
                     <div class="form-check text-center">
                         <h5>@Html.LabelFor(m => m.IsVaccinated)</h5>
-                        @Html.DisplayFor(m => m.IsVaccinated, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        @if(Model.IsVaccinated)
+                        {
+                            <span class="fa fa-check-circle-o fa-2x"></span>
+                        }
+                        else
+                        {
+                            <span class="fa fa-circle-o fa-2x"></span>
+                        }
                     </div>
 
                 }
@@ -60,6 +67,13 @@
             <div class="col-md-12 col-lg-12">
                 <div class="panel">
                     <div class="panel-body">
+                        @if (ViewBag.BornCount != null)
+                        {
+                            <div class="form-row mb-2">
+                                <div class="text-info"><h6>Ilość porodów: @ViewBag.BornCount </h6></div>
+                                <div class="text-info ml-5"><h6>Średnia miotu: @ViewBag.AveragePigsCount </h6></div>
+                            </div>
+                        }
                         <table class="table table-striped table-hover" cellspacing="0" style="width:100%" id="dataTables">
                             <thead>
                                 <tr>
