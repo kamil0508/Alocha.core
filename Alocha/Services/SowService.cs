@@ -3,8 +3,6 @@ using Alocha.Domain.Interfaces;
 using Alocha.WebUi.Models.SowVM;
 using Alocha.WebUi.Services.Interfaces;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,27 +61,28 @@ namespace Alocha.WebUi.Services
         public async Task<bool> EditSowAsync(SowEditVM model)
         {
             var sow = await _unitOfWork.Sow.GetByIdAsync(model.SowId);
-            if(model.Status == "Prośna")
+            switch (model.Status)
             {
-                model.DateBorn = model.DateHappening.AddDays(114);
-                model.VaccineDate = model.DateBorn.Value.AddDays(-model.VaccineDays);
-            }
-            if (model.Status == "Luźna")
-            {
-                model.DateInsimination = model.DateHappening.AddDays(8);
-                model.IsVaccinated = false;
-            }
-            if (model.Status == "Laktacja")
-            {
-                model.DateDetachment = model.DateHappening.AddDays(28);
-                model.IsVaccinated = false;
-                //add smallpig
-                if (model.PigsQuantity != null)
-                {
-                    model.BornDate = model.DateHappening;
-                    var smallpig = _mapper.Map<SowEditVM, SmallPig>(model);
-                    _unitOfWork.Smallpig.Add(smallpig);
-                }
+                case "Prośna":
+                    model.DateBorn = model.DateHappening.AddDays(114);
+                    model.VaccineDate = model.DateBorn.Value.AddDays(-model.VaccineDays);
+                    break;
+                case "Luźna":
+                    model.DateInsimination = model.DateHappening.AddDays(8);
+                    model.IsVaccinated = false;
+                    break;
+                case "Laktacja":
+                    model.DateDetachment = model.DateHappening.AddDays(28);
+                    model.IsVaccinated = false;
+                    //add smallpig
+                    if (model.PigsQuantity != null)
+                    {
+                        model.BornDate = model.DateHappening;
+                        var smallpig = _mapper.Map<SowEditVM, SmallPig>(model);
+                        _unitOfWork.Smallpig.Add(smallpig);
+                    }
+                    break;
+
             }
 
             _mapper.Map(model, sow);
@@ -92,14 +91,12 @@ namespace Alocha.WebUi.Services
 
         public string CalculateDate(DateTime date, string status)
         {
-            var response = "";
             if (status == "Prośna")
-                response = date.AddDays(114).ToShortDateString();
-            if (status == "Luźna")           
-                response = date.AddDays(8).ToShortDateString();
-            if(status == "Laktacja")
-                response = date.AddDays(28).ToShortDateString();                          
-            return response;
+                return date.AddDays(114).ToShortDateString();
+            else if (status == "Luźna")           
+                return date.AddDays(8).ToShortDateString();
+            else 
+                return date.AddDays(28).ToShortDateString();                          
         }
 
         public async Task<bool> RemoveSowAsync(int sowId)
