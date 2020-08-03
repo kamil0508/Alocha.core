@@ -19,3 +19,13 @@
 .mt-5 {
     margin-top: 9rem !important;
 }
+
+span.field-icon {
+    position: absolute;
+    display: inline-block;
+    cursor: pointer;
+    right: 0.5rem;
+    top: 2.8rem;
+    margin-right: 20px;
+    z-index: 2;
+}
