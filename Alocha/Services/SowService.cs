@@ -36,12 +36,12 @@ namespace Alocha.WebUi.Services
             return new List<SowVM>();
         }
 
-        public async Task<bool> CreateSowAsync(SowIndexVM model, string userId)
+        public async Task<bool> CreateSowAsync(SowCreateVM model, string userId)
         {
             var user = await _unitOfWork.User.FindOneAsync(u => u.Id == userId);
             if (!user.Sows.Where(s => s.Number == model.Number && !s.IsRemoved).Any())
             {
-                var sow = _mapper.Map<SowIndexVM, Sow>(model);
+                var sow = _mapper.Map<SowCreateVM, Sow>(model);
                 sow.UserId = userId;
                 sow.DateHappening = DateTime.Now;
                 _unitOfWork.Sow.Add(sow);

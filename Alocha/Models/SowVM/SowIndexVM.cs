@@ -8,16 +8,7 @@ namespace Alocha.WebUi.Models.SowVM
 {
     public class SowIndexVM
     {
-
-        [Required(ErrorMessage = "Pole Numer jest wymagane.")]
-        [Display(Name = "Numer")]
-        public string Number { get; set; }
-
-        [Required(ErrorMessage = "Pole Stan lochy jet wymagane.")]
-        [Display(Name = "Stan lochy")]
-        public string Status { get; set; }
-
-        public bool IsRemoved { get; set; }
+        public SowCreateVM SowCreateVM { get; set; }
 
         public IEnumerable<SowVM> Sows { get; set; }
     }

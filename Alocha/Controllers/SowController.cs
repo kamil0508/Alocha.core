@@ -34,15 +34,15 @@ namespace Alocha.WebUi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind(include:"Number, Status, IsRemoved")]SowIndexVM model)
+        public async Task<IActionResult> Create([Bind(include: "SowCreateVM")]SowIndexVM model)
         {
             var currentUserId = User.Claims.ElementAt(0).Value;
-            var validationResult = CustomNumberValidator.NumberValidation(model.Number);
+            var validationResult = CustomNumberValidator.NumberValidation(model.SowCreateVM.Number);
             if (validationResult != null)
                 ModelState.AddModelError("", validationResult);
             if(ModelState.IsValid)
             {
-                var result = await _sowService.CreateSowAsync(model, currentUserId);
+                var result = await _sowService.CreateSowAsync(model.SowCreateVM, currentUserId);
                 if(result)
                     return RedirectToAction("Index");
                 ModelState.AddModelError("", "Locha o podanym numerze już istnieje.");

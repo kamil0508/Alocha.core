@@ -20,7 +20,7 @@ namespace Alocha.WebUi.Helpers
         public AutoMaperConfiguration()
         {
             CreateMap<Sow, SowVM>();
-            CreateMap<SowIndexVM, Sow>();
+            CreateMap<SowCreateVM, Sow>();
             CreateMap<Sow, SowEditVM>().ReverseMap();
             CreateMap<SowEditVM, SmallPig>();
             CreateMap<SmallPig, SmallPigVM>();
