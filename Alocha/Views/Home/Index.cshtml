@@ -2,9 +2,24 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="col-md-12 col-lg-12">
+    <div class="panel">
+        <div class="panel-body">
+            <h2 class="text-center" style="color:rgba(245, 119, 10, 0.80)">Witaj w Aplikacji Alocha !</h2>
+            <p class="font-italic">
+                Program <strong>Alocha</strong> służy pomocą w zarządzaniu swoim stadem loch. Ułatwia nadzór nad stadem loch <br />
+                między innymi ze względu na to iż w każdej chwili możemy dowiedzieć sie w jakim stanie znajduje się locha(luźna , prośna , karmiąca).<br />
+                Możemy również dowiedzieć sie szczegułów związanych z porodem(daty porodów, ilość prosiąt) oraz informacjami na temat<br />
+                terminu szczepienia przedporodowego.
+                Aplikacja posiada system informowania o wydarzeniach z dnia jutrzejszego, informacje te są przesyłane poprzez wiadomość SMS,<br />
+                jednak aby go uruchomić należy dodać numer telefonu, aby to zrobić należy wybrać przycisk:<br />
+                <span class="mr-2">&#9776;</span><span>&rarr;</span> następnie przejść do sekcji<br />
+                <span class="fa fa-cog mr-2"></span><span>&rarr;</span>Ustawienia<br />
+                po czym należy dodać numer telefonu. Po dodaniu numeru telefonu usługa uruchomi się automatycznie informująć nas o tym odpowiednim komunikatem.<br />
+                Numer telefonu mozna w każdej chwili usunać co wiaże się z rezygnacji z korzystania z usługi informowania SMS.
+            </p>
+        </div>
+    </div>
 </div>
 @section Scripts{
     <script src="~/js/Index-home.js"></script>
