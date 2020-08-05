@@ -25,10 +25,10 @@ namespace Alocha.WebUi.Services
             _userManager = userManager;
         }
 
-        public async Task<IdentityResult> AddPhoneNumberAsync(UserManageVM model, string userId)
+        public async Task<IdentityResult> AddPhoneNumberAsync(string phoneNumber, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
-            return await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
+            return await _userManager.SetPhoneNumberAsync(user, phoneNumber);
         }
 
         public async Task<IdentityResult> ChangePasswordAsync(UserManageVM model, string userId)
@@ -44,7 +44,7 @@ namespace Alocha.WebUi.Services
             return model;
         }
 
-        public async Task<IdentityResult> RemovePhoneNumberAsync(UserManageVM model, string userId)
+        public async Task<IdentityResult> RemovePhoneNumberAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             return await _userManager.SetPhoneNumberAsync(user, null);

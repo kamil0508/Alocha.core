@@ -21,7 +21,7 @@
                 </dd>
                 <dt>Hasło:</dt>
                 <dd>
-                    <button type="button" id=" " class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Zmień</button>
+                    <button type="button" id="openModalChangePassword" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Zmień</button>
                 </dd>
                 <dt>Numer telefonu:</dt>
                 <dd>
@@ -78,7 +78,6 @@
                         </button>
                     </form>
                 </dd>
-                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             </dl>
         </div>
     </div>
@@ -151,9 +150,6 @@
                                 <span class="fa fa-floppy-o text-light"></span>
                                 Zapisz
                             </button>
-                        </div>
-                        <div class="form-group">
-                            @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "sumaryValidationAddPhoneNumber" })
                         </div>
                     }
                 </div>

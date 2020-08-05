@@ -92,11 +92,26 @@ namespace Alocha.WebUi.Controllers
                 model.LinkUrl = "/User/ConfirmPhoneNumber";
                 model.LinkName = "Potwierdź";
             }
+            if (message == IdMessage.AddPhoneNumberError)
+            {
+                model.Topic = "Błąd";
+                model.Message = "Niestety nie udało się dodać numeru telefonu.";
+                model.LinkUrl = "/User/Index";
+                model.LinkName = "Wróć";
+            }
             else
             if (message == IdMessage.RemovePhoneNumberSucces)
             {
                 model.Topic = "Powodzenie";
                 model.Message = "Numer telefonu został usunięty pomyślnie.";
+                model.LinkUrl = "/User/Index";
+                model.LinkName = "Wróć";
+            }
+            else
+            if (message == IdMessage.RemovePhoneNumberError)
+            {
+                model.Topic = "Błąd";
+                model.Message = "Nie udało się usunąć numeru telefonu.";
                 model.LinkUrl = "/User/Index";
                 model.LinkName = "Wróć";
             }

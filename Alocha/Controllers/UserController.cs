@@ -37,31 +37,36 @@ namespace Alocha.WebUi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(UserManageVM model)
+        public async Task<IActionResult> ChangePassword([Bind(include: "OldPassword, NewPassword, ConfirmNewPassword ")]UserManageVM model)
         {
-            var currentUserId = User.Claims.ElementAt(0).Value;
-            var result = await _userService.ChangePasswordAsync(model, currentUserId);
-            if (result.Succeeded)
-                return RedirectToAction("Index", "Message", new { Message = IdMessage.ChangePasswordSucces});
-            result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
+            if (ModelState.IsValid)
+            {
+                var currentUserId = User.Claims.ElementAt(0).Value;
+                var result = await _userService.ChangePasswordAsync(model, currentUserId);
+                if (result.Succeeded)
+                    return RedirectToAction("Index", "Message", new { Message = IdMessage.ChangePasswordSucces });
+                result.Errors.ToList().ForEach(e => ModelState.AddModelError("ChangePassword", e.Description));
+            }
             return View("Index",model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPhoneNumber(UserManageVM model)
+        public async Task<IActionResult> AddPhoneNumber([Bind(include: "PhoneNumber")]UserManageVM model)
         {
-            var currentUserId = User.Claims.ElementAt(0).Value;
-            var result = await _userService.AddPhoneNumberAsync(model, currentUserId);
-            if (result.Succeeded)
+            if (model.PhoneNumber != null)
             {
-                var code = await _userService.GenerateConfirmedPhoneNumberCodeAsync(model.PhoneNumber, currentUserId);
-                var smsResult = await _smsService.SendConfirmPhoneNumberSmsAsync(model.PhoneNumber, code);
-                if(smsResult != null)
-                    return RedirectToAction("Index", "Message", new { Message = IdMessage.AddPhoneNumberSucces });
-                _logger.LogError(string.Format("The confirmation SMS has not been sent to the user : {0}.", User.Identity.Name));
+                var currentUserId = User.Claims.ElementAt(0).Value;
+                var result = await _userService.AddPhoneNumberAsync(model.PhoneNumber, currentUserId);
+                if (result.Succeeded)
+                {
+                    var code = await _userService.GenerateConfirmedPhoneNumberCodeAsync(model.PhoneNumber, currentUserId);
+                    var smsResult = await _smsService.SendConfirmPhoneNumberSmsAsync(model.PhoneNumber, code);
+                    if (smsResult != null)
+                        return RedirectToAction("Index", "Message", new { Message = IdMessage.AddPhoneNumberSucces });
+                    _logger.LogError(string.Format("The confirmation SMS has not been sent to the user : {0}.", User.Identity.Name));
+                }
             }
-            result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
-            return View("Index", model);
+            return RedirectToAction("Index", "Message", new { Message = IdMessage.AddPhoneNumberError });        
         }
 
         [HttpGet]
@@ -71,7 +76,7 @@ namespace Alocha.WebUi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmPhoneNumber(UserManageVM model)
+        public async Task<IActionResult> ConfirmPhoneNumber([Bind(include: "Token")]UserManageVM model)
         {
             var currentUserId = User.Claims.ElementAt(0).Value;
             var result = await _userService.ConfirmPhoneNumberAsync(model.Token, currentUserId);
@@ -81,14 +86,13 @@ namespace Alocha.WebUi.Controllers
         }
 
 
-        public async Task<IActionResult> RemovePhoneNumber(UserManageVM model)
+        public async Task<IActionResult> RemovePhoneNumber()
         {
             var currentUserId = User.Claims.ElementAt(0).Value;
-            var result = await _userService.RemovePhoneNumberAsync(model, currentUserId);
+            var result = await _userService.RemovePhoneNumberAsync(currentUserId);
             if (result.Succeeded)
                 return RedirectToAction("Index", "Message", new { Message = IdMessage.RemovePhoneNumberSucces });
-            result.Errors.ToList().ForEach(e => ModelState.AddModelError("", e.Description));
-            return View("Index", model);
+            return RedirectToAction("Index", "Message", new { Message = IdMessage.RemovePhoneNumberError });
         }
 
         public async Task<IActionResult> Delete([Bind(include: "Email")] UserManageVM model)

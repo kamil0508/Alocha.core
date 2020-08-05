@@ -11,7 +11,6 @@ namespace Alocha.WebUi.Models.UserVM
     {
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Pole Numer telefonu jest wymagane.")]
         [Display(Name = "Numer telefonu")]
         [RegularExpression(@"\d{8}[0-9]", ErrorMessage = "Numer może się składać z liczb [0-9].")]
         public string PhoneNumber { get; set; }
