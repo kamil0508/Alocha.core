@@ -92,6 +92,7 @@ namespace Alocha.WebUi.Controllers
                 model.LinkUrl = "/User/ConfirmPhoneNumber";
                 model.LinkName = "Potwierdź";
             }
+            else
             if (message == IdMessage.AddPhoneNumberError)
             {
                 model.Topic = "Błąd";
