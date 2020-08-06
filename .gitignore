@@ -2,6 +2,8 @@
 /Alocha.Domain/obj
 /Alocha/bin
 /Alocha/obj
+/Alocha.Api/bin
+/Alocha.Api/obj
 /.vs
 /.vscode
 *.user
