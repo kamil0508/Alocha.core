@@ -11,6 +11,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alocha.Domain", "Alocha.Domain\Alocha.Domain.csproj", "{D3C4E6DA-DFA8-4F7A-B49B-3B23F21926ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alocha.Api", "Alocha.Api\Alocha.Api.csproj", "{9F02EA99-3012-458D-BB0E-8DFE138C6643}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D3C4E6DA-DFA8-4F7A-B49B-3B23F21926ED} = {D3C4E6DA-DFA8-4F7A-B49B-3B23F21926ED}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
