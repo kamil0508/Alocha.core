@@ -1,4 +1,6 @@
-﻿using Alocha.Domain.Interfaces;
+﻿using Alocha.Api.Services;
+using Alocha.Api.Services.Interfaces;
+using Alocha.Domain.Interfaces;
 using Alocha.Domain.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -21,6 +23,8 @@ namespace Alocha.Api.Extensions
         }
         public static IServiceCollection ServiceInjetor(this IServiceCollection services)
         {
+            services.AddScoped<IJwTokenService, JwTokenService>();
+
             return services;
         }
     }
