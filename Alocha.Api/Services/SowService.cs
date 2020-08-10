@@ -1,4 +1,5 @@
-﻿using Alocha.Domain.Interfaces;
+﻿using Alocha.Api.DTOs.SowDTOs;
+using Alocha.Domain.Interfaces;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,16 @@ namespace Alocha.Api.Services
             _mapper = mapper;
         }
 
-
+        public async Task<IEnumerable<SowDTO>> GetAllSowsAsync(string email)
+        {
+            var user = await _unitOfWork.User.FindOneAsync(u => u.Email == email);
+            if (user != null)
+            {
+                var sows = user.Sows.Where(s => !s.IsRemoved);
+                var model = _mapper.Map<IEnumerable<SowDTO>>(sows);
+                return model;
+            }
+            throw new NullReferenceException();
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace Alocha.Api.Extensions
         public static IServiceCollection ServiceInjetor(this IServiceCollection services)
         {
             services.AddScoped<IJwTokenService, JwTokenService>();
+            services.AddScoped<ISowService, SowService>();
 
             return services;
         }
