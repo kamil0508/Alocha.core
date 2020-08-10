@@ -30,12 +30,8 @@ namespace Alocha.Api.Controllers
                 var token = await _jwTokenService.GenerateToken(dto.Email);
                 if(token != null)
                     return Ok(token);
-                return NotFound();
             }
-            else
-            {
-                return NotFound();    
-            }
+            return NotFound();    
         }
 
         [HttpPost("RefreshToken")]
