@@ -61,7 +61,20 @@ namespace Alocha.Api
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("Tomojsekretnyklucz")),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                };    
+                    ClockSkew = TimeSpan.Zero
+                };
+                JwtBearerOptions.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+
             });
 
             services.RepositoryInjector();
