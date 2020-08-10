@@ -16,10 +16,7 @@ namespace Alocha.Api.Controllers
     {
         private readonly IJwTokenService _jwTokenService;
 
-        public JwTokenController(IJwTokenService jwTokenService)
-        {
-            _jwTokenService = jwTokenService;
-        }
+        public JwTokenController(IJwTokenService jwTokenService) => _jwTokenService = jwTokenService;
 
         [HttpPost("CreateToken")]
         public async Task<IActionResult> SignIn(UserCardDTO dto)

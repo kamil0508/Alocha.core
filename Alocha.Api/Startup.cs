@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Alocha.Api.Extensions;
 using Alocha.Domain;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +40,8 @@ namespace Alocha.Api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 options.UseLazyLoadingProxies();
             });
+
+            services.AddAutoMapper(typeof(Startup));
 
             // Add IdentityUser and IdentityRole
             services.AddIdentity<IdentityUser, IdentityRole>()
