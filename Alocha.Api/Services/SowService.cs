@@ -25,10 +25,22 @@ namespace Alocha.Api.Services
             if (user != null)
             {
                 var sows = user.Sows.Where(s => !s.IsRemoved);
-                var model = _mapper.Map<IEnumerable<SowDTO>>(sows);
-                return model;
+                var dto = _mapper.Map<IEnumerable<SowDTO>>(sows);
+                return dto;
             }
-            throw new NullReferenceException();
+            return null;
+        }
+
+        public async Task<SowOneDTO> GetOneSowAsync(string email, int sowId)
+        {
+            var user = await _unitOfWork.User.FindOneAsync(u => u.Email == email);
+            if (user != null)
+            {
+                var sow = user.Sows.Where(s => s.SowId == sowId && !s.IsRemoved).First();
+                var dto = _mapper.Map<SowOneDTO>(sow);
+                return dto;
+            }
+            return null;
         }
     }
 }

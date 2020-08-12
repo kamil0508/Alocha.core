@@ -19,17 +19,33 @@ namespace Alocha.Api.Controllers
 
         public SowController(ISowService sowService) => _sowService = sowService;
 
+        //GET Sow
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var currentUserEmail = User.Claims.ElementAt(0).Value;
             if (currentUserEmail != null)
             {
-                var model = new SowIndexDTO()
+                var dto = new SowIndexDTO()
                 {
                     Sows = await _sowService.GetAllSowsAsync(currentUserEmail)
                 };
-                return Ok(model);
+                return Ok(dto);
+            }
+            return BadRequest(new UnauthorizedAccessException());
+        }
+
+        //GET Sow/{id}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOneSow(int id)
+        {
+            var currentUserEmail = User.Claims.ElementAt(0).Value;
+            if (currentUserEmail != null)
+            {
+                var dto = await _sowService.GetOneSowAsync(currentUserEmail, id);
+                if(dto != null)
+                    return Ok(dto);
+                return NotFound();
             }
             return BadRequest(new UnauthorizedAccessException());
         }
