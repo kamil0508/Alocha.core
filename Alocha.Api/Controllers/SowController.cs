@@ -49,5 +49,21 @@ namespace Alocha.Api.Controllers
             }
             return BadRequest(new UnauthorizedAccessException());
         }
+
+        //POST Sow
+        [HttpPost]
+        public async Task<IActionResult> CreateSow(SowCreateDTO dto)
+        {
+            var currentUserEmail = User.Claims.ElementAt(0).Value;
+            if(currentUserEmail != null)
+            {
+                var resultDto = await _sowService.AddSowAsync(dto, currentUserEmail);
+                if (resultDto != null)
+                {
+                    return Created(string.Format("/Sow/{0}", resultDto.SowId), resultDto);
+                }
+            }
+            return BadRequest(string.Format("Sow with number {0} is exist", dto.Number));
+        }
     }
 }

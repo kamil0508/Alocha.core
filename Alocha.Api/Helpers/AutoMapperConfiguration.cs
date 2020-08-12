@@ -14,6 +14,7 @@ namespace Alocha.Api.Helpers
         {
             CreateMap<Sow, SowDTO>();
             CreateMap<Sow, SowOneDTO>();
+            CreateMap<SowCreateDTO, Sow>();
         }
     }
 }

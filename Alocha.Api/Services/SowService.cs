@@ -1,4 +1,5 @@
 ﻿using Alocha.Api.DTOs.SowDTOs;
+using Alocha.Domain.Entities;
 using Alocha.Domain.Interfaces;
 using AutoMapper;
 using System;
@@ -39,6 +40,23 @@ namespace Alocha.Api.Services
                 var sow = user.Sows.Where(s => s.SowId == sowId && !s.IsRemoved).First();
                 var dto = _mapper.Map<SowOneDTO>(sow);
                 return dto;
+            }
+            return null;
+        }
+
+        public async Task<SowOneDTO> AddSowAsync(SowCreateDTO dto, string email)
+        {
+            var user = await _unitOfWork.User.FindOneAsync(u => u.Email == email);
+            if(user != null)
+            {
+                if (!user.Sows.Any(s => s.Number == dto.Number))
+                {
+                    var sow = _mapper.Map<Sow>(dto);
+                    sow.UserId = user.Id;
+                    _unitOfWork.Sow.Add(sow);
+                    await _unitOfWork.SaveChangesAsync();
+                    return await GetOneSowAsync(email, sow.SowId);
+                }
             }
             return null;
         }
