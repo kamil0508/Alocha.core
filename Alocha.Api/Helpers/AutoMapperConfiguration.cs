@@ -13,7 +13,7 @@ namespace Alocha.Api.Helpers
         public AutoMapperConfiguration()
         {
             CreateMap<Sow, SowDTO>();
-            CreateMap<Sow, SowOneDTO>();
+            CreateMap<Sow, SowOneDTO>().ReverseMap();
             CreateMap<SowCreateDTO, Sow>();
         }
     }

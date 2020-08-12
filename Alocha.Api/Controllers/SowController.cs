@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Alocha.Api.DTOs.SowDTOs;
 using Alocha.Api.Services;
+using AutoMapper.Configuration.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -62,8 +63,23 @@ namespace Alocha.Api.Controllers
                 {
                     return Created(string.Format("/Sow/{0}", resultDto.SowId), resultDto);
                 }
+                return BadRequest(string.Format("Sow with number {0} is exist", dto.Number));
             }
-            return BadRequest(string.Format("Sow with number {0} is exist", dto.Number));
+            return BadRequest(new UnauthorizedAccessException());
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateSow(SowOneDTO dto)
+        {
+            var currentUserEmail = User.Claims.ElementAt(0).Value;
+            if(currentUserEmail != null)
+            {
+                var result = await _sowService.EditSowAsync(dto, currentUserEmail);
+                if(result)
+                    return NoContent();
+                return NotFound();
+            }
+            return BadRequest(new UnauthorizedAccessException());
         }
     }
 }

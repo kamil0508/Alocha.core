@@ -60,5 +60,19 @@ namespace Alocha.Api.Services
             }
             return null;
         }
+
+        public async Task<bool> EditSowAsync(SowOneDTO dto, string email)
+        {
+            var user = await _unitOfWork.User.FindOneAsync(u => u.Email == email);
+            if (user != null)
+            {
+                var sow = user.Sows.Where(s => s.SowId == dto.SowId && !s.IsRemoved).First();
+                _mapper.Map(dto, sow);
+                return await _unitOfWork.SaveChangesAsync();
+            }
+            return false;
+        }
+
+
     }
 }

@@ -10,26 +10,26 @@ namespace Alocha.Api.DTOs.SowDTOs
     {
         public int SowId { get; set; }
 
+        [Required]
+        [MaxLength(4)]
+        [RegularExpression(@"^\d{4}$", ErrorMessage = "The number field can only contain numbers 0 - 9")]
         public string Number { get; set; }
 
+        [Required]
+        [RegularExpression(@"^Prośna|Laktacja|Luźna$", ErrorMessage = "The Status field can only contain 'Prośna', 'Luźna', 'Laktacja'.")]
         public string Status { get; set; }
 
-        [DataType(DataType.Date)]
+        [Required]
         public DateTime DateHappening { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime DateBorn { get; set; }
+        public DateTime? DateBorn { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime DateInsimination { get; set; }
+        public DateTime? DateInsimination { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime DateDetachment { get; set; }
+        public DateTime? DateDetachment { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime VaccineDate { get; set; }
+        public DateTime? VaccineDate { get; set; }
 
-        [Display(Name = "Szczepienie")]
         public bool IsVaccinated { get; set; }
     }
 }
