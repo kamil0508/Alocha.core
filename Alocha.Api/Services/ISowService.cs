@@ -12,5 +12,6 @@ namespace Alocha.Api.Services
         Task<SowOneDTO> GetOneSowAsync(string email, int sowId);
         Task<SowOneDTO> AddSowAsync(SowCreateDTO dto, string email);
         Task<bool> EditSowAsync(SowOneDTO dto, string email);
+        Task<bool> RemoveSowAync(string email, int sowId);
     }
 }

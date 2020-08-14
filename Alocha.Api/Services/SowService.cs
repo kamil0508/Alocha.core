@@ -73,6 +73,19 @@ namespace Alocha.Api.Services
             return false;
         }
 
-
+        public async Task<bool> RemoveSowAync(string email, int sowId)
+        {
+            var user = await _unitOfWork.User.FindOneAsync(u => u.Email == email);
+            if(user != null)
+            {
+                var sow = user.Sows.Where(s => s.SowId == sowId).First();
+                if(sow != null)
+                {
+                    sow.IsRemoved = true;
+                    return await _unitOfWork.SaveChangesAsync();
+                }
+            }
+            return false;
+        }
     }
 }

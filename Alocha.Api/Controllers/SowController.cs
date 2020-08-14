@@ -81,5 +81,19 @@ namespace Alocha.Api.Controllers
             }
             return BadRequest(new UnauthorizedAccessException());
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveSow(int id)
+        {
+            var currentUserEmail = User.Claims.ElementAt(0).Value;
+            if (currentUserEmail != null)
+            {
+                var result = await _sowService.RemoveSowAync(currentUserEmail, id);
+                if (result)
+                    return NoContent();
+                return NotFound();
+            }
+            return BadRequest(new UnauthorizedAccessException());
+        }
     }
 }
