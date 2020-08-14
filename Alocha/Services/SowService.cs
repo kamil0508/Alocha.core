@@ -4,6 +4,7 @@ using Alocha.WebUi.Models.SmallPigsVM;
 using Alocha.WebUi.Models.SowVM;
 using Alocha.WebUi.Services.Interfaces;
 using AutoMapper;
+using iTextSharp.text.pdf.qrcode;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,13 @@ namespace Alocha.WebUi.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly ISmallPigService _smallPig;
 
-        public SowService(IUnitOfWork unitOfWork, IMapper mapper)
+        public SowService(IUnitOfWork unitOfWork, IMapper mapper, ISmallPigService smallPig)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _smallPig = smallPig;
         }
 
         public async Task<IEnumerable<SowVM>> GetAllSowsAsync(string userId)
@@ -77,10 +80,8 @@ namespace Alocha.WebUi.Services
                     model.IsVaccinated = false;
                     //add smallpig
                     if (model.PigsQuantity != null)
-                    {
-                        model.BornDate = model.DateHappening;
-                        var smallpig = _mapper.Map<SowEditVM, SmallPig>(model);
-                        _unitOfWork.Smallpig.Add(smallpig);
+                    { 
+                        await _smallPig.AddSmallPig(model);
                     }
                     break;
 
