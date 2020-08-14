@@ -68,6 +68,7 @@ namespace Alocha.Api.Controllers
             return BadRequest(new UnauthorizedAccessException());
         }
 
+        //PUT Sow
         [HttpPut]
         public async Task<IActionResult> UpdateSow(SowOneDTO dto)
         {
@@ -82,6 +83,7 @@ namespace Alocha.Api.Controllers
             return BadRequest(new UnauthorizedAccessException());
         }
 
+        //DELETE Sow/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveSow(int id)
         {

@@ -29,8 +29,7 @@ namespace Alocha.Domain.Repositories
        
         public async Task<bool> SaveChangesAsync()
         {
-            await _applicationDbContext.SaveChangesAsync();
-            return true;
+            return (await _applicationDbContext.SaveChangesAsync() > 0);
         }
 
         public void Dispose()
