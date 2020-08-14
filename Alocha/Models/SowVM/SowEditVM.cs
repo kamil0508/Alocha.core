@@ -19,9 +19,11 @@ namespace Alocha.WebUi.Models.SowVM
         [Display(Name = "Numer")]
         public string Number { get; set; }
 
+        [Required(ErrorMessage = "Pole Wydarzenie jest wymagane.")]
         [Display(Name = "Wydarzenie:")]
         public string Status { get; set; }
 
+        [Required(ErrorMessage = "Pole Data zdarzenia jest wymagane.")]
         [Display(Name = "Data zdarzenia")]
         [DataType(DataType.Date)]
         public DateTime DateHappening { get; set; }
