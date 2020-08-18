@@ -14,5 +14,6 @@ namespace Alocha.Api.Services
         Task<bool> EditSowAsync(SowOneDTO dto, string email);
         Task<bool> RemoveSowAync(string email, int sowId);
         Task<IEnumerable<SowDTO>> GetPregnantSows(string email);
+        Task<bool> VaccinateSow(int sowId, string email);
     }
 }

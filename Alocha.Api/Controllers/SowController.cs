@@ -100,6 +100,21 @@ namespace Alocha.Api.Controllers
             return BadRequest(new UnauthorizedAccessException());
         }
 
+        //GET Sow/Vaccinate/{id}
+        [HttpGet("Vaccinate/{id}")]
+        public async Task<IActionResult> SowVaccinated(int id)
+        {
+            var currentUserEmail = User.Claims.ElementAt(0).Value;
+            if (currentUserEmail != null)
+            {
+                var result = await _sowService.VaccinateSow(id, currentUserEmail);
+                if (result)
+                    return NoContent();
+                return NotFound();
+            }
+            return BadRequest(new UnauthorizedAccessException());
+        }
+
         //DELETE Sow/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveSow(int id)
