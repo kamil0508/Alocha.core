@@ -84,6 +84,7 @@ namespace Alocha.Api.Controllers
             return BadRequest(new UnauthorizedAccessException());
         }
 
+        //GET Sow/PregnantSows
         [HttpGet("PregnantSows")]
         public async Task<IActionResult> GetPregnantSow()
         {
