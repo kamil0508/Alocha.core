@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Alocha.Api.DTOs.SowDTOs;
 using Alocha.Api.Services;
@@ -79,6 +80,21 @@ namespace Alocha.Api.Controllers
                 if(result)
                     return NoContent();
                 return NotFound();
+            }
+            return BadRequest(new UnauthorizedAccessException());
+        }
+
+        [HttpGet("PregnantSows")]
+        public async Task<IActionResult> GetPregnantSow()
+        {
+            var currentUserEmail = User.Claims.ElementAt(0).Value;
+            if(currentUserEmail != null)
+            {
+                var dto = new SowIndexDTO()
+                {
+                    Sows = await _sowService.GetPregnantSows(currentUserEmail)
+                };
+                return Ok(dto);
             }
             return BadRequest(new UnauthorizedAccessException());
         }

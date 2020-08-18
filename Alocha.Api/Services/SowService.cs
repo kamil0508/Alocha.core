@@ -87,5 +87,16 @@ namespace Alocha.Api.Services
             }
             return false;
         }
+
+        public async Task<IEnumerable<SowDTO>> GetPregnantSows(string email)
+        {
+            var user = await _unitOfWork.User.FindOneAsync(u => u.Email == email);
+            if(user != null)
+            {
+                var sows = user.Sows.Where(s => s.Status == "Prośna" && !s.IsRemoved);
+                return _mapper.Map<IEnumerable<SowDTO>>(sows);
+            }
+            return null;
+        }
     }
 }
