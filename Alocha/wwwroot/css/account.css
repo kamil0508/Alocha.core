@@ -3,6 +3,11 @@
     background-attachment: fixed;
 }
 
+.log-in-div {
+    background-color: white;
+    border-radius: 20px;
+}
+
 .center-div {
     -webkit-box-shadow: 0px 0px 52px 18px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 52px 18px rgba(0,0,0,0.75);
@@ -10,10 +15,23 @@
 }
 
 .register-div {
-    -webkit-box-shadow: 0px 0px 52px 18px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 52px 18px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 52px 18px rgba(0,0,0,0.75);
-    background-color: #fdfdfd;
+    background-color: #e0fffb;
+    border-radius: 20px;
+}
+
+.forgot-password-div {
+    background-color: #fff4e0;
+    border-radius: 20px;
+}
+
+.reset-password-div {
+    background-color: #ffe8e0;
+    border-radius: 20px;
+}
+
+.message-div {
+    background-color: #ffebb3;
+    border-radius: 40px;
 }
 
 .mt-5 {

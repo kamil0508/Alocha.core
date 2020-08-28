@@ -10,19 +10,16 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/account.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="row h-100" style="margin-top:200px;">
-        <div class="col-sm-12 my-auto">
-            <div class="card card-block w-50 mx-auto">
-                <div class="text-center">
-                    @Html.HiddenFor(m => m.LinkUrl)
-                    <h4>@Model.Topic</h4>
-                    <p>@Model.Message</p>
-                    <a class="btn btn-primary" href=@Model.LinkUrl>@Model.LinkName (<span id="counter">5</span>)</a>
+    <div class="mt-5 mx-auto col-sm-6 message-div py-2">
+        <div class="text-center">
+            @Html.HiddenFor(m => m.LinkUrl)
+            <h4>@Model.Topic</h4>
+            <p>@Model.Message</p>
+            <a class="btn btn-primary" href=@Model.LinkUrl>@Model.LinkName (<span id="counter">5</span>)</a>
 
-                </div>
-            </div>
         </div>
     </div>
     <script src="~/lib/jquery/dist/jquery.js"></script>
