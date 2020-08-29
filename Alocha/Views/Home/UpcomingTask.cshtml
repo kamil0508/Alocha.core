@@ -14,70 +14,79 @@
                 {
                     <div class="text-center"><h3>Brak Zadań w najbliższym czasie</h3></div>
                 }
-            <div class="form-row">
-                @foreach (var task in Model)
-                {
-                    @if (task.DateBorn == DateTime.Today || task.DateDetachment == DateTime.Today || task.DateInsimination == DateTime.Today || task.VaccineDate == DateTime.Today)
+                <div class="row">
+                    @foreach (var task in Model)
                     {
-                        <a href="/Sow/Details/@task.SowId" class="form-group col-lg-3 mx-5 date-today text-center  style-link link-hover ">
-                            <div>
-                                <h3 class="text-warning">@Html.LabelFor(m => task.Number) @Html.DisplayFor(m => task.Number)</h3>
-                                @if (task.DateBorn != DateTime.MinValue)
-                                {
-                                    <h4>@Html.LabelFor(m => task.DateBorn)</h4>
-                                    <h5>@Html.DisplayFor(m => task.DateBorn)</h5>
-                                }
-                                @if (task.DateDetachment != DateTime.MinValue)
-                                {
-                                    <h4>@Html.LabelFor(m => task.DateDetachment)</h4>
-                                    <h5>@Html.DisplayFor(m => task.DateDetachment)</h5>
-                                }
+                        @if (task.DateBorn == DateTime.Today || task.DateDetachment == DateTime.Today || task.DateInsimination == DateTime.Today || task.VaccineDate == DateTime.Today)
+                        {
+                            <div class="col-sm-6 mb-2">
+                                <div class="card bg-transparent bg-transparent border-danger">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Locha numer: @Html.DisplayFor(m => task.Number) (DZIŚ)</h5>
+                                        <p class="card-text">
+                                            @if (task.DateBorn != DateTime.MinValue)
+                                            {
+                                                <h4>@Html.LabelFor(m => task.DateBorn)</h4>
+                                                <h5 class="text-center">@Html.DisplayFor(m => task.DateBorn)</h5>
+                                            }
+                                            @if (task.DateDetachment != DateTime.MinValue)
+                                            {
+                                                <h4>@Html.LabelFor(m => task.DateDetachment)</h4>
+                                                <h5 class="text-center">@Html.DisplayFor(m => task.DateDetachment)</h5>
+                                            }
 
-                                @if (task.DateInsimination != DateTime.MinValue)
-                                {
-                                    <h4>@Html.LabelFor(m => task.DateInsimination)</h4>
-                                    <h5>@Html.DisplayFor(m => task.DateInsimination)</h5>
-                                }
-                                @if (task.VaccineDate != DateTime.MinValue )
-                                {
-                                    <h4>@Html.LabelFor(m => task.VaccineDate)</h4>
-                                    <h5>@Html.DisplayFor(m => task.VaccineDate)</h5>
-                                }
-                                <p class="text-warning">DZIŚ</p>
+                                            @if (task.DateInsimination != DateTime.MinValue)
+                                            {
+                                                <h4>@Html.LabelFor(m => task.DateInsimination)</h4>
+                                                <h5 class="text-center">@Html.DisplayFor(m => task.DateInsimination)</h5>
+                                            }
+                                            @if (task.VaccineDate != DateTime.MinValue)
+                                            {
+                                                <h4>@Html.LabelFor(m => task.VaccineDate)</h4>
+                                                <h5 class="text-center">@Html.DisplayFor(m => task.VaccineDate)</h5>
+                                            }
+                                        </p>
+                                        <a href="/Sow/Details/@task.SowId" class="btn btn-block btn-primary">Szczegóły</a>
+                                    </div>
+                                </div>
                             </div>
-                        </a>
-                    }
-                    else
-                    {
-                        <a href="/Sow/Details/@task.SowId" class="form-group mx-5 col-lg-3 mx-5 upcoming-task text-center style-link link-hover ">
-                            <div>
-                                <h3 class="text-warning">@Html.LabelFor(m => task.Number) @Html.DisplayFor(m => task.Number)</h3>
-                                @if (task.DateBorn != DateTime.MinValue)
-                                {
-                                    <h4>@Html.LabelFor(m => task.DateBorn)</h4>
-                                    <h5>@Html.DisplayFor(m => task.DateBorn)</h5>
-                                }
-                                @if (task.DateDetachment != DateTime.MinValue)
-                                {
-                                    <h4>@Html.LabelFor(m => task.DateDetachment)</h4>
-                                    <h5>@Html.DisplayFor(m => task.DateDetachment)</h5>
-                                }
+                        }
+                        else
+                        {
+                            <div class="col-sm-6 mb-2">
+                                <div class="card bg-transparent border-info">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Locha numer: @Html.DisplayFor(m => task.Number)</h5>
+                                        <p class="card-text">
+                                            @if (task.DateBorn != DateTime.MinValue)
+                                            {
+                                                <h4>@Html.LabelFor(m => task.DateBorn)</h4>
+                                                <h5 class="text-center">@Html.DisplayFor(m => task.DateBorn)</h5>
+                                            }
+                                            @if (task.DateDetachment != DateTime.MinValue)
+                                            {
+                                                <h4>@Html.LabelFor(m => task.DateDetachment)</h4>
+                                                <h5 class="text-center">@Html.DisplayFor(m => task.DateDetachment)</h5>
+                                            }
 
-                                @if (task.DateInsimination != DateTime.MinValue)
-                                {
-                                    <h4>@Html.LabelFor(m => task.DateInsimination)</h4>
-                                    <h5>@Html.DisplayFor(m => task.DateInsimination)</h5>
-                                }
-                                @if (task.VaccineDate != DateTime.MinValue)
-                                {
-                                    <h4>@Html.LabelFor(m => task.VaccineDate)</h4>
-                                    <h5>@Html.DisplayFor(m => task.VaccineDate)</h5>
-                                }
+                                            @if (task.DateInsimination != DateTime.MinValue)
+                                            {
+                                                <h4>@Html.LabelFor(m => task.DateInsimination)</h4>
+                                                <h5 class="text-center">@Html.DisplayFor(m => task.DateInsimination)</h5>
+                                            }
+                                            @if (task.VaccineDate != DateTime.MinValue)
+                                            {
+                                                <h4>@Html.LabelFor(m => task.VaccineDate)</h4>
+                                                <h5 class="text-center">@Html.DisplayFor(m => task.VaccineDate)</h5>
+                                            }
+                                        </p>
+                                        <a href="/Sow/Details/@task.SowId" class="btn btn-block btn-primary">Szczegóły</a>
+                                    </div>
+                                </div>
                             </div>
-                        </a>
-                    }
-                 }
-            </div>
+                        }
+                     }
+                </div>
             </div>
         </div>    
     </div>
