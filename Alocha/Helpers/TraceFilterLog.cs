@@ -12,5 +12,6 @@ namespace Alocha.WebUi.Helpers
         public string ControllerName { get; set; }
         public string ActionName { get; set; }
         public IDictionary<string, object> ActionParameters { get; set; }
+        public string IpHostInfo { get; set; }
     }
 }

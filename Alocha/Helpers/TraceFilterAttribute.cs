@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading.Tasks;
 using Alocha.WebUi.Helpers.Constans;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -8,44 +12,47 @@ namespace Alocha.WebUi.Helpers
 {
     public sealed class TraceFilterAttribute : ActionFilterAttribute
     {
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        public async override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (filterContext != null && filterContext.HttpContext != null)
+            if (context != null && context.HttpContext != null)
             {
                 try
                 {
-                    var descriptor = filterContext.ActionDescriptor as ControllerActionDescriptor;
+                    var ipHostEntry = Dns.GetHostEntry(Dns.GetHostName());
+                    var descriptor = context.ActionDescriptor as ControllerActionDescriptor;
 
                     var log = new TraceFilterLog()
                     {
                         Date = DateTime.Now.ToString(),
-                        User = filterContext.HttpContext.User.Identity.Name,
+                        User = context.HttpContext.User.Identity.Name,
                         ControllerName = descriptor.ControllerName,
                         ActionName = descriptor.ActionName,
-                        ActionParameters = filterContext.ActionArguments
+                        ActionParameters = context.ActionArguments,
+                        IpHostInfo = ipHostEntry.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork).ToString()
                     };
 
-                    LogMessageToFile(JsonConvert.SerializeObject(log));
+                    await SaveLogMessageToFile(JsonConvert.SerializeObject(log));
                 }
                 catch (Exception)
                 {
                 }
             }
-
-            base.OnActionExecuting(filterContext);
+            base.OnActionExecuting(context);
         }
 
-        private void LogMessageToFile(string msg)
+        private async Task SaveLogMessageToFile(string message)
         {
             System.IO.Directory.CreateDirectory(PathConstans.TRACE_FILTER_LOG_PATH);
-            System.IO.StreamWriter sw = System.IO.File.AppendText(PathConstans.TRACE_FILTER_LOG_PATH + "\\" + DateTime.Now.Date.ToShortDateString() + ".txt");
-            try
+            using (System.IO.StreamWriter file = System.IO.File.AppendText(string.Format("{0}\\{1}.txt", PathConstans.TRACE_FILTER_LOG_PATH, DateTime.Now.Date.ToShortDateString())))
             {
-                sw.WriteLine(msg);
-            }
-            finally
-            {
-                sw.Close();
+                try
+                {
+                    await file.WriteLineAsync(message);
+                }
+                finally //Clean resource after write text
+                {
+                    file.Close();
+                }
             }
         }
     }
