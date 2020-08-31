@@ -14,23 +14,31 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-static-top navbar-expand-lg" role="navigation">
-            <div class="navbar-header">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    <h4><strong class="font-italic text-light"><span class="fa fa-calendar-check-o text-light mr-2"></span>ALOCHA</strong></h4>
-                </a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav mr-auto">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand d-inline-block align-top" href="/Home/Index">
+                <h4><strong class="font-italic text-light"><span class="fa fa-calendar-check-o text-light mr-2"></span>ALOCHA</strong></h4>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
                     @if (User.IsInRole("Administrator"))
                     {
-                        <li class="text-warning mr-2">Administrator</li>
+                        <li class="text-light mr-2 border-danger">Administrator</li>
+                    }
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="UpcomingTask"><span class="fa fa-thumb-tack text-light mr-2"></span>Zadania</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Sow" asp-action="Index"><span class="fa fa-list-alt text-light mr-2"></span>Lochy</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Sow" asp-action="Vaccinate"><span class="fa fa-user-md text-light mr-2"></span>Szczepienia</a></li>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="ManagementAdmin" asp-action="Index"><span class="fa fa-bar-chart text-light mr-2"></span>Panel Administratora</a></li>
                     }
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mr-4"><h6 class="text-warning">@User.Identity.Name</h6></li>
+                    <li class="nav-item mr-4"><h6 class="text-dark"><strong>@User.Identity.Name</strong></h6></li>
                 </ul>
-                <span style="font-size:20px; cursor:pointer" onclick="openNav()">&#9776;</span>
+                <span class="btn btn-outline-danger" style="font-size:20px; cursor:pointer" onclick="openNav()">&#9776;</span>
             </div>
         </nav>
     </header>
@@ -44,24 +52,6 @@
             <a class="text-center" href="/Account/LogOut"><span class="fa fa-power-off text-danger mr-2"></span>Wyloguj</a>
         }
     </div>
-
-    <aside class="sidebar">
-        <!-- Sidebar scroll-->
-        <div class="scroll-sidebar">
-            <!-- Sidebar navigation-->
-            <nav class="sidebar-nav">
-                <ul id="sidebarnav">
-                    <li><a asp-controller="Home" asp-action="UpcomingTask"><span class="fa fa-thumb-tack text-light mr-2"></span>Zadania</a></li>
-                    <li><a asp-controller="Sow" asp-action="Index"><span class="fa fa-list-alt text-light mr-2"></span>Lochy</a></li>
-                    <li><a asp-controller="Sow" asp-action="Vaccinate"><span class="fa fa-user-md text-light mr-2"></span>Szczepienia</a></li>
-                    @if (User.IsInRole("Administrator")) 
-                    {
-                        <li><a asp-controller="ManagementAdmin" asp-action="Index"><span class="fa fa-bar-chart text-light mr-2"></span>Panel Administratora</a></li>
-                    }
-                </ul>
-            </nav>
-        </div><!-- End Sidebar scroll-->
-    </aside>
 
     <div id="page-wrapper">
         <div class="row">
