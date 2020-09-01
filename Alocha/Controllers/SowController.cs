@@ -16,10 +16,12 @@ namespace Alocha.WebUi.Controllers
     public class SowController : Controller
     {
         private readonly ISowService _sowService;
+        private readonly IAttachmentService _attachmentService;
 
-        public SowController(ISowService sowService)
+        public SowController(ISowService sowService, IAttachmentService attachmentService)
         {
             _sowService = sowService;
+            _attachmentService = attachmentService;
         }
 
         [HttpGet]
@@ -121,33 +123,10 @@ namespace Alocha.WebUi.Controllers
         public async Task<IActionResult> DownloadAttachment()
         {
             var currentUserId = User.Claims.ElementAt(0).Value;
-            var model = await _sowService.GetAllSowsAsync(currentUserId);
-            
-            var pdfHelper = new PdfDocument(model);
-            var bytes = pdfHelper.Generate();
+            var fileContents = await _attachmentService.GenerateSowsListPdfAttachmentAsync(currentUserId);            
             var fileName = string.Format("SpisLoch_{0}.pdf", DateTime.Today.ToShortDateString());
-            var contentType = default(string);
-            var extension = fileName.Split(".");
-            switch (extension[1])
-            {
-                case "pdf":
-                    contentType = "application/pdf";
-                    break;
-                case "txt":
-                    contentType = "text/plain";
-                    break;
-                case "doc":
-                case "docx":
-                    contentType = "application/vnd.ms-word";
-                    break;
-                case "png":
-                    contentType = "image/png";
-                    break;
-                case "jpeg":
-                    contentType = "image/jpeg";
-                    break;
-            }
-            return File(bytes, contentType, fileName);
+
+            return File(fileContents, "application/pdf", fileName);
         }
     }
 }
