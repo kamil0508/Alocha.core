@@ -25,9 +25,9 @@ namespace Alocha.Domain.DbInitializer
             if (!_roleManager.RoleExistsAsync("Customer").GetAwaiter().GetResult())
                 _roleManager.CreateAsync(new IdentityRole() { Name = "Customer" }).GetAwaiter().GetResult();
 
-            if (_userManager.FindByEmailAsync("kaamilgrabowski1@wp.pl").GetAwaiter().GetResult() == null)
+            if (_userManager.FindByEmailAsync("Administrator@poczta.pl").GetAwaiter().GetResult() == null)
             {
-                var user = new User() { Email = "kaamilgrabowski1@wp.pl", UserName = "kaamilgrabowski1@wp.pl", EmailConfirmed = true };
+                var user = new User() { Email = "Administrator@poczta.pl", UserName = "Administrator@poczta.pl", EmailConfirmed = true };
                 var result = _userManager.CreateAsync(user, "Start123!").GetAwaiter().GetResult();
                 _userManager.AddToRoleAsync(user, "Administrator").GetAwaiter().GetResult();
             }
