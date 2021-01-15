@@ -1,0 +1,304 @@
+﻿@model Alocha.WebUi.Models.SowVM.SowCreateVM
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="col-md-12 col-lg-12">
+    <div class="panel">
+        <div class="panel-heading">
+            <h3><span class="lstick"></span>Lochy</h3>
+            <div class="pull-right">
+                <!-- Button trigger modal -->
+                <a href="/Sow/DownloadAttachment" class="btn btn-secondary">
+                    <span class="fa fa-download"></span>
+                    Pobierz PDF
+                </a>
+                <button type="button" id="openModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    <span class="fa fa-plus text-light"></span>
+                    Dodaj loche
+                </button>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filter-area" aria-expanded="false" aria-controls="filter-area">
+                    <i class="fa fa-filter"></i>
+                </button>
+            </div>
+        </div>
+        <div class="form-row collapse" id="filter-area">
+            <div class="form-group ml-2">
+                <input type="text" id="number-filter" class="form-control" placeholder="Numer lochy" />
+            </div>
+            <div class="form-group ml-1">
+                <input type="button" value="Filtruj" id="search-button" class="btn btn-info" />
+            </div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover" cellspacing="0" style="width:100%" id="myTables">
+                <thead>
+                    <tr>
+                        <th>
+                            Numer Lochy
+                        </th>
+                        <th class="select-filter">
+                            Status
+                        </th>
+                        <th>
+                            Data zdarzenia
+                        </th>
+                        <th>
+                            Data inseminacji
+                        </th>
+                        <th>
+                            Data oderwania
+                        </th>
+                        <th>
+                            Data porodu
+                        </th>
+                        <th>
+                            Data szczepienia
+                        </th>
+                        <th>Opcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Number
+                        </td>
+                        <td>
+                            Status
+                        </td>
+                        <td>
+                            DateHappening
+                        </td>
+                        <td>
+                            DateInsimination
+                        </td>
+                        <td>
+                            DateDetachment
+                        </td>
+                        <td>
+                            DateBorn
+                        </td>
+                        <td>
+                            VaccineDate
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<body onload="OpenModalWithValidation()">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nowa Locha</h5>
+                    <button type="button" onclick="ClearModal()" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("Create", "Sow", FormMethod.Post))
+                    {
+                        <div class="form-group col-sm-10">
+                            @Html.LabelFor(m => m.Number)
+                            @Html.EditorFor(m => m.Number, new { htmlAttributes = new { @class = "form-control", placeholder = "Numer", id = "numberInput", maxlength = "4" } })
+                            @Html.ValidationMessageFor(m => m.Number, "", new { @class = "field-validation text-danger" })
+                        </div>
+                        <div class="form-group col-sm-10">
+                            @{
+                                List<SelectListItem>
+                                    listItems = new List<SelectListItem>
+                                        ();
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "Luźna",
+                                    Value = "Luźna"
+                                });
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "Prośna",
+                                    Value = "Prośna",
+                                });
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "Laktacja",
+                                    Value = "Laktacja"
+                                });
+                            }
+                            @Html.DropDownListFor(m => m.Status, listItems, "Stan lochy:*", new { @class = "form-control" })<br />
+                            @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" href="/Sow/Index">
+                                <span class="fa fa-floppy-o text-light"></span>
+                                Zapisz
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@section Scripts {
+    @*
+        <script src="~/js/datatables-filters-classic.js"></script>*@
+    <script src="~/js/create-sow.js"></script>
+    <!-- Moment.js: -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+
+
+    <script>
+        //User Setting set TODO
+        var epochTime = new Date().valueOf();
+        localStorage.setItem('DataTables_myTables_/Sow/IndexServerSide', '{"time": ' + epochTime + ', "start": 0, "length": 50, "order": [[0, "asc"]], "search": { "search": "", "smart": true, "regex": false, "caseInsensitive": true }, "columns": \
+                    [{"visible": true, "search": { "search": "", "smart": true, "regex": false, "caseInsensitive": true } },\
+                    { "visible": true, "search": { "search": "", "smart": true, "regex": false, "caseInsensitive": true } },\
+                    { "visible": true, "search": { "search": "", "smart": true, "regex": false, "caseInsensitive": true } },\
+                    { "visible": true, "search": { "search": "", "smart": true, "regex": false, "caseInsensitive": true } },\
+                    { "visible": true, "search": { "search": "", "smart": true, "regex": false, "caseInsensitive": true } },\
+                    { "visible": true, "search": { "search": "", "smart": true, "regex": false, "caseInsensitive": true } },\
+                    { "visible": true, "search": { "search": "", "smart": true, "regex": false, "caseInsensitive": true } },\
+                    { "visible": true, "search": { "search": "", "smart": true, "regex": false, "caseInsensitive": true } }]}');
+
+        //jQuery DataTables initialization
+        var otable = $('#myTables').DataTable({
+            "processing": true, // for show processing bar
+            "serverSide": true, // for process on server side
+            "stateSave": true,
+            "lengthMenu": [25, 50, 100, 200],
+            "scrollY": "410px",
+            "scrollCollapse": true,
+            "dom": 'lBfrtip',
+            "buttons": [
+                'colvis'
+            ],
+            "ajax": {
+                "url": "/Sow/LoadData",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                {
+                    //index 0
+                    "data": "number",
+                    "name": "Number",
+                    "autoWidth": true
+                },
+                {
+                    //index 1
+                    "data": "status",
+                    "name": "Status",
+                    "autoWidth": true
+                }, 
+                {
+                    //index 2
+                    "data": "dateHappening",
+                    "name": "DateHappening",
+                    "autoWidth": true
+                },
+                {
+                    //index 3
+                    "data": "dateInsimination",
+                    "name": "DateInsimination",
+                    "autoWidth": true
+                },
+                {
+                    //index 4
+                    "data": "dateDetachment",
+                    "name": "DateDetachment",
+                    "autoWidth": true
+                },
+                {
+                    //index 5
+                    "data": "dateBorn",
+                    "name": "DateBorn",
+                    "autoWidth": true
+                },
+                {
+                    //index 6
+                    "data": "vaccineDate",
+                    "name": "VaccineDate",
+                    "autoWidth": true
+                },
+                {
+                    "render": function (data, type, row) {
+                        var char = "'";
+                        var dropOptionButton = '<div class="dropdown btn-block pull-right"><button class="btn btn-xs btn-primary btn-block dropdown-toggle" data-toggle="dropdown"> Opcje<span class="caret"></span></button>';
+                        var dropDownMenu = '<ul class="dropdown-menu bg-dark"><li><a class="dropdown-item text-info" href="/Sow/Details/' + row.sowId + '">Szczegóły</a></li> <li><li><a class="dropdown-item text-info" href="/Sow/Edit/' + row.sowId + '">Edytuj</a></li><li><li><a class="dropdown-item text-info" href="/Sow/Remove/' + row.sowId + '" onclick = "return confirm(' + char + ' Czy napewno chcesz usunąc tą loche? ' + char + ');">Usuń</a></li></ul></div>';
+                        return dropOptionButton + dropDownMenu;
+                    },
+                },
+            ],
+            rowId: function (row) {
+                return row.number;
+            },
+            "language": {
+                "processing": "Przetwarzanie...",
+                "search": "Szukaj:",
+                "lengthMenu": "Pokaż _MENU_ pozycji",
+                "info": "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+                "infoEmpty": "Pozycji 0 z 0 dostępnych",
+                "infoFiltered": "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+                "loadingRecords": "Wczytywanie...",
+                "processing": "Loading. Please wait...",
+                "zeroRecords": "Nie znaleziono pasujących pozycji",
+                "paginate": {
+                    "first": "Pierwsza",
+                    "previous": "Poprzednia",
+                    "next": "Następna",
+                    "last": "Ostatnia"
+                },
+                "aria": {
+                    "sortAscending": ": aktywuj, by posortować kolumnę rosnąco",
+                    "sortDescending": ": aktywuj, by posortować kolumnę malejąco"
+                },
+                "autoFill": {
+                    "cancel": "Anuluj",
+                    "fill": "Wypełnij wszystkie komórki <i>%d<\/i>",
+                    "fillHorizontal": "Wypełnij komórki w poziomie",
+                    "fillVertical": "Wypełnij komórki w pionie"
+                },
+                "buttons": {
+                    "collection": "Zbiór <span class=\"ui-button-icon-primary ui-icon ui-icon-triangle-1-s\"><\/span>",
+                    "colvis": "Widoczność kolumny",
+                    "colvisRestore": "Przywróć widoczność",
+                    "copy": "Kopiuj",
+                    "copyKeys": "Naciśnij Ctrl lub u2318 + C, aby skopiować dane tabeli do schowka systemowego. <br \/> <br \/> Aby anulować, kliknij tę wiadomość lub naciśnij Esc.",
+                    "copySuccess": {
+                        "1": "Skopiowano 1 wiersz do schowka",
+                        "_": "Skopiowano %d wierszy do schowka"
+                    },
+                    "copyTitle": "Skopiuj do schowka",
+                    "csv": "CSV",
+                    "excel": "Excel",
+                    "pageLength": {
+                        "-1": "Pokaż wszystkie wiersze",
+                        "1": "Pokaż 1 wiersz",
+                        "_": "Pokaż %d wierszy"
+                    },
+                },
+                "emptyTable": "Brak danych w tabeli",
+                "searchBuilder": {
+                    "add": "Dodaj warunek",
+                    "clearAll": "Wyczyść wszystko",
+                    "condition": "Warunek",
+                    "data": "Dane"
+                }
+            }
+        });
+
+        $(document).on('click', '#search-button', function () {
+            otable.columns(0).search($('#number-filter').val().trim());
+            otable.draw();
+        });
+    </script>
+}

@@ -1,0 +1,7 @@
+﻿.dataTables_wrapper .dt-buttons {
+    float: right;
+}
+
+.dataTables_filter {
+    display: none;
+}

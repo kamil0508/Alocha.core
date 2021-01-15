@@ -8,6 +8,7 @@ using Alocha.WebUi.Models.SowVM;
 using Alocha.WebUi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 
 namespace Alocha.WebUi.Controllers
 {
@@ -84,7 +85,7 @@ namespace Alocha.WebUi.Controllers
         public async Task<IActionResult> Remove(int id)
         {
             var result = await _sowService.RemoveSowAsync(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexServerSide");
         }
 
         [HttpGet]
@@ -127,6 +128,27 @@ namespace Alocha.WebUi.Controllers
             var fileName = string.Format("SpisLoch_{0}.pdf", DateTime.Today.ToShortDateString());
 
             return File(fileContents, "application/pdf", fileName);
+        }
+
+        [HttpGet]
+        public IActionResult IndexServerSide()
+        {
+            var model = new SowCreateVM();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult LoadData()
+        {
+            var currentUserId = User.Claims.ElementAt(0).Value;
+            var sows = _sowService.GetAllSowsAsync(currentUserId).GetAwaiter().GetResult();
+
+            var dtModel = DataTablesHelper.BindRequestForm(Request.Form);
+            var sowsFilter = DataTablesHelper.FilterData(ref dtModel, sows);
+
+
+            return Json(new { draw = dtModel.Draw, recordsFiltered = dtModel.RecordsTotal, recordsTotal = dtModel.RecordsTotal, data = sowsFilter });
         }
     }
 }

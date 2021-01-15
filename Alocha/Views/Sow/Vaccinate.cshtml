@@ -67,15 +67,12 @@
                                 @Html.DisplayFor(m => item.Status)
                             </td>
                             <td>
-                                @if (item.DateHappening != DateTime.MinValue)
                                     @Html.DisplayFor(m => item.DateHappening)
                             </td>
                             <td>
-                                @if (item.DateBorn != DateTime.MinValue)
                                     @Html.DisplayFor(m => item.DateBorn)
                             </td>
                             <td>
-                                @if (item.VaccineDate != DateTime.MinValue)
                                     @Html.DisplayFor(m => item.VaccineDate)
                             </td>
                             @if (item.IsVaccinated == true)

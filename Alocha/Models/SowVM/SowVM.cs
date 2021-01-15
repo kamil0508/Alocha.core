@@ -17,24 +17,19 @@ namespace Alocha.WebUi.Models.SowVM
         public string Status { get; set; }
 
         [Display(Name = "Data zdarzenia")]
-        [DataType(DataType.Date)]
-        public DateTime DateHappening { get; set; }
+        public string DateHappening { get; set; }
 
         [Display(Name = "Data porodu")]
-        [DataType(DataType.Date)]
-        public DateTime DateBorn { get; set; }
+        public string DateBorn { get; set; }
 
         [Display(Name = "Data inseminacji")]
-        [DataType(DataType.Date)]
-        public DateTime DateInsimination { get; set; }
+        public string DateInsimination { get; set; }
 
         [Display(Name = "Data oderwania")]
-        [DataType(DataType.Date)]
-        public DateTime DateDetachment { get; set; }
+        public string DateDetachment { get; set; }
 
         [Display(Name = "Data szczepienia")]
-        [DataType(DataType.Date)]
-        public DateTime VaccineDate { get; set; }
+        public string VaccineDate { get; set; }
 
         [Display(Name = "Szczepienie")]
         public bool IsVaccinated { get; set; }

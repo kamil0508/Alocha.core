@@ -19,7 +19,13 @@ namespace Alocha.WebUi.Helpers
     {
         public AutoMaperConfiguration()
         {
-            CreateMap<Sow, SowVM>();
+            CreateMap<Sow, SowVM>()
+                .ForMember(dest => dest.DateBorn, opt => opt.MapFrom(src => src.DateBorn != null ? src.DateBorn.Value.ToShortDateString() : ""))
+                .ForMember(dest => dest.DateHappening, opt => opt.MapFrom(src => src.DateHappening != null ? src.DateHappening.Value.ToShortDateString() : ""))
+                .ForMember(dest => dest.DateDetachment, opt => opt.MapFrom(src => src.DateDetachment != null ? src.DateDetachment.Value.ToShortDateString() : ""))
+                .ForMember(dest => dest.DateInsimination, opt => opt.MapFrom(src => src.DateInsimination != null ? src.DateInsimination.Value.ToShortDateString() : ""))
+                .ForMember(dest => dest.VaccineDate, opt => opt.MapFrom(src => src.VaccineDate != null ? src.VaccineDate.Value.ToShortDateString() : ""));
+
             CreateMap<SowCreateVM, Sow>();
             CreateMap<Sow, SowEditVM>().ReverseMap();
             CreateMap<SowEditVM, SmallPig>();

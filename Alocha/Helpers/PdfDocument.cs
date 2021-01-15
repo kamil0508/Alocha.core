@@ -109,30 +109,16 @@ namespace Alocha.WebUi.Helpers
                     itemTable.AddCell(cell);
                     itemTable.AddCell(GetCellWithBorderAlignCenter(item.Status));
 
-                    if(item.DateHappening != DateTime.MinValue)
-                        itemTable.AddCell(GetCellWithBorderAlignCenter(item.DateHappening.ToShortDateString()));
-                    else
-                    itemTable.AddCell("");
 
-                    if (item.DateInsimination != DateTime.MinValue)
-                        itemTable.AddCell(GetCellWithBorderAlignCenter(item.DateInsimination.ToShortDateString()));
-                    else
-                    itemTable.AddCell("");
+                    itemTable.AddCell(GetCellWithBorderAlignCenter(item.DateHappening));
 
-                    if (item.DateDetachment != DateTime.MinValue)
-                        itemTable.AddCell(GetCellWithBorderAlignCenter(item.DateDetachment.ToShortDateString()));
-                    else
-                    itemTable.AddCell("");
+                    itemTable.AddCell(GetCellWithBorderAlignCenter(item.DateInsimination));
 
-                    if (item.DateBorn != DateTime.MinValue)
-                        itemTable.AddCell(GetCellWithBorderAlignCenter(item.DateBorn.ToShortDateString()));
-                    else
-                    itemTable.AddCell("");
+                    itemTable.AddCell(GetCellWithBorderAlignCenter(item.DateDetachment));
 
-                    if (item.VaccineDate != DateTime.MinValue)
-                        itemTable.AddCell(GetCellWithBorderAlignCenter(item.VaccineDate.ToShortDateString()));
-                    else
-                    itemTable.AddCell("");
+                    itemTable.AddCell(GetCellWithBorderAlignCenter(item.DateBorn));
+
+                    itemTable.AddCell(GetCellWithBorderAlignCenter(item.VaccineDate));
 
                     if(item.Status != "Prośna")
                         itemTable.AddCell("");

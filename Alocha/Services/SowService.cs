@@ -25,7 +25,7 @@ namespace Alocha.WebUi.Services
             _smallPig = smallPig;
         }
 
-        public async Task<IEnumerable<SowVM>> GetAllSowsAsync(string userId)
+        public async Task<List<SowVM>> GetAllSowsAsync(string userId)
         {
             var user = await _unitOfWork.User.FindOneAsync(u => u.Id == userId);
             if(user != null)
@@ -33,7 +33,7 @@ namespace Alocha.WebUi.Services
                 if(user.Sows.Count() > 0)
                 {
                     var sows = user.Sows.Where(s => !s.IsRemoved);
-                    var model = _mapper.Map<IEnumerable<Sow>, IEnumerable<SowVM>>(sows);
+                    var model = _mapper.Map<IEnumerable<Sow>, IEnumerable<SowVM>>(sows).ToList();
                     return model;
                 }
             }
