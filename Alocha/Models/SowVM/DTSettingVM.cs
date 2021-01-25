@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alocha.WebUi.Models.SowVM
 {
-    public class DTSowVM
+    public class DTSettingVM
     {
         public string Draw { get; set; }
 

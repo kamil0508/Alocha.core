@@ -11,7 +11,7 @@ namespace Alocha.WebUi.Helpers
 {
     public static class DataTablesHelper
     {
-        public static List<SowVM> FilterData(ref DTSowVM dtModel, IEnumerable<SowVM> sows)
+        public static List<SowVM> FilterData(ref DTSettingVM dtModel, IEnumerable<SowVM> sows)
         {
             //SEARCHING...
             if (!string.IsNullOrEmpty(dtModel.NumberFilter) && sows != null)
@@ -45,9 +45,9 @@ namespace Alocha.WebUi.Helpers
             return data;
         }
 
-        public static DTSowVM BindRequestForm(IFormCollection form)
+        public static DTSettingVM BindRequestForm(IFormCollection form)
         {
-            var dtModel = new DTSowVM();
+            var dtModel = new DTSettingVM();
             dtModel.Draw = form["draw"].FirstOrDefault();
 
             dtModel.Start = form["start"].FirstOrDefault();

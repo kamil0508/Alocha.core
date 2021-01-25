@@ -37,21 +37,21 @@ namespace Alocha.WebUi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind(include: "SowCreateVM")]SowIndexVM model)
+        public async Task<IActionResult> Create(SowCreateVM model)
         {
             var currentUserId = User.Claims.ElementAt(0).Value;
-            var validationResult = CustomNumberValidator.NumberValidation(model.SowCreateVM.Number);
+            var validationResult = CustomNumberValidator.NumberValidation(model.Number);
             if (validationResult != null)
                 ModelState.AddModelError("", validationResult);
             if(ModelState.IsValid)
             {
-                var result = await _sowService.CreateSowAsync(model.SowCreateVM, currentUserId);
+                var result = await _sowService.CreateSowAsync(model, currentUserId);
                 if(result)
-                    return RedirectToAction("Index");
+                    return RedirectToAction("IndexServerSide");
                 ModelState.AddModelError("", "Locha o podanym numerze już istnieje.");
             }
-            model.Sows = await _sowService.GetAllSowsAsync(currentUserId);
-            return View("Index", model); 
+
+            return RedirectToAction("IndexServerSide"); 
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -59,7 +59,7 @@ namespace Alocha.WebUi.Controllers
             var currentUserId = User.Claims.ElementAt(0).Value;
             var model = await _sowService.GetSowForEditAsync(id, currentUserId);
             if (model == null)
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexServerSide");
             return View(model);
         }
 
@@ -70,7 +70,7 @@ namespace Alocha.WebUi.Controllers
             {
                 var result = await _sowService.EditSowAsync(model);
                 if(result)
-                    return RedirectToAction("Index");
+                    return RedirectToAction("IndexServerSide");
                 ModelState.AddModelError("", "Niestety nie udało się dokonać zmian");
             }
             return View(model);
